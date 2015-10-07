@@ -1,0 +1,11 @@
+/* CSS declarations go here */
+/* tester en remplaçant dans @media width par device-width  */
+@media only screen and (max-width: 480px) {
+	body { background: #ff0000; }
+}
+@media only screen and (min-width: 480px) and (max-width: 768px){
+	body { background: #00ff00; }
+}
+@media screen and (min-width: 768px) {
+	body { background: #0000ff; } 
+}

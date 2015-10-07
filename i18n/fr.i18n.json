@@ -1,0 +1,8 @@
+{
+	"interface": {
+		"test" : "Vous avez appuyé sur le bouton __n__ fois"
+	},
+	"error": {
+		"not-authorized": "Vous n'êtes pas autorisé à faire cette action"
+	}
+}

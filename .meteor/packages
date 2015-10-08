@@ -20,3 +20,5 @@ accounts-ui
 accounts-password
 accounts-facebook
 tap:i18n
+meteorhacks:aggregate
+check

@@ -1,8 +1,19 @@
 {
+	"notification":{
+		"carte-active": "",
+		"carte-new": "",
+		"carte-upd": ""
+	},
 	"interface": {
 		"test" : "Vous avez appuyé sur le bouton __n__ fois"
 	},
 	"error": {
-		"not-authorized": "Vous n'êtes pas autorisé à faire cette action"
+		"carte_utilisee": "Vous ne pouvez pas supprimer une carte qui a été utilisée",
+		"database_request": "La requête %s a échouée",
+		"privilege_user": "Vous n'êtes pas autorisé à faire cette action",
+		"syntaxe_carte_regles": "Erreur de syntaxe des règles d'une carte %s"
+	},
+	"message": {
+		"carte_enregistree": "La carte %s est enregistrée"
 	}
 }

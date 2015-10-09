@@ -1,8 +1,13 @@
 {
 	"notification":{
 		"carte-active": "",
+		"carte-del": "",
 		"carte-new": "",
-		"carte-upd": ""
+		"carte-upd": "",
+		"event-active": "",
+		"event-del": "",
+		"event-new": "",
+		"event-upd": ""
 	},
 	"interface": {
 		"test" : "Vous avez appuyé sur le bouton __n__ fois"
@@ -10,10 +15,13 @@
 	"error": {
 		"carte_utilisee": "Vous ne pouvez pas supprimer une carte qui a été utilisée",
 		"database_request": "La requête %s a échouée",
+		"evenement_utilise": "Vous ne pouvez pas supprimer un évènement qui a été utilisé",
+		"privilege_anonyme": "Vous devez vous authentifier",
 		"privilege_user": "Vous n'êtes pas autorisé à faire cette action",
 		"syntaxe_carte_regles": "Erreur de syntaxe des règles d'une carte %s"
 	},
 	"message": {
-		"carte_enregistree": "La carte %s est enregistrée"
+		"carte_enregistree": "La carte %s est enregistrée",
+		"evenement_enregistre": "L'évènement %s est enregistré"
 	}
 }

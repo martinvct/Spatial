@@ -44,11 +44,10 @@ if (Meteor.isClient) {
       // increment the counter when button is clicked
       Session.set('counter', Session.get('counter') + 1);
      // var condition = "{username:\"admin\", admin: true}";
-     var carteTest = {"carteId": "T1", "nom": "Carte Test"};
-      Meteor.call("throwNotification","CARTE-NEW", "*", {carte: carteTest});
+     // var carteTest = {"carteId": "T1", "nom": "Carte Test"};
+     // Meteor.call("throwNotification","CARTE-NEW", "*", {carte: carteTest});
+
+     
     }
   });
 }
-
-
-

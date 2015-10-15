@@ -1,16 +1,14 @@
 Meteor.startup(function(){
   // If this is the first user going into the database, make them an admin
   if (Meteor.users.find().count() === 0) {
-  	Accounts.createUser({username: "admin", email: "vincent.martin@ulg.ac.be", password: "M@str3r", profile: { name: "Vincent Martin" }});
+  	Accounts.createUser({username: "admin", email: "vincent.martin@ulg.ac.be", password: "M@str3r", profile: { firstname: "Vincent", lastname:"Martin" }});
   } else if (Meteor.users.find().count() === 1) {
-  	Accounts.createUser({username: "u200846", email: "martin_vct@hotmail.com", password: "m@rtin_vct", profile: { name: "Raspoutine" }});
+  	Accounts.createUser({username: "u200846", email: "martin_vct@hotmail.com", password: "m@rtin_vct", profile: { firstname: "Raspoutine", lastname:"" }});
   }
 });
 
 Accounts.onCreateUser(function(options, user){
 	if (Meteor.users.find().count() === 0){
-		options.profile.firstname = "Vincent";
-		options.profile.lastname  = "Martin";
 		user.admin = true;
 	}
 

@@ -4,10 +4,21 @@
 		"carte-del": "",
 		"carte-new": "",
 		"carte-upd": "",
+		"deck-add": "",
+		"deck-rem": "",
 		"event-active": "",
 		"event-del": "",
 		"event-new": "",
-		"event-upd": ""
+		"event-upd": "",
+		"partie-del": "",
+		"peer-call": "",
+		"peer-nocall-budget": "",
+		"peer-nomorecall": "",
+		"peer-stillcall": "",
+		"peer-toolate": "",
+		"user-call": "",
+		"user-msg": "",
+		"user-nocall-budget": ""
 	},
 	"interface": {
 		"test" : "Vous avez appuyé sur le bouton __n__ fois"
@@ -16,8 +27,11 @@
 		"carte_utilisee": "Vous ne pouvez pas supprimer une carte qui a été utilisée",
 		"database_request": "La requête %s a échouée",
 		"evenement_utilise": "Vous ne pouvez pas supprimer un évènement qui a été utilisé",
+		"partie_close": "Vous ne pouvez modifier une partie terminée ou supprimée",
+		"partie_id": "Partie inconnue",
 		"privilege_anonyme": "Vous devez vous authentifier",
 		"privilege_user": "Vous n'êtes pas autorisé à faire cette action",
+		"scenario_id": "Scénario inconnu", 
 		"syntaxe_carte_regles": "Erreur de syntaxe des règles d'une carte %s"
 	},
 	"message": {

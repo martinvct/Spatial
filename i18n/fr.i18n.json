@@ -9,6 +9,7 @@
 		"event-active": "",
 		"event-del": "",
 		"event-new": "",
+		"event-put": "",
 		"event-upd": "",
 		"partie-del": "",
 		"peer-call": "",
@@ -24,8 +25,10 @@
 		"test" : "Vous avez appuyé sur le bouton __n__ fois"
 	},
 	"error": {
+		"carte°inactive": "Carte inexistante",
 		"carte_utilisee": "Vous ne pouvez pas supprimer une carte qui a été utilisée",
 		"database_request": "La requête %s a échouée",
+		"evenement_inactif": "Evènement inexistant",
 		"evenement_utilise": "Vous ne pouvez pas supprimer un évènement qui a été utilisé",
 		"partie_close": "Vous ne pouvez modifier une partie terminée ou supprimée",
 		"partie_id": "Partie inconnue",

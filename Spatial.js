@@ -8,6 +8,8 @@ if (Meteor.isServer) {
     // code to run on server at startup
    // var last = Meteor.users.aggregate([{$group:{_id:null, maxU:{$max: "$username"}}}]);
     //  last.forEach(function(m){ console.log(m.maxU); });
+
+    Meteor.call("initTest");
   });
   
   Meteor.publish("users", function(){

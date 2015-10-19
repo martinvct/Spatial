@@ -15,13 +15,16 @@ if (Meteor.isServer) {
   Meteor.publish("users", function(){
     return Meteor.users.find();
   });
+  Meteor.publish("testmet", function(){
+    return Test.find();
+  });
 }
 
 if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault('counter', 0);
   Meteor.subscribe("users");
-
+  Meteor.subscribe("testmet");
   Template.hello.helpers({
     counter: function () {
       return Session.get('counter');
@@ -38,7 +41,15 @@ if (Meteor.isClient) {
       } 
       if(nbr > -1) return "OK";
       return "ERREUR";
+    },
+    chatte: function(){
+      //Meteor.call("loadChat");
+      return Meteor.apply("loadChat", [], {returnStubValue: true});
+    },
+    nchat: function(){
+      return Meteor.apply("countChat", [], {returnStubValue: true});
     }
+
   });
 
   Template.hello.events({
@@ -48,8 +59,10 @@ if (Meteor.isClient) {
      // var condition = "{username:\"admin\", admin: true}";
      // var carteTest = {"carteId": "T1", "nom": "Carte Test"};
      // Meteor.call("throwNotification","CARTE-NEW", "*", {carte: carteTest});
-
-     
+     //Meteor.call("updChat");
+     Meteor.call("testCheck", function(error, result){
+      if(error) sAlert.error(error.reason);
+     });
     }
   });
 }

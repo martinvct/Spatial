@@ -3,8 +3,11 @@
 </head>
 
 <body>
+	{{> sAlert}}
   <h1>Welcome to Meteor!</h1>
-
+  <div id="notifications">
+  	{{ notifications }}
+  </div>
   {{> hello}}
 </body>
 
@@ -12,4 +15,15 @@
   <button>Click Me</button>
   <p>{{_ "interface.test" n=counter }}</p>
   <p>Nbr user : {{teste}}</p>
+  {{#with chatte}}
+  	{{> tchat }}
+  {{/with}}
+  <p>Nbr chat : {{ nchat }}</p>
+</template>
+
+<template name="tchat">
+	<p>
+		Type: {{nom}},
+		Prénom : {{prenom}}
+	</p>
 </template>

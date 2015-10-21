@@ -11,6 +11,9 @@
 		"event-new": "",
 		"event-put": "",
 		"event-upd": "",
+		"expert-call": "",
+		"expert-nocall-budget": "",
+		"expert-nomorecall": "",
 		"partie-del": "",
 		"peer-call": "",
 		"peer-nocall-budget": "",
@@ -25,20 +28,32 @@
 		"test" : "Vous avez appuyé sur le bouton __n__ fois"
 	},
 	"error": {
-		"carte°inactive": "Carte inexistante",
+		"carte_inactive": "Carte inexistante",
 		"carte_utilisee": "Vous ne pouvez pas supprimer une carte qui a été utilisée",
 		"database_request": "La requête %s a échouée",
 		"evenement_inactif": "Evènement inexistant",
 		"evenement_utilise": "Vous ne pouvez pas supprimer un évènement qui a été utilisé",
 		"partie_close": "Vous ne pouvez modifier une partie terminée ou supprimée",
+		"partie_commencee": "Vous ne pouvez modifier le scénario d'une partie entamée",
 		"partie_id": "Partie inconnue",
+		"planete_interdite": "Vous ne pouvez sélectionner cette planète dans cette partie",
 		"privilege_anonyme": "Vous devez vous authentifier",
 		"privilege_user": "Vous n'êtes pas autorisé à faire cette action",
 		"scenario_id": "Scénario inconnu", 
+		"scenario_utilise": "Scénario utilisé",
+		"scenario_inactif": "Scénario inexistant",
 		"syntaxe_carte_regles": "Erreur de syntaxe des règles d'une carte %s"
+	},
+	"validation":{
+		"budget": "Vous avez dépensé plus que le budget alloué",
+		"energie": "Vous n'avez pas assez d'énergie pour tous les composants",
+		"masse": "Vous n'avez pas assez de puissance pour transporter tous les composants",
+		"volume": "Vous n'avez pas assez de place pour tous les composants",
+		"science": "Votre projet n'a aucun intérêt scientifique"
 	},
 	"message": {
 		"carte_enregistree": "La carte %s est enregistrée",
-		"evenement_enregistre": "L'évènement %s est enregistré"
+		"evenement_enregistre": "L'évènement %s est enregistré",
+		"scenario_enregistre": "Le scénario est enregistré"
 	}
 }

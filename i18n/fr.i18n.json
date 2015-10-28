@@ -29,9 +29,11 @@
 	},
 	"error": {
 		"carte_inactive": "Carte inexistante",
+		"carte_incompatible": "Carte incompatible avec le scénario choisi",
 		"carte_utilisee": "Vous ne pouvez pas supprimer une carte qui a été utilisée",
 		"database_request": "La requête %s a échouée",
 		"evenement_inactif": "Evènement inexistant",
+		"evenement_incompatible": "Evènement incompatible avec le scénario choisi",
 		"evenement_utilise": "Vous ne pouvez pas supprimer un évènement qui a été utilisé",
 		"partie_close": "Vous ne pouvez modifier une partie terminée ou supprimée",
 		"partie_commencee": "Vous ne pouvez modifier le scénario d'une partie entamée",

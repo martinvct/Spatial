@@ -1,3 +1,6 @@
+/* S: 320*480; M: 1024*768; L: 1920*1080; */
+
+
 /* CSS declarations go here */
 /* tester en remplaçant dans @media width par device-width  */
 @media only screen and (max-width: 480px) {

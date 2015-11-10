@@ -9,6 +9,11 @@
   	{{ notifications }}
   </div>
   {{> hello}}
+   
+   {{> loginWithLDAP}}<br> 
+   {{> userConnected}} 
+
+
 </body>
 
 <template name="hello">
@@ -26,4 +31,23 @@
 		Type: {{nom}},
 		Prénom : {{prenom}}
 	</p>
+</template>
+
+
+<template name="loginWithLDAP">
+  {{#unless currentUser }}
+  <input type="text" name="login" id="login" value=""/><br />
+  <input type="password" name="password" id="password" value=""/><br />
+  <button>Login</button>
+  {{/unless}}
+</template>
+
+<template name="userConnected">
+  {{#if currentUser}}
+     First Name: {{currentUser.profile.firstname}} <br> 
+     Display Name: {{currentUser.profile.lastname}}<br> 
+     Username: {{currentUser.username}} <br> 
+     Email : {{currentUser.profile.email}} <br> 
+     <button>Disconnect</button>
+  {{/if}}
 </template>

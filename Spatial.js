@@ -65,4 +65,26 @@ if (Meteor.isClient) {
      });
     }
   });
+
+  Template.loginWithLDAP.events({
+    'click button': function (event, template) {
+     
+        Meteor.loginWithLDAP(template.find('#login').value, template.find('#password').value, { dn: "uid=" + template.find('#login').value + ",ou=people,dc=ulg,dc=ac,dc=be" }, function(err){
+          if(err){
+            if(! Meteor.userId()){
+              Meteor.loginWithPassword(template.find('#login').value, template.find('#password').value,  function(err) { if (err) console.log(err.reason); });
+           }
+          }
+        });
+      
+      
+    }
+  });
+
+  Template.userConnected.events({
+    'click button': function (event, template) {
+      Meteor.logout();   
+
+    }
+  });
 }

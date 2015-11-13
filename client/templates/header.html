@@ -1,0 +1,20 @@
+<!-- http://blog.teamtreehouse.com/how-to-build-a-three-line-drop-down-menu-for-a-responsive-website-in-jquery -->
+<template name="header">
+	<nav class="navMain">
+		<div id="menu">☰</div>
+		<div id="logoApplication"></div>
+		{{#if currentUser}}
+		<div id="menuMain">
+			<ul class="menuMain">
+				<li><button class="lien" id="nouvellePartie">{{_ "interface.bouton.nouvellePartie" }}</button></li>
+				<li><button class="lien" id="chargerPartie">{{_ "interface.bouton.chargerPartie" }}</button></li>
+				<li><button class="lien" id="meilleursScores">{{_ "interface.bouton.meilleursScores" }}</button></li>
+				<li><button class="lien" id="aide">{{_ "interface.bouton.aide" }}</button></li>
+			</ul>
+		</div>
+		<div id="buttonAvatar">
+			<button class="buttonAvatar"><img id="avatarMinified" src="{{#if currentUser.profile.avatar}} {{currentUser.profile.avatar}} {{else}} /defaultAvatar.png {{/if}}"/></button>
+		</div>
+		{{/if}}
+	</nav>
+</template>

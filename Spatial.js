@@ -21,10 +21,13 @@ if (Meteor.isServer) {
 }
 
 if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
+
   Meteor.subscribe("users");
-  Meteor.subscribe("testmet");
+ /* 
+// counter starts at 0
+Session.setDefault('counter', 0);
+ Meteor.subscribe("testmet");
+  
   Template.hello.helpers({
     counter: function () {
       return Session.get('counter');
@@ -64,27 +67,7 @@ if (Meteor.isClient) {
       if(error) sAlert.error(error.reason);
      });
     }
-  });
+  });*/
 
-  Template.loginWithLDAP.events({
-    'click button': function (event, template) {
-     
-        Meteor.loginWithLDAP(template.find('#login').value, template.find('#password').value, { dn: "uid=" + template.find('#login').value + ",ou=people,dc=ulg,dc=ac,dc=be" }, function(err){
-          if(err){
-            if(! Meteor.userId()){
-              Meteor.loginWithPassword(template.find('#login').value, template.find('#password').value,  function(err) { if (err) console.log(err.reason); });
-           }
-          }
-        });
-      
-      
-    }
-  });
 
-  Template.userConnected.events({
-    'click button': function (event, template) {
-      Meteor.logout();   
-
-    }
-  });
 }

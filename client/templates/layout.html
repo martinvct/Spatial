@@ -1,0 +1,11 @@
+<template name="layout">
+  <div class="container">
+    {{> header}}
+    {{> sAlert}}
+    <div id="main">
+      {{#unless currentUser }}
+      	{{> login}}
+      {{/unless}}
+    </div>
+  </div>
+</template>

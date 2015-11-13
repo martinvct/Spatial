@@ -1,0 +1,17 @@
+<template name="menuProfile">
+	<ul class="menuProfile">
+		<li>
+			<button class="close"></button>
+		</li>
+		<li>
+			<div class="menuProfileIcone"><img id="avatarMinified" src="{{#if currentUser.profile.avatar}} {{currentUser.profile.avatar}} {{else}} /defaultAvatar.png {{/if}}"/></div><!--
+		 --><div class="menuProfileInfo">{{currentUser.profile.firstname}} {{currentUser.profile.lastname}}</div><!--
+		 --><div class="menuProfileLien"><button class="menuProfileLogout">{{_ "interface.logout" }}</button></div>
+		</li>
+		<li>
+			<div class="menuProfileIcone"><img src="/mesBadges.png"/></div><!--
+		 --><div class="menuProfileInfo"></div><!--
+		 --><div class="menuProfileLien"><button class="menuProfileMesBadges">{{_ "interface.bouton.mesBadges" }}</button></div>
+		</li>
+	</ul>
+</template>

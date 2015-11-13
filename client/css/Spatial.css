@@ -1,14 +1,57 @@
+
+body { margin: 0; padding: 0; font-family: "Digital-7", Helvetica, Arial, sans-serif; }
+button { cursor: pointer; }
+nav.navMain { vertical-align: top; }
+ul.buttonsBar { list-style: none;  margin-left: 0; padding-left: 0; }
+ul.buttonsBar li { display: inline; list-style-type:none;  }
+ul.menuMain { list-style: none;  margin-left: 0; padding-left: 0; }
+ul.menuMain > li > button { border: none; background: none; color: white; font-family: "Digital-7"; font-size: large; }
+
+div.login { text-align: center; margin-top: 5em; }
+div.login > input { width: 20em; }
+
+button.close { display: inline-block; background-image: url('/buttonClose.png'); width: 24px; height: 24px; float: right; }
+#menuMain { display: inline-block; }
+#buttonAvatar { display: inline-block; float: right; }
+button.buttonAvatar { padding: 0; margin: 0; }
+#avatarMinified { display: block; padding: 0; margin: 0; }
+
+ul.menuProfile { position: absolute; top: 50px; right: 0; border: 0.5em solid black; background: white; list-style: none; margin-left: 0; padding: 0 0.5em; max-width: 20em; z-index: 1000;}
+ul.menuProfile > li:first-child { height: 24px; }
+ul.menuProfile li { vertical-align: top; }
+div.menuProfileIcone { display: inline-block; }
+div.menuProfileIcone > img { width: 2em; height: 2em; }
+div.menuProfileInfo { display: inline-block; }
+div.menuProfileLien { display: inline-block; }
+button.menuProfileLogout { display: inline-block; }
+
 /* S: 320*480; M: 1024*768; L: 1920*1080; */
-
-
-/* CSS declarations go here */
 /* tester en remplaçant dans @media width par device-width  */
 @media only screen and (max-width: 480px) {
-	body { background: #ff0000; }
+	body { background: #111111; background-image: url('/fond480x480.jpg'); }
+	#logoApplication { display: inline-block; width: 200px; height: 50px; background-image: url('/logoApplication_S.png'); }
+	ul.menuMain li { display: block; list-style-type:none;  }
+	#menuMain { display: none; }
+	#menu { display: inline-block; color: white; border: 0.05em solid white; border-radius: 0.2em; text-align: center; margin-left: 0.3em; width: 24px; height: 24px; }
 }
-@media only screen and (min-width: 480px) and (max-width: 768px){
-	body { background: #00ff00; }
+@media only screen and (min-width: 480px) and (max-width: 1024px){
+	body { background: #111111; background-image: url('/fond1024x1024.jpg'); }
+	#logoApplication { display: inline-block; width: 300px; height: 75px; background-image: url('/logoApplication_M.png'); }
+	ul.menuMain li { display: inline; list-style-type:none;  }
+	#menu { display: none; }
 }
-@media screen and (min-width: 768px) {
-	body { background: #0000ff; } 
+@media screen and (min-width: 1024px) {
+	body { background: #111111; background-image: url('/fond1920x1080.jpg'); }
+	#logoApplication { display: inline-block; width: 300px; height: 75px; background-image: url('/logoApplication_L.png'); }
+	ul.menuMain li { display: inline; list-style-type:none;  }
+	#menu { display: none; }
+}
+@font-face {
+    font-family: "Digital-7";
+    src: url('/font/digital-7.ttf');
+}
+@font-face {
+    font-family: "Digital-7";
+    font-style: italic;
+    src: url('/font/digital-7_(italic).ttf');
 }

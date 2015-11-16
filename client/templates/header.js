@@ -1,12 +1,12 @@
 
 
 if (Meteor.isClient) {
-	Template.header.events({
+	Template.Header.events({
 		'click button.buttonAvatar': function (event, template) {
-			Blaze.render(Template.menuProfile, document.getElementById('main'));
+			Blaze.render(Template.MenuProfile, document.getElementById('main'));
 		}
 	});
-	Template.header.onRendered(function() {
+	Template.Header.onRendered(function() {
 		
 	});
 }

@@ -28,16 +28,11 @@
 		"bouton": {
 			"aide": "Aide",
 			"chargerPartie": "Charger",
-			"configuration": "Administration",
-			"listeRapports": "Rapports",
-			"listeScenarios": "Scenarios",
-			"listeUtilisateurs": "Utilisateurs",
 			"meilleursScores": "Scores",
 			"mesBadges": "Mes badges",
-			"nouvellePartie": "Nouvelle",
-			"retour": "Retour"
+			"nouvellePartie": "Nouvelle"
 		},
-		"login": "Se connecter",
+		"login": "LOGIN",
 		"loginWithFaceBook": "Facebook",
 		"logout": "Se déconnecter",
 		"nomUtilisateur": "Nom d'utilisateur",

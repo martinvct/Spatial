@@ -1,7 +1,3 @@
-getUserLanguage = function () {
-  // Put here the logic for determining the user language
-  return "fr";
-};
 
 if (Meteor.isServer) {
   Meteor.startup(function () {

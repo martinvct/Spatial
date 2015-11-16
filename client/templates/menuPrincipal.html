@@ -1,0 +1,21 @@
+<template name="MenuPrincipal">
+	<div id="menuMain">
+		<ul class="menuMain">
+			<li><button class="lien" id="nouvellePartie">{{_ "interface.bouton.nouvellePartie" }}</button></li>
+			<li><button class="lien" id="chargerPartie">{{_ "interface.bouton.chargerPartie" }}</button></li>
+			{{#if currentUser.admin }}<li><button class="lien" id="configuration">{{_ "interface.bouton.configuration" }}</button></li>{{/if}}
+			<li><button class="lien" id="meilleursScores">{{_ "interface.bouton.meilleursScores" }}</button></li>
+			<li><button class="lien" id="aide">{{_ "interface.bouton.aide" }}</button></li>
+		</ul>
+	</div>
+</template>
+<template name="Config">
+	<div id="menuMain">
+		<ul class="menuMain">
+			<li><button class="lien" id="listeUtilisateurs">{{_ "interface.bouton.listeUtilisateurs" }}</button></li>
+			<li><button class="lien" id="listeScenarios">{{_ "interface.bouton.listeScenarios" }}</button></li>
+			<li><button class="lien" id="listeRapports">{{_ "interface.bouton.listeRapports" }}</button></li>
+			<li><button class="lien" id="retour">{{_ "interface.bouton.retour" }}</button></li>
+		</ul>
+	</div>
+</template>

@@ -1,5 +1,4 @@
-<template name="login">
-  {{#unless currentUser }}
+<template name="Login">
   <div class="login">
 	<input type="text" name="login" id="login" value="" placeholder="{{_ 'interface.nomUtilisateur' }}"/><br />
 	<input type="password" name="password" id="password" value="" placeholder="{{_ 'interface.motDePasse'}}"/><br />
@@ -7,6 +6,5 @@
 	  <li> <button class="loginWithLDAP">{{_ "interface.login" }}</button> </li>
 	  <li> <button class="loginWithFaceBook">{{_ "interface.loginWithFaceBook" }}</button> </li>
 	</ul>
-  </div>	  
-  {{/unless}}
+  </div>
 </template>

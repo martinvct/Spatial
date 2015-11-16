@@ -4,14 +4,17 @@ button { cursor: pointer; }
 nav.navMain { vertical-align: top; }
 ul.buttonsBar { list-style: none;  margin-left: 0; padding-left: 0; }
 ul.buttonsBar li { display: inline; list-style-type:none;  }
-ul.menuMain { list-style: none;  margin-left: 0; padding-left: 0; }
-ul.menuMain > li > button { border: none; background: none; color: white; font-family: "Digital-7"; font-size: large; }
+
 
 div.login { text-align: center; margin-top: 5em; }
 div.login > input { width: 20em; }
 
 button.close { display: inline-block; background-image: url('/buttonClose.png'); width: 24px; height: 24px; float: right; }
-#menuMain { display: inline-block; }
+#menuMain { display: block; text-align: center; margin: 2em auto; width: 12em;}
+ul.menuMain { list-style: none;  padding: 0; margin: 0; }
+ul.menuMain li { display: block; list-style-type:none; }
+ul.menuMain > li > button { border: 0.1em solid white; width: 11em; margin: 0.5em; padding: 0.5em 0; text-align: center; background: none; color: white; font-family: "Digital-7"; font-size: large; }
+
 #buttonAvatar { display: inline-block; float: right; }
 button.buttonAvatar { padding: 0; margin: 0; }
 #avatarMinified { display: block; padding: 0; margin: 0; }
@@ -30,21 +33,14 @@ button.menuProfileLogout { display: inline-block; }
 @media only screen and (max-width: 480px) {
 	body { background: #111111; background-image: url('/fond480x480.jpg'); }
 	#logoApplication { display: inline-block; width: 200px; height: 50px; background-image: url('/logoApplication_S.png'); }
-	ul.menuMain li { display: block; list-style-type:none;  }
-	#menuMain { display: none; }
-	#menu { display: inline-block; color: white; border: 0.05em solid white; border-radius: 0.2em; text-align: center; margin-left: 0.3em; width: 24px; height: 24px; }
 }
 @media only screen and (min-width: 480px) and (max-width: 1024px){
 	body { background: #111111; background-image: url('/fond1024x1024.jpg'); }
 	#logoApplication { display: inline-block; width: 300px; height: 75px; background-image: url('/logoApplication_M.png'); }
-	ul.menuMain li { display: inline; list-style-type:none;  }
-	#menu { display: none; }
 }
 @media screen and (min-width: 1024px) {
 	body { background: #111111; background-image: url('/fond1920x1080.jpg'); }
 	#logoApplication { display: inline-block; width: 300px; height: 75px; background-image: url('/logoApplication_L.png'); }
-	ul.menuMain li { display: inline; list-style-type:none;  }
-	#menu { display: none; }
 }
 @font-face {
     font-family: "Digital-7";

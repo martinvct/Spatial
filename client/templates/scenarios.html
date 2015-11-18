@@ -1,6 +1,175 @@
-<template name="configScenarios">
-	
+<template name="ConfigScenarios">
+	<button id="addScenario">{{_ "interface.bouton.addScenario" }}</button>
+	<button class="lien" id="retour">{{_ "interface.bouton.retour" }}</button>
+	{{#each scenarios}}
+		{{> ConfigScenario }}
+	{{/each}}
 </template>
-<template name="configScenario">
+<template name="ConfigScenario">
+	<div class="scenario">
+		<div class="illustrationScenario"></div>
+		<div class="infosScenario">
+			<div class="titreScenario">{{ intitule }}</div>
+			<div class="tagsScenario">
+				<span class="tagScenario">{{_ "interface.budget" }}: {{ intialisation.budget }}€</span>
+				{{#if cubesat}}
+					<span class="tagScenario">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{ intialisation.cubesat.poidsMax }}gr, {{_ "interface.volumeMax"}}: {{ initialisation.volumeMax }}mm</span>
+				{{else}}
+					<span class="tagScenario">{{_ "interface.objectif" }}: {{tr "interface.objectifs." initialisation.objectif}} {{#if initialisation.planetes}}, {{_ "interface.planetes"}}: {{#each initialisation.planetes}} {{nomPlanete this}} {{/each}}{{/if}}</span>
+				{{/if}}
+			</div>
+			<div class="descScenario">{{ description }}</div>
+		</div>
+	</div>
+</template>
+<template name="EditScenario">
+	<form method="post">
+		<input type="hidden" name="_id" id="_id" value="{{ scenario._id }}" />
+		<h2>{{#if scenario}} {{_ "interface.editionScenario" intitule=scenario.intitule}} {{else}} {{_ "interface.nouveauScenario" }} {{/if}}</h2>
 
+		<h3>{{_ "interface.scenario.infos" }}</h3>
+		<div class="scenarioParametre">
+			<label for="intitule" class="required">{{_ "interface.scenario.intitule" }}</label>
+			<input type="text" class="longText" id="intitule" name="intitule" value="{{ scenario.intitule }}" placeholder="{{_ 'interface.scenario.intitule' }}"/>
+		</div>
+		<div class="scenarioParametre">
+			<label for="description">{{_ "interface.scenario.description" }}</label>
+			<textarea id="description" name="description" placeholder="{{_ 'interface.scenario.description' }}" rows="5" cols="100">{{ scenario.description }}</textarea>
+		</div>
+		<div class="scenarioParametre">
+			<input type="radio" id="active" name="active" value="1" {{isChecked scenario.active}} />
+			<label for="actif">{{_ "interface.scenario.actif" }}</label>
+			<input type="radio" id="inactive" name="active" value="0" {{isNChecked scenario.active}} />
+			<label for="actif">{{_ "interface.scenario.inactif" }}</label>
+		</div>
+		<h3>{{_ "interface.scenario.initialisation" }}</h3>
+		<div class="scenarioParametre">
+			<label for="cubesat">{{_ "interface.scenario.cubesat"}}</label>
+			<input type="checkbox" id="cubesat" name="cubesat" value="1" {{isChecked scenario.initialisation.cubesat}} />
+		</div>
+		<div class="scenarioParametre">
+			<label for="poidsMax">{{_ "interface.scenario.poidsMax" }}</label>
+			<input type="text" id="poidsMax" name="poidsMax" value="{{ scenario.initialisation.cubesatLimites.poidsMax }}" placeholder="{{_ 'interface.scenario.poidsMaxInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="volumeMax">{{_ "interface.scenario.volumeMax" }}</label>
+			<input type="text" id="volumeMax" name="volumeMax" value="{{ scenario.initialisation.cubesatLimites.volumeMax }}" placeholder="{{_ 'interface.scenario.volumeMaxInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="budget">{{_ "interface.scenario.budget" }}</label>
+			<input type="text" id="budget" name="budget" value="{{ scenario.initialisation.budget }}" placeholder="{{_ 'interface.scenario.budgetInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="objectif">{{_ "interface.scenario.objectif"}}</label>
+			<select id="objectif" name="objectif">
+				<option value="planete" {{isSelected scenario.initialisation.objectif "planete"}} >{{_ "interface.scenario.objectifPlanete" }}</option>
+				<option value="espace" {{isNSelected scenario.initialisation.objectif "planete"}} >{{_ "interface.scenario.objectifEspace" }}</option>
+			</select>
+		</div>
+		<div class="scenarioParametre">
+			{{#each planetes}}
+				<input type="checkbox" name="planetes[]" id="planete_{{ planeteId }}" value="{{ planeteId }}" {{isPlaneteChecked planeteId scenario.initialisation.planetes}} />
+				<label for="planete_{{ planeteId }}">{{nomPlanete planeteId }}</label>
+			{{/each}}
+		</div>
+		<h3>{{_ "interface.scenario.construction" }}</h3>
+		<div class="scenarioParametre">
+			<label for="tpsMax">{{_ "interface.scenario.tpsMax" }}</label>
+			<input type="text" id="tpsMax" name="tpsMax" value="{{ scenario.construction.tpsMax }}" placeholder="{{_ 'interface.scenario.tpsMaxInfo' }}" />
+		</div>
+		<h3>{{_ "interface.scenario.expertise" }}</h3>
+		<div class="scenarioParametre">
+			<label for="nbrMaxExperts">{{_ "interface.scenario.nbrMaxExperts" }}</label>
+			<input type="text" id="nbrMaxExperts" name="nbrMaxExperts" value="{{ scenario.expertise.nbrMaxExperts }}" placeholder="{{_ 'interface.scenario.nbrMaxExpertsInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="malusTempsExpert">{{_ "interface.scenario.malusTemps" }}</label>
+			<input type="text" id="malusTempsExpert" name="malusTempsExpert" value="{{ scenario.expertise.malusTemps }}" placeholder="{{_ 'interface.scenario.malusTempsInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="malusBudgetExpert">{{_ "interface.scenario.malusBudget" }}</label>
+			<input type="text" id="malusBudgetExpert" name="malusBudgetExpert" value="{{ scenario.expertise.malusBudget }}" placeholder="{{_ 'interface.scenario.malusBudgetInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="malusNbrEvenementsExpert">{{_ "interface.scenario.malusNbrEvenements" }}</label>
+			<input type="text" id="malusNbrEvenementsExpert" name="malusNbrEvenementsExpert" value="{{ scenario.expertise.malusNbrEvenements }}" placeholder="{{_ 'interface.scenario.malusNbrEvenementsInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="nbrExpertsGratuits">{{_ "interface.scenario.nbrExpertsGratuits" }}</label>
+			<input type="text" id="nbrExpertsGratuits" name="nbrExpertsGratuits" value="{{ scenario.expertise.nbrExpertsGratuits }}" placeholder="{{_ 'interface.scenario.nbrExpertsGratuitsInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="niveauDetails">{{_ "interface.scenario.niveauDetails"}}</label>
+			<select id="niveauDetails" name="niveauDetails">
+				<option value="0" {{isSelected scenario.expertise.niveauDetails 0}} >{{_ "interface.scenario.niveauDetails0" }}</option>
+				<option value="1" {{isSelected scenario.expertise.niveauDetails 1}} >{{_ "interface.scenario.niveauDetails1" }}</option>
+				<option value="2" {{isSelected scenario.expertise.niveauDetails 2}} >{{_ "interface.scenario.niveauDetails2" }}</option>
+			</select>
+		</div>
+		<h3>{{_ "interface.scenario.collaboration" }}</h3>
+		<div class="scenarioParametre">
+			<label for="nbrMaxAppels">{{_ "interface.scenario.nbrMaxAppels" }}</label>
+			<input type="text" id="nbrMaxAppels" name="nbrMaxAppels" value="{{ scenario.collaboration.nbrMaxAppels }}" placeholder="{{_ 'interface.scenario.nbrMaxAppelsInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="malusTempsAppel">{{_ "interface.scenario.malusTemps" }}</label>
+			<input type="text" id="malusTempsAppel" name="malusTempsAppel" value="{{ scenario.collaboration.malusTemps }}" placeholder="{{_ 'interface.scenario.malusTempsInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="malusBudgetAppel">{{_ "interface.scenario.malusBudget" }}</label>
+			<input type="text" id="malusBudgetAppel" name="malusBudgetAppel" value="{{ scenario.collaboration.malusBudget }}" placeholder="{{_ 'interface.scenario.malusBudgetInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="malusNbrEvenementsAppel">{{_ "interface.scenario.malusNbrEvenements" }}</label>
+			<input type="text" id="malusNbrEvenementsAppel" name="malusNbrEvenementsAppel" value="{{ scenario.collaboration.malusNbrEvenements }}" placeholder="{{_ 'interface.scenario.malusNbrEvenementsInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="nbrAppelsGratuits">{{_ "interface.scenario.nbrAppelsGratuits" }}</label>
+			<input type="text" id="nbrAppelsGratuits" name="nbrAppelsGratuits" value="{{ scenario.collaboration.nbrAppelsGratuits }}" placeholder="{{_ 'interface.scenario.nbrAppelsGratuitsInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="tpsMaxParAppel">{{_ "interface.scenario.tpsMaxParAppel" }}</label>
+			<input type="text" id="tpsMaxParAppel" name="tpsMaxParAppel" value="{{ scenario.collaboration.tpsMaxParAppel }}" placeholder="{{_ 'interface.scenario.tpsMaxParAppelInfo' }}" />
+		</div>
+		<h3>{{_ "interface.scenario.evenement" }}</h3>
+		<div class="scenarioParametre">
+			<label for="nbrMaxEvenements">{{_ "interface.scenario.nbrMaxEvenements" }}</label>
+			<input type="text" id="nbrMaxEvenements" name="nbrMaxEvenements" value="{{ scenario.evenement.nbrMax }}" placeholder="{{_ 'interface.scenario.nbrMaxEvenementsInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="intervalleTps">{{_ "interface.scenario.intervalleTps" }}</label>
+			<input type="text" id="intervalleTps" name="intervalleTps" value="{{ scenario.evenement.intervalleTps }}" placeholder="{{_ 'interface.scenario.intervalleTpsInfo' }}" />
+		</div>
+		<h3>{{_ "interface.scenario.validation" }}</h3>
+		<div class="scenarioParametre">
+			<label for="niveauDetailsValidation">{{_ "interface.scenario.niveauDetails"}}</label>
+			<select id="niveauDetailsValidation" name="niveauDetailsValidation">
+				<option value="0" {{isSelected scenario.validation.niveauDetails 0}} >{{_ "interface.scenario.niveauDetails0" }}</option>
+				<option value="1" {{isSelected scenario.validation.niveauDetails 1}} >{{_ "interface.scenario.niveauDetails1" }}</option>
+				<option value="2" {{isSelected scenario.validation.niveauDetails 2}} >{{_ "interface.scenario.niveauDetails2" }}</option>
+			</select>
+		</div>
+		<h3>{{_ "interface.scenario.lancement" }}</h3>
+		<div class="scenarioParametre">
+			<label for="nbrEvenementsFinaux">{{_ "interface.scenario.nbrEvenementsFinaux" }}</label>
+			<input type="text" id="nbrEvenementsFinaux" name="nbrEvenementsFinaux" value="{{ scenario.lancement.nbrEvenements }}" placeholder="{{_ 'interface.scenario.nbrEvenementsFinauxInfo' }}" />
+		</div>
+		<h3>{{_ "interface.scenario.score" }}</h3>
+		<div class="scenarioParametre">
+			<label for="ptsParScience">{{_ "interface.scenario.ptsParScience" }}</label>
+			<input type="text" id="ptsParScience" name="ptsParScience" value="{{ scenario.score.ptsParScience }}" placeholder="{{_ 'interface.scenario.ptsParScienceInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="ptsParTps">{{_ "interface.scenario.ptsParTps" }}</label>
+			<input type="text" id="ptsParTps" name="ptsParTps" value="{{ scenario.score.ptsParTps }}" placeholder="{{_ 'interface.scenario.ptsParTpsInfo' }}" />
+		</div>
+	</form>
+	<div class="toolbarForm">
+		<ul>
+			<li><button id="saveScenario">{{_ "interface.bouton.sauver" }}</button></li>
+			<li><button id="delScenario">{{_ "interface.bouton.supprimer" }}</button></li>
+			<li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+		</ul>
+	</div>
+	
 </template>

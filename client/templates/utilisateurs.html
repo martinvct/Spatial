@@ -1,7 +1,15 @@
 <template name="ConfigUtilisateurs">
-	<ul>
+	<button class="lien" id="retour">{{_ "interface.bouton.retour" }}</button>
 	{{#each utilisateurs}}
-		<li>{{_id}} {{ username }} {{ profile.lastname }}</li>
+		{{> ConfigUtilisateur }}
 	{{/each}}
-	</ul>
+</template>
+<template name="ConfigUtilisateur">
+	<div class="utilisateur">
+		<div class="utilisateurAvatar"><img class="utilisateurAvatar" src="{{#if avatar}} {{avatar}} {{else}} /defaultAvatar.png {{/if}}" /></div>
+		<div class="utilisateurInfo">{{ username }}</div>
+		<div class="utilisateurInfo">{{ profile.firstname }}</div>
+		<div class="utilisateurInfo">{{ profile.lastname }}</div>
+		<div class="utilisateurInfo">{{ profile.lastLogin }}</div>
+	</div>
 </template>

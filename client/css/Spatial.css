@@ -1,5 +1,7 @@
 
-body { margin: 0; padding: 0; font-family: "Digital-7", Helvetica, Arial, sans-serif; }
+body { margin: 0; padding: 0; font-family: "Digital-7", Helvetica, Arial, sans-serif; color: white; }
+h2 { margin: 2em 0em 1em 0.5em; }
+h3 { margin: 2em 0em 1em 0.5em; }
 button { cursor: pointer; }
 nav.navMain { vertical-align: top; }
 ul.buttonsBar { list-style: none;  margin-left: 0; padding-left: 0; }
@@ -27,6 +29,23 @@ div.menuProfileIcone > img { width: 2em; height: 2em; }
 div.menuProfileInfo { display: inline-block; }
 div.menuProfileLien { display: inline-block; }
 button.menuProfileLogout { display: inline-block; }
+
+
+div.utilisateur { display: block; border-bottom: 0.2em dotted white; margin-bottom: 1em;}
+div.utilisateurAvatar { display: inline-block; }
+div.utilisateurInfo { display: inline-block; color: white; }
+
+div.scenarioParametre { margin-bottom: 0.2em; padding-left: 0.5em; }
+div.scenarioParametre label { display: inline-block; width: 8em; vertical-align: top; }
+div.scenarioParametre label.required::after { content: "*"; color: red; font-size: large; margin-left: 0.2em; }
+div.scenarioParametre input[type="text"] { width: 11em; }
+div.scenarioParametre select { width: 11.45em; }
+div.scenarioParametre input[type="text"].longText { width: 22em; }
+div.scenarioParametre textarea { width: 22.5em; }
+
+div.toolbarForm ul { list-style: none;  margin-left: 0; padding-left: 0; }
+div.toolbarForm ul li {  display: inline; list-style-type:none; }
+div.toolbarForm ul li button { border: 0.1em solid white; width: 7em; margin: 0.2em; padding: 0.2em 0; text-align: center; background: none; color: white; font-family: "Digital-7"; }
 
 /* S: 320*480; M: 1024*768; L: 1920*1080; */
 /* tester en remplaçant dans @media width par device-width  */

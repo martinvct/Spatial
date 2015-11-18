@@ -24,17 +24,9 @@ Accounts.onCreateUser(function(options, user){
 	return user;
 });
 
-Meteor.publish("allUsersData", function(){
+Meteor.publish("getUsers", function(){
   if(this.userId){
-    return Meteor.users.find({}, {fields: {_id:1, "profile.username":1, admin:1, "profile.firstname":1, "profile.lastname":1, "profile.email":1, "profile.avatar":1}});
-  } else {
-    this.ready();
-  }
-});
-
-Meteor.publish("myUserData", function(){
-  if(this.userId){
-    return Meteor.users.find({_id: this.userId}, {fields: {_id:1, "profile.username":1, admin:1, "profile.firstname":1, "profile.lastname":1, "profile.email":1, "profile.avatar":1}});
+    return Meteor.users.find({},{fields: {username:1, profile:1}});
   } else {
     this.ready();
   }

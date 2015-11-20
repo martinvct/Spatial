@@ -58,13 +58,7 @@ if (Meteor.isClient) {
 	});
 	Template.ConfigScenarios.helpers({
 		scenarios: function(){
-			return Meteor.call("getScenarios");
-		},
-		nomPlanete: function(_planeteId){
-			return TAPi18n.__("planetes." + (_.findWhere(Planetes, {planeteId: _planeteId})).planeteId);
-		},
-		tr: function(prefix, fieldName){
-			return TAPi18n.__(prefix + fieldName);
+			return Scenarios.find();
 		}
 	});
 	Template.ConfigScenarios.events({
@@ -75,6 +69,15 @@ if (Meteor.isClient) {
 			Router.go('Config');
 		}
 	});
+	Template.ConfigScenario.helpers({
+		nomPlanete: function(_planeteId){
+			return TAPi18n.__("planetes." + (_.findWhere(Planetes, {planeteId: _planeteId})).planeteId);
+		},
+		tr: function(prefix, fieldName){
+			return TAPi18n.__(prefix + fieldName);
+		}
+	});
+	
 	Template.EditScenario.helpers({
 		nomPlanete: function(_planeteId){
 			return TAPi18n.__("planetes." + (_.findWhere(Planetes, {planeteId: _planeteId})).planeteId);
@@ -127,60 +130,66 @@ if (Meteor.isClient) {
 			}
 		},
 		'click #saveScenario': function(event){
+			$("div.scenarioParametre").each( function(){ $(this).removeClass('error'); });
 			if(!$('#intitule').val()){
+				$(this).parent().addClass('error');
 				throwError("champs_requis", TAPi18n.__("error.champs_requis_vide"));
 				return;
 			}
-			//TODO vérification des champs de type numériques !!
+			if($('#poidsMax').val() && (!$.isNumeric($('#poidsMax').val()))){
+				$(this).parent().addClass('error');
+				throwError("champs_numerique", TAPi18n.__("error.champs_numeric_incorrect"));
+				return;
+			}
 			var scenario = {
 				intitule: $('#intitule').val(),
 				description: $('#description').val(),
-				active: $('#active').val(),
+				active: ($('#active').val() === "1"),
 				initialisation: {
-					cubesat: $('#cubesat').val(),
+					cubesat: ($('#cubesat').val() === "1"),
 					cubesatLimites:{
-						poidsMax: $('#poidsMax').val(),
-						volumeMax: $('#volumeMax').val()
+						poidsMax: parseInt($('#poidsMax').val()),
+						volumeMax: parseInt($('#volumeMax').val())
 					},
-					budget: $('#budget').val(),
+					budget: parseInt($('#budget').val())*1000,
 					objectif: $('#objectif').val(),
 					planetes: []
 				},
 				construction: {
-					tpsMax: $('#tpsMax').val()
+					tpsMax: parseInt($('#tpsMax').val())
 				},
 				expertise:{
-					nbrMaxExperts: $('#nbrMaxExperts').val(),
-					malusTemps: $('#malusTempsExpert').val(),
-					malusBudget: $('#malusBudgetExpert').val(),
-					malusNbrEvenements: $('#malusNbrEvenementsExpert').val(),
+					nbrMaxExperts: parseInt($('#nbrMaxExperts').val()),
+					malusTemps: parseInt($('#malusTempsExpert').val()),
+					malusBudget: parseInt($('#malusBudgetExpert').val()),
+					malusNbrEvenements: parseInt($('#malusNbrEvenementsExpert').val()),
 					niveauDetails: $('#niveauDetails').val(),
-					nbrExpertsGratuits: $('#nbrExpertsGratuits').val()
+					nbrExpertsGratuits: parseInt($('#nbrExpertsGratuits').val())
 				},
 				collaboration:{
-					nbrMaxAppels: $('#nbrMaxAppels').val(),
-					malusTemps: $('#malusTempsAppel').val(),
-					malusBudget: $('#malusBudgetAppel').val(),
-					malusNbrEvenements: $('#malusNbrEvenementsAppel').val(),
-					tpsMaxParAppel: $('#tpsMaxParAppel').val(),
-					nbrAppelsGratuits: $('#nbrAppelsGratuits').val()
+					nbrMaxAppels: parseInt($('#nbrMaxAppels').val()),
+					malusTemps: parseInt($('#malusTempsAppel').val()),
+					malusBudget: parseInt($('#malusBudgetAppel').val()),
+					malusNbrEvenements: parseInt($('#malusNbrEvenementsAppel').val()),
+					tpsMaxParAppel: parseInt($('#tpsMaxParAppel').val()),
+					nbrAppelsGratuits: parseInt($('#nbrAppelsGratuits').val())
 				},
 				evenement:{
-					nbrMax: $('#nbrMaxEvenements').val(),
-					intervalleTps: $('#intervalleTps').val()
+					nbrMax: parseInt($('#nbrMaxEvenements').val()),
+					intervalleTps: parseInt($('#intervalleTps').val())
 				},
 				validation:{
 					niveauDetails: $('#niveauDetailsValidation').val()
 				},
 				lancement:{
-					nbrEvenements: $('#nbrEvenementsFinaux').val()
+					nbrEvenements: parseInt($('#nbrEvenementsFinaux').val())
 				},
 				score:{
-					ptsParScience: $('#ptsParScience').val(),
-					ptsParTps: $('#ptsParTps').val()
+					ptsParScience: parseInt($('#ptsParScience').val()),
+					ptsParTps: parseInt($('#ptsParTps').val())
 				}
 			};
-			$('input[name="planetes"] :checked').each(function(){ scenario.intialisation.planetes.push($(this).val()) });
+			$('input[name="planetes"]:checked').each(function(){ scenario.initialisation.planetes.push($(this).val()); });
 			if($('#_id').val()) scenario._id = $('#_id').val();
 
 			Meteor.call('setScenario', scenario);

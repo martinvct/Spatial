@@ -2,23 +2,23 @@
 	<button id="addScenario">{{_ "interface.bouton.addScenario" }}</button>
 	<button class="lien" id="retour">{{_ "interface.bouton.retour" }}</button>
 	{{#each scenarios}}
-		{{> ConfigScenario }}
+		{{> ConfigScenario }}		
 	{{/each}}
 </template>
 <template name="ConfigScenario">
 	<div class="scenario">
 		<div class="illustrationScenario"></div>
 		<div class="infosScenario">
-			<div class="titreScenario">{{ intitule }}</div>
+			<div class="titreScenario">{{intitule}}</div>
 			<div class="tagsScenario">
 				<span class="tagScenario">{{_ "interface.budget" }}: {{ intialisation.budget }}€</span>
 				{{#if cubesat}}
-					<span class="tagScenario">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{ intialisation.cubesat.poidsMax }}gr, {{_ "interface.volumeMax"}}: {{ initialisation.volumeMax }}mm</span>
+					<span class="tagScenario">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{intialisation.cubesat.poidsMax}}gr, {{_ "interface.volumeMax"}}: {{initialisation.volumeMax}}mm</span>
 				{{else}}
 					<span class="tagScenario">{{_ "interface.objectif" }}: {{tr "interface.objectifs." initialisation.objectif}} {{#if initialisation.planetes}}, {{_ "interface.planetes"}}: {{#each initialisation.planetes}} {{nomPlanete this}} {{/each}}{{/if}}</span>
 				{{/if}}
 			</div>
-			<div class="descScenario">{{ description }}</div>
+			<div class="descScenario">{{description}}</div>
 		</div>
 	</div>
 </template>
@@ -68,7 +68,7 @@
 		</div>
 		<div class="scenarioParametre">
 			{{#each planetes}}
-				<input type="checkbox" name="planetes[]" id="planete_{{ planeteId }}" value="{{ planeteId }}" {{isPlaneteChecked planeteId scenario.initialisation.planetes}} />
+				<input type="checkbox" name="planetes" id="planete_{{ planeteId }}" value="{{ planeteId }}" {{isPlaneteChecked planeteId scenario.initialisation.planetes}} />
 				<label for="planete_{{ planeteId }}">{{nomPlanete planeteId }}</label>
 			{{/each}}
 		</div>

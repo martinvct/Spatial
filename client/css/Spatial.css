@@ -1,5 +1,5 @@
 
-body { margin: 0; padding: 0; font-family: "Digital-7", Helvetica, Arial, sans-serif; color: white; }
+body { margin: 0; padding: 0; font-family: "nasalization", Helvetica, Arial, sans-serif; color: white; }
 h2 { margin: 2em 0em 1em 0.5em; }
 h3 { margin: 2em 0em 1em 0.5em; }
 button { cursor: pointer; }
@@ -42,6 +42,7 @@ div.scenarioParametre input[type="text"] { width: 11em; }
 div.scenarioParametre select { width: 11.45em; }
 div.scenarioParametre input[type="text"].longText { width: 22em; }
 div.scenarioParametre textarea { width: 22.5em; }
+div.scenarioParametre.error { border: 0.05em solid red; }
 
 div.toolbarForm ul { list-style: none;  margin-left: 0; padding-left: 0; }
 div.toolbarForm ul li {  display: inline; list-style-type:none; }
@@ -60,6 +61,10 @@ div.toolbarForm ul li button { border: 0.1em solid white; width: 7em; margin: 0.
 @media screen and (min-width: 1024px) {
 	body { background: #111111; background-image: url('/fond1920x1080.jpg'); }
 	#logoApplication { display: inline-block; width: 300px; height: 75px; background-image: url('/logoApplication_L.png'); }
+}
+@font-face {
+    font-family: "nasalization";
+    src: url('/font/nasalization_rg.ttf');
 }
 @font-face {
     font-family: "Digital-7";

@@ -70,17 +70,27 @@ if (Meteor.isClient) {
 		}
 	});
 	Template.ConfigScenario.helpers({
+		nbrPartie: function(scenarioId){
+			return 0; // TODO compter le nombre de parties de ce scénario
+		},
 		nomPlanete: function(_planeteId){
-			return TAPi18n.__("planetes." + (_.findWhere(Planetes, {planeteId: _planeteId})).planeteId);
+			//return TAPi18n.__("planetes." + (_.findWhere(Planetes, {planeteId: _planeteId})).nom);
+			return TAPi18n.__("planetes." + _planeteId);
+		},
+		convertir: function(valeur, unite){
+			return convertir(valeur, unite);
 		},
 		tr: function(prefix, fieldName){
 			return TAPi18n.__(prefix + fieldName);
+		},
+		formatDate: function(valeur, format){
+			return moment(valeur).format(format);
 		}
 	});
 	
 	Template.EditScenario.helpers({
 		nomPlanete: function(_planeteId){
-			return TAPi18n.__("planetes." + (_.findWhere(Planetes, {planeteId: _planeteId})).planeteId);
+			return TAPi18n.__("planetes." + _planeteId);
 		},
 		isChecked: function(valeur){
 			if (valeur !== false)  return "checked"; 
@@ -146,7 +156,7 @@ if (Meteor.isClient) {
 				description: $('#description').val(),
 				active: ($('#active').val() === "1"),
 				initialisation: {
-					cubesat: ($('#cubesat').val() === "1"),
+					cubesat: ($('#cubesat').is(':checked')),
 					cubesatLimites:{
 						poidsMax: parseInt($('#poidsMax').val()),
 						volumeMax: parseInt($('#volumeMax').val())

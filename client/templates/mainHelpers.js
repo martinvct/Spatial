@@ -33,6 +33,9 @@ if (Meteor.isClient) {
 	Template.MenuPrincipal.events({
 		'click #configuration': function(event){
 			Router.go('Config');
+		},
+		'click #nouvellePartie': function(event){
+			Router.go('NouvellePartie');
 		}
 	});
 	Template.Config.events({
@@ -63,7 +66,7 @@ if (Meteor.isClient) {
 	});
 	Template.ConfigScenarios.events({
 		'click #addScenario': function(event){
-			Router.go('EditScenario');
+			Router.go('EditScenario', {_id: 0});
 		},
 		'click #retour': function(event){
 			Router.go('Config');
@@ -87,6 +90,12 @@ if (Meteor.isClient) {
 			return moment(valeur).format(format);
 		}
 	});
+	Template.ConfigScenario.events({
+		'click button.lien': function(event){
+			Router.go('EditScenario', {_id: $(event.target).attr('data-scenarioId')});
+			//Router.go('EditScenario');
+		}
+	});
 	
 	Template.EditScenario.helpers({
 		nomPlanete: function(_planeteId){
@@ -99,10 +108,10 @@ if (Meteor.isClient) {
 			if (valeur === false)  return "checked"; 
 		},
 		isSelected: function(valeur, ref){
-			if (valeur === ref)  return "checked"; 
+			if (valeur == ref)  return "selected"; 
 		},
 		isNSelected: function(valeur, ref){
-			if (valeur !== ref)  return "checked"; 
+			if (valeur != ref)  return "selected"; 
 		},
 		isPlaneteChecked: function(_planeteId, planetes){
 			if((!planetes) || (planetes.indexOf(_planeteId) == -1)) return "";
@@ -146,8 +155,15 @@ if (Meteor.isClient) {
 				throwError("champs_requis", TAPi18n.__("error.champs_requis_vide"));
 				return;
 			}
+			if(isNaN($('#poidsMax').val())) $('#poidsMax').val(0);
+			if(isNaN($('#volumeMax').val())) $('#volumeMax').val(0);
 			if($('#poidsMax').val() && (!$.isNumeric($('#poidsMax').val()))){
-				$(this).parent().addClass('error');
+				$('#poidsMax').parent().addClass('error');
+				throwError("champs_numerique", TAPi18n.__("error.champs_numeric_incorrect"));
+				return;
+			}
+			if($('#volumeMax').val() && (!$.isNumeric($('#volumeMax').val()))){
+				$('#poidsMax').parent().addClass('error');
 				throwError("champs_numerique", TAPi18n.__("error.champs_numeric_incorrect"));
 				return;
 			}
@@ -161,7 +177,7 @@ if (Meteor.isClient) {
 						poidsMax: parseInt($('#poidsMax').val()),
 						volumeMax: parseInt($('#volumeMax').val())
 					},
-					budget: parseInt($('#budget').val())*1000,
+					budget: parseInt($('#budget').val()),
 					objectif: $('#objectif').val(),
 					planetes: []
 				},
@@ -202,10 +218,46 @@ if (Meteor.isClient) {
 			$('input[name="planetes"]:checked').each(function(){ scenario.initialisation.planetes.push($(this).val()); });
 			if($('#_id').val()) scenario._id = $('#_id').val();
 
-			Meteor.call('setScenario', scenario);
+			Meteor.call('setScenario', scenario,  function(error, result){ if(Meteor.isClient) { Meteor.setTimeout(function(){ Router.go('ConfigScenarios'); }, 2000); } });
 		},
 		'click #retour': function(event){
 			Router.go('ConfigScenarios');
+		}
+	});
+	Template.ListScenarios.helpers({
+		scenarios: function(){
+			return Scenarios.find();
+		}
+	});
+	Template.ScenarioItem.helpers({
+		nbrPartie: function(scenarioId){
+			return 0; // TODO compter le nombre de parties de ce scénario
+		},
+		nomPlanete: function(_planeteId){
+			//return TAPi18n.__("planetes." + (_.findWhere(Planetes, {planeteId: _planeteId})).nom);
+			return TAPi18n.__("planetes." + _planeteId);
+		},
+		convertir: function(valeur, unite){
+			return convertir(valeur, unite);
+		},
+		tr: function(prefix, fieldName){
+			return TAPi18n.__(prefix + fieldName);
+		},
+		formatDate: function(valeur, format){
+			return moment(valeur).format(format);
+		}
+	});
+	Template.ScenarioItem.events({
+		'click button.lien': function(event){
+			//var scenario = Meteor.apply("getScenario", [$(event.target).attr('data-scenarioId')], {returnStubValue: true});
+			//console.log($(event.target).attr('data-scenarioId') + " " + scenario.intitule);
+			var partie = Meteor.apply('newPartie', [$(event.target).attr('data-scenarioId')], {returnStubValue: true});
+			if(partie) {
+				Session.set('currentPartie', partie);
+				console.log('nouvelle partie' + partie.userId);
+				Router.go('Partie', {_scenarioId: $(event.target).attr('data-scenarioId'), _id: partie._id});
+			}
+						
 		}
 	});
 }

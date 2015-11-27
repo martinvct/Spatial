@@ -1,0 +1,34 @@
+<template name="Partie">
+	<nav class="navPartieMenu">
+    	<ul>
+    		<li><button id="partieScenario" class="image" title="{{_ 'interface.bouton.scenario'}}" ></button></li>
+    		<li><button id="partieLanceur" class="image" title="{{_ 'interface.bouton.lanceur'}}" ></button></li>
+    		<li><button id="partieOrbite" class="image" title="{{_ 'interface.bouton.orbite'}}" ></button></li>
+    		<li><button id="partieMagasin" class="image" title="{{_ 'interface.bouton.magasin'}}" ></button></li>
+    		<li><button id="partieCollaboration" class="image" title="{{_ 'interface.bouton.collaboration'}}" ></button></li>
+    		<li><button id="partieExpertise" class="image" title="{{_ 'interface.bouton.expertise'}}" ></button></li>
+    		<li><button id="partieLancement" class="image" title="{{_ 'interface.bouton.lancement'}}" ></button></li>
+    	</ul>
+    </nav>
+	<nav class="navPartieConstantes">
+    	<ul>
+    		<li><button id="partieBudget" class="iconeConstante {{getIconeConstante 'euro-rd' partie.deck.budgetMax partie.deck.budget}}" title="{{_ 'interface.bouton.constanteBudget' }}"></button><span id="partieBudgetConstante" class="partieConstante">{{convertir partie.deck.budget 'EUR'}}</span></li>
+    		<li><button id="partieEnergie" class="iconeConstante {{getIconeConstante 'nrj-rd' partie.deck.energieMax partie.deck.energie}}" title="{{_ 'interface.bouton.constanteEnergie' }}"></button><span id="partieEnergieConstante" class="partieConstante">{{ partie.deck.energie }}</span></li>
+    		<li><button id="partiePoids" class="iconeConstante {{getIconeConstante 'Kg-rd' partie.deck.poidsMax partie.deck.poids}}" title="{{_ 'interface.bouton.constantePoids' }}"></button><span id="partiePoidsConstante" class="partieConstante">{{ partie.deck.poids }}</span></li>
+    		<li><button id="partieVolume" class="iconeConstante {{getIconeConstante 'cm-rd' partie.deck.volumeMax partie.deck.volume}}" title="{{_ 'interface.bouton.constanteVolume' }}"></button><span id="partieVolumeConstante" class="partieConstante">{{ partie.deck.volume }}</span></li>
+    		<li><button id="partieScience" class="iconeConstante star-rd4" title="{{_ 'interface.bouton.constanteScience' }}"></button><span id="partieScienceConstante" class="partieConstante">{{ partie.deck.science }}</span></li>
+    		<li><span id="percentLanceur">{{multi100 partie.budgetLanceur }}%</span><div id="editPercentLanceur"><div class="popupBackground"><div class="popupBox"><input type="range" min="10" max="100" step="10" value="{{multi100 partie.budgetLanceur }}"/></div></div></div></li>
+    	</ul>
+    </nav>
+    <p>Test reactivite {{scenario.intitule}}</p>
+    <div id="plateau">
+    	{{> Template.dynamic template=partieTemplate data=partieData}}
+    	{{ partieData.scenario.intitule }}
+    </div>
+</template>
+<template name="partieTest">
+	<h2>Test scenario : {{scenario.intitule}}</h2>
+</template>
+<template name="partieEssai">
+	<h2>Test essai : {{partie.deck.budget}}</h2>
+</template>

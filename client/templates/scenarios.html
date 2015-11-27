@@ -1,6 +1,10 @@
 <template name="ConfigScenarios">
-	<button id="addScenario">{{_ "interface.bouton.addScenario" }}</button>
-	<button class="lien" id="retour">{{_ "interface.bouton.retour" }}</button>
+	<div class="toolbarForm">
+		<ul>
+			<li><button id="addScenario">{{_ "interface.bouton.addScenario" }}</button></li>
+			<li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+		</ul>
+	</div>
 	<div class="configScenarios">
 	{{#each scenarios}}
 		{{> ConfigScenario }}		
@@ -11,7 +15,7 @@
 	<div class="scenario">
 		<div class="illustrationScenario"></div>
 		<div class="infosScenario">
-			<div class="titreScenario">{{intitule}}</div>
+			<div class="titreScenario"><button class="lien" data-scenarioId="{{ _id }}" >{{intitule}}</button></div>
 			<div class="descScenario">{{description}}</div>
 			<div class="tagsScenario">
 				<span class="tagScenario">{{_ "interface.budget" }}: {{convertir initialisation.budget "EUR"}}€</span>
@@ -179,5 +183,34 @@
 			<li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
 		</ul>
 	</div>
-	
+</template>
+<template name="ListScenarios">
+	<div class="listScenarios">
+	{{#each scenarios}}
+		{{> ScenarioItem }}		
+	{{/each}}
+	</div>
+</template>
+<template name="ScenarioItem">
+	<div class="scenario">
+		<div class="illustrationScenario"></div>
+		<div class="infosScenario">
+			<div class="titreScenario"><button class="lien" data-scenarioId="{{ _id }}" >{{intitule}}</button></div>
+			<div class="descScenario">{{description}}</div>
+			<div class="tagsScenario">
+				<span class="tagScenario">{{_ "interface.budget" }}: {{convertir initialisation.budget "EUR"}}€</span>
+				{{#if initialisation.cubesat }}
+					<span class="tagScenario">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{initialisation.cubesatLimites.poidsMax}}gr, {{_ "interface.volumeMax"}}: {{initialisation.cubesatLimites.volumeMax}}mm)</span>
+				{{else}}
+					<span class="tagScenario">{{_ "interface.objectif" }}: {{tr "interface.objectifs." initialisation.objectif}} {{#if initialisation.planetes}}, {{_ "interface.planetes"}}: {{#each initialisation.planetes}} {{nomPlanete this}} {{/each}}{{/if}}</span>
+				{{/if}}
+			</div>
+		</div>
+		<div class="statsScenario">
+			<ul>
+				<li><span class="label">{{_ "interface.dateModif" }}</span>: <span class="info">{{formatDate dateModif "MM/DD/YYYY"}}</span></li>
+				<li><span class="label">{{_ "interface.nbrParties" }}</span>: <span class="info">{{nbrPartie scenarioId }}</span></li>
+			</ul>
+		</div>
+	</div>
 </template>

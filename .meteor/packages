@@ -28,3 +28,5 @@ typ:accounts-ldap
 
 sacha:spin
 momentjs:moment
+reactive-var
+reactive-dict

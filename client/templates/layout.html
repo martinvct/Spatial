@@ -1,11 +1,6 @@
 <template name="Layout">
   <div class="container">
     {{> Header}}
-    {{#if currentPartie }}
-    <nav class="navPartie">
-    	<!--{{> yield "navPartie" }}-->
-    </nav>
-    {{/if}}
     {{> sAlert}}
     <div id="main">		
       {{> yield }}

@@ -1,29 +1,76 @@
+<template name="Parties">
+    <div class="toolbarForm">
+        <ul>
+            <li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+        </ul>
+    </div>
+    <div class="listParties">
+    {{#each parties}}
+        {{> PartieItem }}       
+    {{/each}}
+    </div>
+</template>
+<template name="PartieItem">
+    <div class="partie">
+        <div class="illustrationPartie"></div>
+        <div class="infosPartie">
+            <div class="titrePartie"><button class="lien" data-partieId="{{ _id }}"  data-scenarioId="{{ scenarioId }}">{{nom}}</button></div>
+            <div class="descPartie">{{scenario.intitule}}</div>
+            <div class="tagsPartie">
+                <span class="tagPartie">{{_ "interface.budget" }}: {{convertir deck.budget "EUR"}}€</span>
+                {{#if cubesat }}
+                    <span class="tagPartie">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{scenario.initialisation.cubesatLimites.poidsMax}}gr, {{_ "interface.volumeMax"}}: {{scenario.initialisation.cubesatLimites.volumeMax}}mm)</span>
+                {{else}}
+                    <span class="tagPartie">{{_ "interface.objectif" }}: {{tr "interface.objectifs." objectif}} {{#if planete}}, {{_ "interface.planetes"}}: {{nomPlanete planete.planeteId}} {{/if}}</span>
+                {{/if}}
+            </div>
+        </div>
+        <div class="statsPartie">
+            <ul>
+                <li><span class="label">{{_ "interface.dateModif" }}</span>: <span class="info">{{formatDate dateModif "MM/DD/YYYY"}}</span></li>
+                <li><span class="label">{{_ "interface.tpsTotal" }}</span>: <span class="info">{{ tempsTotal }}</span></li>
+                {{#if finie }}
+                <li><span class="label">{{_ "interface.finie" }}</span>: <span class="info">{{ score }}</span></li>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+</template>
 <template name="Partie">
+    <div id="nomPartie">
+        <h1 id="nomPartieView">{{ partie.nom }}</h1>
+        <div id="nomPartieForm">
+            <input type="text" id="nomPartieTxt" value="{{ partie.nom }}"/>
+            <button id="nomPartieBouton">{{_ 'interface.bouton.ok' }}</button>
+        </div>    
+    </div>
 	<nav class="navPartieMenu">
     	<ul>
     		<li><button id="partieScenario" class="image" title="{{_ 'interface.bouton.scenario'}}" ></button></li>
     		<li><button id="partieLanceur" class="image" title="{{_ 'interface.bouton.lanceur'}}" ></button></li>
+            {{#if hasLanceur }}
     		<li><button id="partieOrbite" class="image" title="{{_ 'interface.bouton.orbite'}}" ></button></li>
     		<li><button id="partieMagasin" class="image" title="{{_ 'interface.bouton.magasin'}}" ></button></li>
     		<li><button id="partieCollaboration" class="image" title="{{_ 'interface.bouton.collaboration'}}" ></button></li>
     		<li><button id="partieExpertise" class="image" title="{{_ 'interface.bouton.expertise'}}" ></button></li>
     		<li><button id="partieLancement" class="image" title="{{_ 'interface.bouton.lancement'}}" ></button></li>
+            {{/if}}
     	</ul>
     </nav>
 	<nav class="navPartieConstantes">
     	<ul>
     		<li><button id="partieBudget" class="iconeConstante {{getIconeConstante 'euro-rd' partie.deck.budgetMax partie.deck.budget}}" title="{{_ 'interface.bouton.constanteBudget' }}"></button><span id="partieBudgetConstante" class="partieConstante">{{convertir partie.deck.budget 'EUR'}}</span></li>
     		<li><button id="partieEnergie" class="iconeConstante {{getIconeConstante 'nrj-rd' partie.deck.energieMax partie.deck.energie}}" title="{{_ 'interface.bouton.constanteEnergie' }}"></button><span id="partieEnergieConstante" class="partieConstante">{{ partie.deck.energie }}</span></li>
-    		<li><button id="partiePoids" class="iconeConstante {{getIconeConstante 'Kg-rd' partie.deck.poidsMax partie.deck.poids}}" title="{{_ 'interface.bouton.constantePoids' }}"></button><span id="partiePoidsConstante" class="partieConstante">{{ partie.deck.poids }}</span></li>
+    		<li><button id="partiePoids" class="iconeConstante {{getIconeConstante 'Kg-rd' partie.deck.poidsMax partie.deck.masse}}" title="{{_ 'interface.bouton.constantePoids' }}"></button><span id="partiePoidsConstante" class="partieConstante">{{ partie.deck.masse }}</span></li>
     		<li><button id="partieVolume" class="iconeConstante {{getIconeConstante 'cm-rd' partie.deck.volumeMax partie.deck.volume}}" title="{{_ 'interface.bouton.constanteVolume' }}"></button><span id="partieVolumeConstante" class="partieConstante">{{ partie.deck.volume }}</span></li>
     		<li><button id="partieScience" class="iconeConstante star-rd4" title="{{_ 'interface.bouton.constanteScience' }}"></button><span id="partieScienceConstante" class="partieConstante">{{ partie.deck.science }}</span></li>
-    		<li><span id="percentLanceur">{{multi100 partie.budgetLanceur }}%</span><div id="editPercentLanceur"><div class="popupBackground"><div class="popupBox"><input type="range" min="10" max="100" step="10" value="{{multi100 partie.budgetLanceur }}"/></div></div></div></li>
+            {{#if hasLanceur }}
+    		<li><span id="percentLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span><div id="editPercentLanceur"><div class="popupBackground"><div class="popupBox"><input type="range" min="10" max="100" step="10" value="{{multi100 partie.budgetLanceur }}"/></div></div></div></li>
+            {{/if}}
     	</ul>
     </nav>
-    <p>Test reactivite {{scenario.intitule}}</p>
     <div id="plateau">
     	{{> Template.dynamic template=partieTemplate data=partieData}}
-    	{{ partieData.scenario.intitule }}
     </div>
 </template>
 <template name="partieTest">
@@ -31,4 +78,22 @@
 </template>
 <template name="partieEssai">
 	<h2>Test essai : {{partie.deck.budget}}</h2>
+</template>
+<template name="PartieLanceur">
+    <ul>
+    {{#each cartes}}
+    <li>{{> Carte }}</li>
+    {{/each}}
+    </ul>    
+</template>
+<template name="Carte">
+    <div class="carte">
+        <div class="carteIntitule">{{ intitule.fr }} {{ carteId }}</div>
+        <div class="carteillustration"></div>
+        <div class="carteDescription">{{ description.fr }}</div>
+        <div class="carteConstantes">
+            
+        </div>
+        <div class="carteTips">{{ carte.tip }}</div>
+    </div>
 </template>

@@ -214,3 +214,138 @@
 		</div>
 	</div>
 </template>
+<template name="ViewScenario">
+	<form method="post">
+		<input type="hidden" name="_id" id="_id" value="{{ scenario._id }}" />
+		<h2>{{_ "interface.viewScenario" intitule=scenario.intitule}}</h2>
+
+		<h3>{{_ "interface.scenario.infos" }}</h3>
+		<div class="scenarioParametre">
+			<label for="description">{{_ "interface.scenario.description" }}</label>
+			<span>{{ scenario.description }}</span>
+		</div>
+		
+		<h3>{{_ "interface.scenario.initialisation" }}</h3>
+		{{#if scenario.initialisation.cubesat}}
+		<div class="scenarioParametre">
+			<label for="cubesat">{{_ "interface.scenario.cubesat"}}</label>
+			<span>{{_ "interface.oui" }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="poidsMax">{{_ "interface.scenario.poidsMax" }}</label>
+			<span>{{ scenario.initialisation.cubesatLimites.poidsMax }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="volumeMax">{{_ "interface.scenario.volumeMax" }}</label>
+			<span>{{ scenario.initialisation.cubesatLimites.volumeMax }}</span>
+		</div>
+		{{/if}}
+		<div class="scenarioParametre">
+			<label for="budget">{{_ "interface.scenario.budget" }}</label>
+			<span>{{ scenario.initialisation.budget }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="objectif">{{_ "interface.scenario.objectif"}}</label>
+			{{#if compare scenario.initialisation.objectif  "planete"}}
+				<span>{{_ "interface.scenario.objectifPlanete" }}</span>
+			{{else}}	
+				<span>{{_ "interface.scenario.objectifEspace" }}</span>
+			{{/if}}
+		</div>
+		<div class="scenarioParametre">
+			{{#each planetes}}
+				<input type="checkbox" name="planetes" id="planete_{{ planeteId }}" value="{{ planeteId }}" {{isPlaneteChecked planeteId scenario.initialisation.planetes}} />
+				<label for="planete_{{ planeteId }}">{{nomPlanete planeteId }}</label>
+			{{/each}}
+
+		</div>
+		<h3>{{_ "interface.scenario.construction" }}</h3>
+		<div class="scenarioParametre">
+			<label for="tpsMax">{{_ "interface.scenario.tpsMax" }}</label>
+			<span>{{ scenario.construction.tpsMax }}</span>
+		</div>
+		<h3>{{_ "interface.scenario.expertise" }}</h3>
+		<div class="scenarioParametre">
+			<label for="nbrMaxExperts">{{_ "interface.scenario.nbrMaxExperts" }}</label>
+			<span>{{ scenario.expertise.nbrMaxExperts }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="malusTempsExpert">{{_ "interface.scenario.malusTemps" }}</label>
+			<span>{{ scenario.expertise.malusTemps }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="malusBudgetExpert">{{_ "interface.scenario.malusBudget" }}</label>
+			<span>{{ scenario.expertise.malusBudget }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="malusNbrEvenementsExpert">{{_ "interface.scenario.malusNbrEvenements" }}</label>
+			<span>{{ scenario.expertise.malusNbrEvenements }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="nbrExpertsGratuits">{{_ "interface.scenario.nbrExpertsGratuits" }}</label>
+			<span>{{ scenario.expertise.nbrExpertsGratuits }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="niveauDetails">{{_ "interface.scenario.niveauDetails"}}</label>
+			<span>{{concat "interface.scenario.niveauDetails" scenario.expertise.niveauDetails }}</span>
+		</div>
+		<h3>{{_ "interface.scenario.collaboration" }}</h3>
+		<div class="scenarioParametre">
+			<label for="nbrMaxAppels">{{_ "interface.scenario.nbrMaxAppels" }}</label>
+			<span>{{ scenario.collaboration.nbrMaxAppels }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="malusTempsAppel">{{_ "interface.scenario.malusTemps" }}</label>
+			<span>{{ scenario.collaboration.malusTemps }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="malusBudgetAppel">{{_ "interface.scenario.malusBudget" }}</label>
+			<span>{{ scenario.collaboration.malusBudget }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="malusNbrEvenementsAppel">{{_ "interface.scenario.malusNbrEvenements" }}</label>
+			<span>{{ scenario.collaboration.malusNbrEvenements }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="nbrAppelsGratuits">{{_ "interface.scenario.nbrAppelsGratuits" }}</label>
+			<span>{{ scenario.collaboration.nbrAppelsGratuits }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="tpsMaxParAppel">{{_ "interface.scenario.tpsMaxParAppel" }}</label>
+			<span>{{ scenario.collaboration.tpsMaxParAppel }}</span>
+		</div>
+		<h3>{{_ "interface.scenario.evenement" }}</h3>
+		<div class="scenarioParametre">
+			<label for="nbrMaxEvenements">{{_ "interface.scenario.nbrMaxEvenements" }}</label>
+			<span>{{ scenario.evenement.nbrMax }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="intervalleTps">{{_ "interface.scenario.intervalleTps" }}</label>
+			<span>{{ scenario.evenement.intervalleTps }}</span>
+		</div>
+		<h3>{{_ "interface.scenario.validation" }}</h3>
+		<div class="scenarioParametre">
+			<label for="niveauDetailsValidation">{{_ "interface.scenario.niveauDetails"}}</label>
+			<span>{{concat "interface.scenario.niveauDetails" scenario.validation.niveauDetails }}</span>
+		</div>
+		<h3>{{_ "interface.scenario.lancement" }}</h3>
+		<div class="scenarioParametre">
+			<label for="nbrEvenementsFinaux">{{_ "interface.scenario.nbrEvenementsFinaux" }}</label>
+			<span>{{ scenario.lancement.nbrEvenements }}</span>
+		</div>
+		<h3>{{_ "interface.scenario.score" }}</h3>
+		<div class="scenarioParametre">
+			<label for="ptsParScience">{{_ "interface.scenario.ptsParScience" }}</label>
+			<span>{{ scenario.score.ptsParScience }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="ptsParTps">{{_ "interface.scenario.ptsParTps" }}</label>
+			<span>{{ scenario.score.ptsParTps }}</span>
+		</div>
+	</form>
+	<div class="toolbarForm">
+		<ul>
+			<li><button id="saveScenario">{{_ "interface.bouton.sauver" }}</button></li>
+		</ul>
+	</div>
+</template>

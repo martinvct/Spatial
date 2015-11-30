@@ -1,4 +1,14 @@
 if (Meteor.isClient) {
+	Template.registerHelper('compare', function(v1, v2) {
+  		if (typeof v1 === 'object' && typeof v2 === 'object') {
+    		return _.isEqual(v1, v2); // do a object comparison
+  		} else {
+    		return v1 === v2;
+  		}
+	});
+	Template.registerHelper('concat', function(prefix, fieldName){
+		return TAPi18n.__(prefix + fieldName);
+	});
 	Template.Header.events({
 		'click button.buttonAvatar': function (event, template) {
 			Blaze.render(Template.MenuProfile, document.getElementById('main'));
@@ -36,6 +46,9 @@ if (Meteor.isClient) {
 		},
 		'click #nouvellePartie': function(event){
 			Router.go('NouvellePartie');
+		},
+		'click #chargerPartie': function(event){
+			Router.go('Parties');
 		}
 	});
 	Template.Config.events({

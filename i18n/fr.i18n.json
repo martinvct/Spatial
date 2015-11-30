@@ -42,6 +42,7 @@
 			"meilleursScores": "Scores",
 			"mesBadges": "Mes badges",
 			"nouvellePartie": "Nouvelle",
+			"ok": "Ok",
 			"orbite": "Orbite",
 			"retour": "Retour",
 			"sauver": "Sauver",
@@ -52,6 +53,7 @@
 		"cubesat": "CubeSat",
 		"dateModif": "Mise à jour",
 		"editionScenario": "Edition du scénario __intitule__",
+		"finie": "Score final",
 		"login": "Se connecter",
 		"loginWithFaceBook": "Facebook",
 		"logout": "Se déconnecter",
@@ -64,7 +66,11 @@
 			"espace": "Espace",
 			"planete": "Planète"
 		},
+		"oui": "Oui",
 		"pageNonTrouvee": "Désolé, cette page n'existe pas.",
+		"partie": {
+			"nouvelle": "(Nouvelle partie)"
+		},
 		"planetes": "Planètes",
 		"poidsMax": "Charge Max",
 		"scenario": {
@@ -125,6 +131,8 @@
 			"volumeMaxInfo": "en mm"
 		},
 		"test" : "Vous avez appuyé sur le bouton __n__ fois",
+		"tpsTotal" : "Temps",
+		"viewScenario" : "Scénario: __intitule__",
 		"volumeMax": "Taille Max"
 	},
 	"error": {

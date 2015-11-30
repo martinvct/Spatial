@@ -2,6 +2,7 @@
 body { margin: 0; padding: 0; font-family: "MyriadPro", Helvetica, Arial, sans-serif; color: white; }
 .container { max-width: 1024px; height: 100%; margin: 0 auto; padding: 0; background-color: black; }
 #main { padding: 0 0.5em; }
+h1 { font-family: "nasalization"; margin: 2em 0em 1em 0.5em; }
 h2 { font-family: "nasalization"; margin: 2em 0em 1em 0.5em; }
 h3 { font-family: "nasalization"; margin: 2em 0em 1em 0.5em; }
 button { font-family: "nasalization"; cursor: pointer; }
@@ -52,19 +53,24 @@ div.configScenarios div.scenario, div.listScenarios div.scenario { display: bloc
 div.configScenarios div.scenario div.descScenario, div.configScenarios div.scenario div.tagsScenario, div.configScenarios div.scenario div.statsScenario { font-size: small; }
 div.listScenarios div.scenario div.descScenario, div.listScenarios div.scenario div.tagsScenario, div.listScenarios div.scenario div.statsScenario { font-size: small; }
 
+div.listParties div.partie div.descPartie, div.listParties div.partie div.tagsPartie, div.listParties div.partie div.statsPartie { font-size: small; }
+
 div.toolbarForm ul, nav.navPartieMenu ul, nav.navPartieConstantes ul { list-style: none;  margin-left: 0; padding-left: 0; }
 div.toolbarForm ul li, nav.navPartieMenu ul li, nav.navPartieConstantes ul li {  display: inline; list-style-type:none; }
 div.toolbarForm ul li button { border: 0.1em solid white; width: 7em; margin: 0.2em; padding: 0.2em 0; text-align: center; background: none; color: white; }
 nav.navPartieMenu button, nav.navPartieConstantes button { border: none; }
 span.partieConstante { font-family: "Digital-7"; }
 
+#nomPartieForm { display: none; }
+#nomPartie h1, #nomPartieTxt { font-family: "nasalization"; margin: 0em 0.5em 0.1em 0.5em; font-size: medium; color: white; }
+#nomPartieTxt { border: none; background: none; font-family: "nasalization";  }
 
 /* S: 320*480; M: 1024*768; L: 1920*1080; */
 /* tester en remplaçant dans @media width par device-width  */
 @media only screen and (max-width: 480px) {
 	body { background: #111111 url('/fond480x480.jpg') no-repeat fixed center top; }
 	#logoApplication { display: inline-block; width: 200px; height: 50px; background: url('/logoApplication_S.png') no-repeat; }
-    div.statsScenario ul li { display: inline; list-style-type:none;  }
+    div.statsScenario ul li, div.statsPartie ul li { display: inline; list-style-type:none;  }
     #partieLancement { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/submit.png') no-repeat; }
     #partieExpertise { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/exprt320.png') no-repeat; }
     #partieCollaboration { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/collab320.png') no-repeat; }
@@ -91,11 +97,9 @@ span.partieConstante { font-family: "Digital-7"; }
     button.star-rd4 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/star-rd4.png') no-repeat; }
     span.partieConstante { display: none; }
 }
-@media only screen and (min-width: 480px) and (max-width: 1024px){
-	body { background: #111111 url('/fond1024x1024.jpg') no-repeat fixed center top; }
-	#logoApplication { display: inline-block; width: 300px; height: 100px; background: url('/logoApplication_M.png') no-repeat; }
-    div.infosScenario { display: inline-block; width: calc(100% - 15em); }
-    div.statsScenario { display: inline-block; width: 15em; }
+@media only screen and (min-width: 480px){
+    div.infosScenario, div.infosPartie { display: inline-block; width: calc(100% - 15em); }
+    div.statsScenario, div.statsPartie { display: inline-block; width: 15em; }
     #partieLancement { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/submit.png') no-repeat; }
     #partieExpertise { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/exprt1024.png') no-repeat; }
     #partieCollaboration { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/collab1024.png') no-repeat; }
@@ -121,36 +125,14 @@ span.partieConstante { font-family: "Digital-7"; }
     button.cm-rd4 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/cm-rd4.png') no-repeat; }
     button.star-rd4 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/star-rd4.png') no-repeat; }
 }
+@media only screen and (min-width: 480px) and (max-width: 1024px){
+	body { background: #111111 url('/fond1024x1024.jpg') no-repeat fixed center top; }
+	#logoApplication { display: inline-block; width: 300px; height: 100px; background: url('/logoApplication_M.png') no-repeat; }
+}
 @media screen and (min-width: 1024px) {
 	body { background: #111111 url('/fond1920x1080.jpg') no-repeat fixed center top; }
     .container { background: #111111 url('/fond1024x1024.jpg') no-repeat fixed center top; }
 	#logoApplication { display: inline-block; width: 300px; height: 100px; background: url('/logoApplication_L.png') no-repeat; }
-    div.infosScenario { display: inline-block; width: calc(100% - 15em); }
-    div.statsScenario { display: inline-block; width: 15em; }
-    #partieLancement { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/submit.png') no-repeat; }
-    #partieExpertise { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/exprt1024.png') no-repeat; }
-    #partieCollaboration { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/collab1024.png') no-repeat; }
-    #partieMagasin { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/mag1024.png') no-repeat; }
-    #partieOrbite { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/O1024.png') no-repeat; }
-    #partieLanceur { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/L1024.png') no-repeat; }
-    #partieScenario { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/infos.png') no-repeat; }
-     button.euro-rd1 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/euro-rd1.png') no-repeat; }
-    button.euro-rd2 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/euro-rd2.png') no-repeat; }
-    button.euro-rd3 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/euro-rd3.png') no-repeat; }
-    button.euro-rd4 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/euro-rd4.png') no-repeat; }
-    button.nrj-rd1 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/nrj-rd1.png') no-repeat; }
-    button.nrj-rd2 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/nrj-rd2.png') no-repeat; }
-    button.nrj-rd3 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/nrj-rd3.png') no-repeat; }
-    button.nrj-rd4 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/nrj-rd4.png') no-repeat; }
-    button.Kg-rd1 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/Kg-rd1.png') no-repeat; }
-    button.Kg-rd2 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/Kg-rd2.png') no-repeat; }
-    button.Kg-rd3 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/Kg-rd3.png') no-repeat; }
-    button.Kg-rd4 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/Kg-rd4.png') no-repeat; }
-    button.cm-rd1 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/cm-rd1.png') no-repeat; }
-    button.cm-rd2 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/cm-rd2.png') no-repeat; }
-    button.cm-rd3 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/cm-rd3.png') no-repeat; }
-    button.cm-rd4 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/cm-rd4.png') no-repeat; }
-    button.star-rd4 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/star-rd4.png') no-repeat; }
 }
 @font-face {
     font-family: "nasalization";

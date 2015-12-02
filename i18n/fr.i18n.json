@@ -136,6 +136,7 @@
 		"volumeMax": "Taille Max"
 	},
 	"error": {
+		"budget_insuffissant": "Budget insuffisant",
 		"carte_inactive": "Carte inexistante",
 		"carte_incompatible": "Carte incompatible avec le scénario choisi",
 		"carte_utilisee": "Vous ne pouvez pas supprimer une carte qui a été utilisée",
@@ -178,7 +179,18 @@
 		"URANUS": "Uranus",
 		"NEPTUNE": "Neptune"
 	},
-	"cartes":{
-		
+	"categories" : {
+		"A" : "Attitude",
+		"C" : "Communication",
+		"E" : "Energie",
+		"I" : "Instrument",
+		"J" : "Atterrisseur",
+		"L" : "Lanceur",
+		"M" : "Centre de commandes",
+		"O" : "Orbite",
+		"P" : "Propulsion",
+		"S" : "Segment sol",
+		"T" : "Contrôle thermique",
+		"Z" : "Structure"
 	}
 }

@@ -65,6 +65,68 @@ span.partieConstante { font-family: "Digital-7"; }
 #nomPartie h1, #nomPartieTxt { font-family: "nasalization"; margin: 0em 0.5em 0.1em 0.5em; font-size: medium; color: white; }
 #nomPartieTxt { border: none; background: none; font-family: "nasalization";  }
 
+div.carte { width: 244px; border: 0.15em solid white; border-radius: 1em; min-height: 344px; background-color: rgba(0,0,0, 0.6); cursor: pointer; vertical-align: top; }
+div.carteIntitule { position: relative; top: 0; left: 0; width: 244px; height: 65px; border: none; padding: 0; margin: 0; }
+div.carteIntitule.A { background: url('/Cartes/carteEnTeteA.png');  }
+div.carteIntitule.A div.carteId { color: #802098;  }
+div.carteConstantes.A { background: #802098; }
+div.carteIntitule.C { background: url('/Cartes/carteEnTeteC.png');  }
+div.carteIntitule.C div.carteId { color: #ec008c;  }
+div.carteConstantes.C { background: #ec008c; }
+div.carteIntitule.E { background: url('/Cartes/carteEnTeteE.png');  }
+div.carteIntitule.E div.carteId { color: #f1592a;  }
+div.carteConstantes.E { background: #f1592a; }
+div.carteIntitule.I { background: url('/Cartes/carteEnTeteI.png');  }
+div.carteIntitule.I div.carteId { color: #676766;  }
+div.carteConstantes.I { background: #676766; }
+div.carteIntitule.J { background: url('/Cartes/carteEnTeteJ.png');  }
+div.carteIntitule.J div.carteId { color: #40dd8b;  }
+div.carteConstantes.J { background: #40dd8b; }
+div.carteIntitule.L { background: url('/Cartes/carteEnTeteL.png');  }
+div.carteIntitule.L div.carteId { color: #3ac2f1;  }
+div.carteConstantes.L { background: #3ac2f1; }
+div.carteIntitule.M { background: url('/Cartes/carteEnTeteM.png');  }
+div.carteIntitule.M div.carteId { color: #d32336;  }
+div.carteConstantes.M { background: #d32336; }
+div.carteIntitule.O { background: url('/Cartes/carteEnTeteO.png');  }
+div.carteIntitule.O div.carteId { color: #fe2b37;  }
+div.carteConstantes.O { background: #fe2b37; } 
+div.carteIntitule.P { background: url('/Cartes/carteEnTeteP.png');  }
+div.carteIntitule.P div.carteId { color: #2aa233;  }
+div.carteConstantes.P { background: #2aa233; }
+div.carteIntitule.S { background: url('/Cartes/carteEnTeteS.png');  }
+div.carteIntitule.S div.carteId { color: #25266c;  }
+div.carteConstantes.S { background: #25266c; }
+div.carteIntitule.T { background: url('/Cartes/carteEnTeteT.png');  }
+div.carteIntitule.T div.carteId { color: #983620;  }
+div.carteConstantes.T { background: #983620; }
+div.carteIntitule.X { background: url('/Cartes/carteEnTeteX.png');  }
+div.carteIntitule.X div.carteId { color: #a7a9ac;  }
+div.carteConstantes.X { background: #a7a9ac; }
+div.carteIntitule.Z { background: url('/Cartes/carteEnTeteZ.png');  }
+div.carteIntitule.Z div.carteId { color: #c88855;  }
+div.carteConstantes.Z { background: #c88855; }
+div.carteIntitule div.intitule { position: absolute; display: inline-block; width: 144px; height: 45px; top: 14px; left: 60px; line-height: 45px; }
+div.carteIntitule div.intitule span { display: inline-block; vertical-align: middle; line-height: 1.3; }
+div.carteIntitule div.carteId { position: absolute; display: inline-block; width: 25px; height: 25px; top: 16px; right: 13px; text-align: center; font-size: small; }
+div.carteIllustration { width: 244px; margin: 2px 0; }
+div.carteIllustration img { display: block; width: 244px; border: none; margin: 0; padding: 0; }
+div.carteDescription { background: white; color: #333; padding: 0 5px; font-size: small; margin: 0 5px;}
+div.carteConstantes { width: 230px; height: 30px; padding: 2px; font-size: small; margin: 2px 5px 0 5px; font-family: "Digital-7"; text-align: center; }
+div.carteConstante { display: inline-block; }
+div.carteConstanteBudget { display: inline-block; background: url('/Cartes/icoBPG-euro.png'); width: 21px; height: 26px; }
+div.carteConstanteMasse { display: inline-block; background: url('/Cartes/icoBPG-kg.png'); width: 21px; height: 26px; }
+div.carteConstanteVolume { display: inline-block; background: url('/Cartes/icoBPG-kg.png'); width: 21px; height: 26px; }
+div.carteConstanteEnergie { display: inline-block; background: url('/Cartes/icoBPG-nrj.png'); width: 21px; height: 26px; }
+div.carteConstanteScience { display: inline-block; background: url('/Cartes/icoBPG-star.png'); width: 21px; height: 26px; }
+div.carteConstanteValeur { display: inline-block; background: url('/Cartes/icoBPG-INTER.png') repeat; height: 26px; min-width: 5px; color: #333; line-height: 26px; position: relative; top: -9px; left: 0; }
+div.carteConstanteValeur span { display: inline-block; vertical-align: middle; line-height: 1.3; }
+div.carteConstanteFin { display: inline-block; background: url('/Cartes/icoBPG-FIN.png'); width: 9px; height: 26px; }
+div.carteTips { background-color: white; border-radius: 1em; color: #333; padding: 2px 10px; font-size: small; margin: 2px 10px; font-style: italic; text-align: center; }
+div.carte.isDeck { border: 0.15em solid green; }
+div.partieCategorie { cursor: pointer; }
+div.partieCategorieLabel {  font-family: "nasalization"; }
+
 /* S: 320*480; M: 1024*768; L: 1920*1080; */
 /* tester en remplaçant dans @media width par device-width  */
 @media only screen and (max-width: 480px) {
@@ -96,6 +158,20 @@ span.partieConstante { font-family: "Digital-7"; }
     button.cm-rd4 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/cm-rd4.png') no-repeat; }
     button.star-rd4 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/star-rd4.png') no-repeat; }
     span.partieConstante { display: none; }
+    div.partieCategorie { display: block; width: 100%; }
+    div.partieCategorieIcone { display: inline-block; width: 44px; height: 44px; font-size:0; vertical-align: top; }
+    div.partieCategorieIcone.A { background: url('/icones_S/A0.png'); }
+    div.partieCategorieIcone.C { background: url('/icones_S/C0.png'); }
+    div.partieCategorieIcone.E { background: url('/icones_S/E0.png'); }
+    div.partieCategorieIcone.I { background: url('/icones_S/I0.png'); }
+    div.partieCategorieIcone.J { background: url('/icones_S/J0.png'); }
+    div.partieCategorieIcone.M { background: url('/icones_S/M0.png'); }
+    div.partieCategorieIcone.P { background: url('/icones_S/P0.png'); }
+    div.partieCategorieIcone.S { background: url('/icones_S/S0.png'); }
+    div.partieCategorieIcone.T { background: url('/icones_S/T0.png'); }
+    div.partieCategorieIcone.Z { background: url('/icones_S/Z0.png'); }
+    div.partieCategorieLabel span { height: 44px; line-height: 44px; }
+
 }
 @media only screen and (min-width: 480px){
     div.infosScenario, div.infosPartie { display: inline-block; width: calc(100% - 15em); }
@@ -124,6 +200,21 @@ span.partieConstante { font-family: "Digital-7"; }
     button.cm-rd3 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/cm-rd3.png') no-repeat; }
     button.cm-rd4 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/cm-rd4.png') no-repeat; }
     button.star-rd4 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/star-rd4.png') no-repeat; }
+    div.carte { display: inline-block; margin: 10px; }
+    div.partieCategorie { display: inline-block; width: 20em;  height: 47px; margin-bottom: 1em; } 
+    div.partieCategorieIcone { display: inline-block; width: 47px; height: 47px; font-size:0; vertical-align: top; }
+    div.partieCategorieIcone.A { background: url('/icones_M/A0.png'); }
+    div.partieCategorieIcone.C { background: url('/icones_M/C0.png'); }
+    div.partieCategorieIcone.E { background: url('/icones_M/E0.png'); }
+    div.partieCategorieIcone.I { background: url('/icones_M/I0.png'); }
+    div.partieCategorieIcone.J { background: url('/icones_M/J0.png'); }
+    div.partieCategorieIcone.M { background: url('/icones_M/M0.png'); }
+    div.partieCategorieIcone.P { background: url('/icones_M/P0.png'); }
+    div.partieCategorieIcone.S { background: url('/icones_M/S0.png'); }
+    div.partieCategorieIcone.T { background: url('/icones_M/T0.png'); }
+    div.partieCategorieIcone.Z { background: url('/icones_M/Z0.png'); }
+    div.partieCategorieLabel { display: inline-block; width: calc(20em - 47px); height: 47px; line-height: 47px;  }
+    div.partieCategorieLabel span { display: inline-block; vertical-align: middle; line-height: normal; font-size: medium; padding-left: 0.5em; }
 }
 @media only screen and (min-width: 480px) and (max-width: 1024px){
 	body { background: #111111 url('/fond1024x1024.jpg') no-repeat fixed center top; }

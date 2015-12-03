@@ -171,7 +171,10 @@ div.partieCategorieLabel {  font-family: "nasalization"; }
     div.partieCategorieIcone.T { background: url('/icones_S/T0.png'); }
     div.partieCategorieIcone.Z { background: url('/icones_S/Z0.png'); }
     div.partieCategorieLabel span { height: 44px; line-height: 44px; }
+    div.partieCategorieLabel span.stat { font-size: small; }
 
+    #percentLanceurModal { display: none; width: 100%; }
+    #percentLanceur { display: inline; }
 }
 @media only screen and (min-width: 480px){
     div.infosScenario, div.infosPartie { display: inline-block; width: calc(100% - 15em); }
@@ -215,6 +218,9 @@ div.partieCategorieLabel {  font-family: "nasalization"; }
     div.partieCategorieIcone.Z { background: url('/icones_M/Z0.png'); }
     div.partieCategorieLabel { display: inline-block; width: calc(20em - 47px); height: 47px; line-height: 47px;  }
     div.partieCategorieLabel span { display: inline-block; vertical-align: middle; line-height: normal; font-size: medium; padding-left: 0.5em; }
+    div.partieCategorieLabel span.stat { font-size: small; }
+
+    #percentLanceurModal { display: inline-block; }
 }
 @media only screen and (min-width: 480px) and (max-width: 1024px){
 	body { background: #111111 url('/fond1024x1024.jpg') no-repeat fixed center top; }

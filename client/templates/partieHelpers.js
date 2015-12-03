@@ -89,6 +89,9 @@ if (Meteor.isClient) {
 		'click #partieMagasin': function(event){
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategories');
 		},
+		'click #partieExpertise': function(event){
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseConfirmation');
+		},
 		'click div.carte': function(event){
 			var carteId = $(event.currentTarget).attr("data-carteId");
 			if($(event.currentTarget).hasClass("isDeck")){
@@ -102,7 +105,27 @@ if (Meteor.isClient) {
 		'click .partieCategorie': function(event){
 			Template.instance().templateDictionary.set('currentCategorie', this[0]);
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategorie');
+		},
+		'click #percentLanceur': function(event){
+			if($('#percentLanceurModal').css("width") == "100%"){
+				if($('#percentLanceurModal').css("display") == "block"){
+					$('#percentLanceurModal').css("display", "none");
+				} else {
+					$('#percentLanceurModal').css("display", "block");
+				}
+				
+			}
+		},
+		'input #partiePctLanceur': function(event){
+			event.stopPropagation();
+			//console.log("nouveau pourcentage: " + $('#partiePctLanceur').val() );
+			Meteor.call("updatePercentLanceur", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Number($('#partiePctLanceur').val()), Session.get("dateModif"));
+		},
+		'click #appelExpert': function(event){
+			Meteor.call("callExpert", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Session.get("dateModif"));
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseRapport');
 		}
+
 	});
 	Template.PartieHeader.helpers({
 		multi100: function(percent){
@@ -168,6 +191,11 @@ if (Meteor.isClient) {
 	Template.PartieCategorie.helpers({
 		cartes : function(){
 			return Cartes.find({categorie: Template.instance().data.categorie, cubesat: Template.instance().data.scenario.initialisation.cubesat});
+		}
+	});
+	Template.PartieExpertiseConfirmation.helpers({
+		nbrExpertsAppeles: function(){
+			return Template.instance().data.partie.experts.length;
 		}
 	});
 }

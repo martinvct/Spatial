@@ -28,6 +28,7 @@
 		"bouton": {
 			"addScenario": "Nouveau Scénario",
 			"aide": "Aide",
+			"appelExpert": "Appeler un expert",
 			"chargerPartie": "Charger",
 			"collaboration": "Collaboration",
 			"configuration": "Administration",
@@ -53,6 +54,11 @@
 		"cubesat": "CubeSat",
 		"dateModif": "Mise à jour",
 		"editionScenario": "Edition du scénario __intitule__",
+		"expertise":{
+			"appelExpert" : "Appel à un expert",
+			"appelExpertDescription": "L'expert fournit un rapport plus ou moins détaillé de la validité de votre mission.",
+			"nbrExpertsAppeles": "Appels à un expert effectués"
+		},
 		"finie": "Score final",
 		"login": "Se connecter",
 		"loginWithFaceBook": "Facebook",

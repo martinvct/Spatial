@@ -71,10 +71,12 @@
             <li><button id="partieVolume" class="iconeConstante {{getIconeConstante 'cm-rd' partie.deck.volumeMax partie.deck.volume}}" title="{{_ 'interface.bouton.constanteVolume' }}"></button><span id="partieVolumeConstante" class="partieConstante">{{ partie.deck.volume }}</span></li>
             <li><button id="partieScience" class="iconeConstante star-rd4" title="{{_ 'interface.bouton.constanteScience' }}"></button><span id="partieScienceConstante" class="partieConstante">{{ partie.deck.science }}</span></li>
             {{#if hasLanceur }}
-            <li><span id="percentLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span><div id="editPercentLanceur"><div class="popupBackground"><div class="popupBox"><input type="range" min="10" max="100" step="10" value="{{multi100 partie.budgetLanceur }}"/></div></div></div></li>
+            <li><span id="percentLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span></li>
+            <li id="percentLanceurModal"><input id="partiePctLanceur" type="range" min="10" max="100" step="10" value="{{multi100 partie.budgetLanceur }}"/></li>
             {{/if}}
         </ul>
     </nav>
+
 </template>
 
 <template name="PartieLanceur">
@@ -92,10 +94,12 @@
 </template>
 <template name="PartieCategories">
     {{#each categories}}
+    {{#if nbrCartesTotal this}}
     <div class="partieCategorie" data-categorie="{{this}}"><!--
         --><div class="partieCategorieIcone {{this}}"></div><!--
-        --><div class="partieCategorieLabel"><span>{{concat "categories." this }} {{nbrCartesSelect this}} / {{nbrCartesTotal this}}</span></div><!--
+        --><div class="partieCategorieLabel"><span>{{concat "categories." this }}</span><span class="stat">({{nbrCartesSelect this}} / {{nbrCartesTotal this}})</span></div><!--
     --></div>
+    {{/if}}
     {{/each}}
 </template>
 <template name="Carte">
@@ -133,3 +137,26 @@
         {{#if tip.fr }}<div class="carteTips">{{ tip.fr }}</div>{{/if}}
     </div>
 </template>
+<template name="PartieExpertiseConfirmation">
+    <h2>{{_ "interface.expertise.appelExpert" }}</h2>
+    <p>{{_ "interface.expertise.appelExpertDescription" }}</p>
+    <ul>
+        <li>{{_ "interface.scenario.nbrMaxExperts" }}: {{ scenario.expertise.nbrMaxExperts }}</li>
+        <li>{{_ "interface.scenario.malusTemps" }}: {{ scenario.expertise.malusTemps }}</li>
+        <li>{{_ "interface.scenario.malusBudget" }}: {{ scenario.expertise.malusBudget }}</li>
+        <li>{{_ "interface.scenario.malusNbrEvenements" }}: {{ scenario.expertise.malusNbrEvenements }}</li>
+        <li>{{_ "interface.scenario.nbrExpertsGratuits" }}: {{ scenario.expertise.nbrExpertsGratuits }}</li>
+        <li>{{_ "interface.expertise.nbrExpertsAppeles" }}: {{nbrExpertsAppeles}}</li>
+        <li>{{_ "interface.scenario.niveauDetails"}}: {{concat "interface.scenario.niveauDetails" scenario.expertise.niveauDetails }}</li>
+    </ul>
+    <div class="toolbarForm">
+        <ul>
+            <li><button id="appelExpert">{{_ "interface.bouton.appelExpert" }}</button></li>
+        </ul>
+    </div>
+</template>
+<template name="PartieExpertiseRapport">
+    <!-- revoir validation de deck : 1) réencoder les tags globaux ! 2) modifier niveau détail 1 les résultats par les catégories et non les tags 3) faire l'affichage -->
+</template>
+
+

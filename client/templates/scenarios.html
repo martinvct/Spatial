@@ -20,7 +20,7 @@
 			<div class="tagsScenario">
 				<span class="tagScenario">{{_ "interface.budget" }}: {{convertir initialisation.budget "EUR"}}€</span>
 				{{#if initialisation.cubesat }}
-					<span class="tagScenario">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{initialisation.cubesatLimites.poidsMax}}gr, {{_ "interface.volumeMax"}}: {{initialisation.cubesatLimites.volumeMax}}mm)</span>
+					<span class="tagScenario">{{_ "interface.cubesat" }}: ({{initialisation.cubesatOptions.nU}} {{_ "interface.U" }} )</span>
 				{{else}}
 					<span class="tagScenario">{{_ "interface.objectif" }}: {{tr "interface.objectifs." initialisation.objectif}} {{#if initialisation.planetes}}, {{_ "interface.planetes"}}: {{#each initialisation.planetes}} {{nomPlanete this}} {{/each}}{{/if}}</span>
 				{{/if}}
@@ -60,12 +60,11 @@
 			<input type="checkbox" id="cubesat" name="cubesat" value="1" {{isChecked scenario.initialisation.cubesat}} />
 		</div>
 		<div class="scenarioParametre">
-			<label for="poidsMax">{{_ "interface.scenario.poidsMax" }}</label>
-			<input type="text" id="poidsMax" name="poidsMax" value="{{ scenario.initialisation.cubesatLimites.poidsMax }}" placeholder="{{_ 'interface.scenario.poidsMaxInfo' }}" />
-		</div>
-		<div class="scenarioParametre">
-			<label for="volumeMax">{{_ "interface.scenario.volumeMax" }}</label>
-			<input type="text" id="volumeMax" name="volumeMax" value="{{ scenario.initialisation.cubesatLimites.volumeMax }}" placeholder="{{_ 'interface.scenario.volumeMaxInfo' }}" />
+			<label for="nU">{{_ "interface.scenario.nU" }}</label>
+			<select id="nU" name="nU">
+				<option value="1" {{isSelected scenario.initialisation.cubesatOptions.nU "1"}} >1{{_ "interface.U" }}</option>
+				<option value="3" {{isNSelected scenario.initialisation.cubesatOptions.nU "3"}} >3{{_ "interface.U" }}</option>
+			</select>
 		</div>
 		<div class="scenarioParametre">
 			<label for="budget">{{_ "interface.scenario.budget" }}</label>
@@ -200,7 +199,7 @@
 			<div class="tagsScenario">
 				<span class="tagScenario">{{_ "interface.budget" }}: {{convertir initialisation.budget "EUR"}}€</span>
 				{{#if initialisation.cubesat }}
-					<span class="tagScenario">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{initialisation.cubesatLimites.poidsMax}}gr, {{_ "interface.volumeMax"}}: {{initialisation.cubesatLimites.volumeMax}}mm)</span>
+					<span class="tagScenario">{{_ "interface.cubesat" }}: ({{initialisation.cubesatOptions.nU}}{{_ "interface.U"}})</span>
 				{{else}}
 					<span class="tagScenario">{{_ "interface.objectif" }}: {{tr "interface.objectifs." initialisation.objectif}} {{#if initialisation.planetes}}, {{_ "interface.planetes"}}: {{#each initialisation.planetes}} {{nomPlanete this}} {{/each}}{{/if}}</span>
 				{{/if}}
@@ -232,12 +231,8 @@
 			<span>{{_ "interface.oui" }}</span>
 		</div>
 		<div class="scenarioParametre">
-			<label for="poidsMax">{{_ "interface.scenario.poidsMax" }}</label>
-			<span>{{ scenario.initialisation.cubesatLimites.poidsMax }}</span>
-		</div>
-		<div class="scenarioParametre">
-			<label for="volumeMax">{{_ "interface.scenario.volumeMax" }}</label>
-			<span>{{ scenario.initialisation.cubesatLimites.volumeMax }}</span>
+			<label for="nU">{{_ "interface.scenario.nU" }}</label>
+			<span>{{ scenario.initialisation.cubesatOptions.nU }}{{_ "interface.U"}}</span>
 		</div>
 		{{/if}}
 		<div class="scenarioParametre">

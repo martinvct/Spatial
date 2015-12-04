@@ -168,7 +168,7 @@ if (Meteor.isClient) {
 				throwError("champs_requis", TAPi18n.__("error.champs_requis_vide"));
 				return;
 			}
-			if(isNaN($('#poidsMax').val())) $('#poidsMax').val(0);
+			/*if(isNaN($('#poidsMax').val())) $('#poidsMax').val(0);
 			if(isNaN($('#volumeMax').val())) $('#volumeMax').val(0);
 			if($('#poidsMax').val() && (!$.isNumeric($('#poidsMax').val()))){
 				$('#poidsMax').parent().addClass('error');
@@ -179,16 +179,15 @@ if (Meteor.isClient) {
 				$('#poidsMax').parent().addClass('error');
 				throwError("champs_numerique", TAPi18n.__("error.champs_numeric_incorrect"));
 				return;
-			}
+			}*/
 			var scenario = {
 				intitule: $('#intitule').val(),
 				description: $('#description').val(),
 				active: ($('#active').val() === "1"),
 				initialisation: {
 					cubesat: ($('#cubesat').is(':checked')),
-					cubesatLimites:{
-						poidsMax: parseInt($('#poidsMax').val()),
-						volumeMax: parseInt($('#volumeMax').val())
+					cubesatOptions:{
+						nU: parseInt($('#nU').val())
 					},
 					budget: parseInt($('#budget').val()),
 					objectif: $('#objectif').val(),

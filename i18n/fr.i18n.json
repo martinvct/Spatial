@@ -118,6 +118,7 @@
 			"nbrMaxExpertsInfo": "(0 pour illimité)",
 			"nbrMaxEvenements": "Nbr max d'évènements",
 			"nbrMaxEvenementsInfo": "",
+			"nU": "Nombre d'unités",
 			"objectif": "Objectif",
 			"objectifEspace": "Observation spatiale",
 			"objectifPlanete": "Etude planétaire",
@@ -138,6 +139,7 @@
 		},
 		"test" : "Vous avez appuyé sur le bouton __n__ fois",
 		"tpsTotal" : "Temps",
+		"U": "U",
 		"viewScenario" : "Scénario: __intitule__",
 		"volumeMax": "Taille Max"
 	},

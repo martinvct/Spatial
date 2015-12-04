@@ -185,7 +185,7 @@ if (Meteor.isClient) {
 	Template.Carte.helpers({
 		isDeck: function(){
 			if(_.findWhere(Template.parentData(1).partie.deck.cartes, {_carteId: this._id})) return "isDeck";
-			return "";
+			return "";  
 		}
 	});
 	Template.PartieCategorie.helpers({

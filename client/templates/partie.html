@@ -103,7 +103,7 @@
     {{/each}}
 </template>
 <template name="Carte">
-    <div class="carte {{isDeck}}" data-carteId="{{ carteId }}" ><!--
+    <div id="{{carteId}}" class="carte {{isDeck}}" data-carteId="{{ carteId }}" ><!--
         --><div class="carteIntitule {{ categorie }}"><div class="intitule"><span>{{ intitule.fr }}</span></div><div class="carteId">{{ carteId }}</div></div><!--
         --><div class="carteIllustration"><img src="{{illustration carteId cubesat}}" /></div><!--
         --><div class="carteDescription">{{ description.fr }}</div><!--
@@ -152,12 +152,49 @@
     <div class="toolbarForm">
         <ul>
             <li><button id="appelExpert">{{_ "interface.bouton.appelExpert" }}</button></li>
+            {{#if rapportExiste}}<li><button id="dernierExpert">{{_ "interface.bouton.dernierExpert" }}</button></li>{{/if}}
         </ul>
     </div>
 </template>
 <template name="PartieExpertiseRapport">
     <!-- revoir validation de deck : 1) modifier niveau détail 2 :obtenir les cartes , 2) sauver dans partie ) faire l'affichage -->
+    <ul class="rapport">
+    {{#if erreurs._ }}
+        {{#each erreurs._}}
+        <li>{{concat "validation." constante }}</li>
+        {{/each}}
+    {{/if}}
+    {{#if niveauDetailsCategorie }}
+        {{#each erreurs.categories }}
+        <li><button class="categorieLien" data-categorieId="{{this}}">{{concat "categories." this }}</button></li>
+        {{/each}}
+    {{/if}}
+    {{#if niveauDetailsCartes }}
+        {{#each erreurs.cartes }}
+        {{#if tag }}
+        <li>{{_ "interface.rapport.tag" }}
 
+            <ul>{{#each cartes }}
+                <li><button class="carteLien" data-categorieId="{{categorie}}" data-carteId="{{carteId}}" >{{carteId}} {{intitule.fr}}</button></li>
+                {{/each}}
+            </ul>
+        </li>
+        {{/if}}
+        {{#if incompatible }}
+        <li>{{_ "interface.rapport.incompatible" }} <button class="carteLien" data-carteId="{{carteId}}" >{{carte.carteId}} {{carte.intitule.fr}}</button></li>
+        {{/if}}
+        {{#if necessite }}
+        <li>{{_ "interface.rapport.necessite" }} <button class="carteLien" data-carteId="{{carteId}}" >{{carte.carteId}} {{carte.intitule.fr}}</button></li>
+        {{/if}}
+        
+       {{/each}} 
+       
+    {{/if}}
+    </ul>
+    <div class="toolbarForm">
+        <ul>
+            <li><button id="appelExpertConfirmation">{{_ "interface.bouton.appelExpert" }}</button></li>
+        </ul>
+    </div>
 </template>
-
 

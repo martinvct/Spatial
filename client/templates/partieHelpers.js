@@ -51,7 +51,7 @@ if (Meteor.isClient) {
 			return Template.instance().templateDictionary.get('currentTemplate');
 		},
 		partieData: function(){
-			return { partie: Parties.findOne({_id: Template.instance().templateDictionary.get('currentPartie')}), scenario: Template.instance().templateDictionary.get('currentScenarioObj'), categorie: Template.instance().templateDictionary.get('currentCategorie') };
+			return { partie: Parties.findOne({_id: Template.instance().templateDictionary.get('currentPartie')}), scenario: Template.instance().templateDictionary.get('currentScenarioObj'), categorie: Template.instance().templateDictionary.get('currentCategorie'), locationHash:  Template.instance().templateDictionary.get('currentLocationHash')};
 		},
 		scenario: function(){
 			return  Template.instance().templateDictionary.get('currentScenarioObj');
@@ -90,6 +90,15 @@ if (Meteor.isClient) {
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategories');
 		},
 		'click #partieExpertise': function(event){
+			var partie = Parties.findOne({_id: Template.instance().templateDictionary.get('currentPartie')});
+			if(partie.experts.length > 0){
+				Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseRapport');
+			} else {
+				Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseConfirmation');
+			}
+			
+		},
+		'click #appelExpertConfirmation': function(event){
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseConfirmation');
 		},
 		'click div.carte': function(event){
@@ -105,6 +114,7 @@ if (Meteor.isClient) {
 		'click .partieCategorie': function(event){
 			Template.instance().templateDictionary.set('currentCategorie', this[0]);
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategorie');
+			Template.instance().templateDictionary.set('currentLocationHash', '');
 		},
 		'click #percentLanceur': function(event){
 			if($('#percentLanceurModal').css("width") == "100%"){
@@ -124,8 +134,20 @@ if (Meteor.isClient) {
 		'click #appelExpert': function(event){
 			Meteor.call("callExpert", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Session.get("dateModif"));
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseRapport');
+		},
+		'click #dernierExpert': function(event){
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseRapport');
+		},
+		'click .carteLien': function(event){
+			Template.instance().templateDictionary.set('currentCategorie', this.categorie);
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategorie');
+			Template.instance().templateDictionary.set('currentLocationHash', this.carteId);
+		},
+		'click .categorieLien': function(event){
+			Template.instance().templateDictionary.set('currentCategorie', this.categorie);
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategorie');
+			Template.instance().templateDictionary.set('currentLocationHash', '');
 		}
-
 	});
 	Template.PartieHeader.helpers({
 		multi100: function(percent){
@@ -188,6 +210,13 @@ if (Meteor.isClient) {
 			return "";  
 		}
 	});
+	Template.PartieCategorie.onRendered(function(){
+		console.log(Template.instance().data.locationHash);
+		if(Template.instance().data.locationHash){
+			$(document).scrollTop( $('#'+Template.instance().data.locationHash).offset().top );  
+			//$('#'+Template.instance().data.locationHash).focus();
+		} 
+	});
 	Template.PartieCategorie.helpers({
 		cartes : function(){
 			return Cartes.find({categorie: Template.instance().data.categorie, cubesat: Template.instance().data.scenario.initialisation.cubesat});
@@ -196,6 +225,28 @@ if (Meteor.isClient) {
 	Template.PartieExpertiseConfirmation.helpers({
 		nbrExpertsAppeles: function(){
 			return Template.instance().data.partie.experts.length;
+		},
+		rapportExiste: function(){
+			return (Template.instance().data.partie.experts.length > 0);
+		}
+	});
+	Template.PartieExpertiseRapport.helpers({
+		erreurs: function(){
+			if(Template.instance().data.partie.experts){
+				var lastRapport = _.max(Template.instance().data.partie.experts, function(rapport){ return rapport.dateAppel; });
+				if(lastRapport){
+					var e = _.find(Template.instance().data.partie.experts, function(rapport){ return rapport.dateAppel == lastRapport.dateAppel; });
+					console.log(e.rapport);
+					return e.rapport;
+				}
+			}	
+			return null;
+		},
+		niveauDetailsCategorie: function(){
+			return (Template.instance().data.scenario.expertise.niveauDetails == 1);
+		},
+		niveauDetailsCartes: function(){
+			return (Template.instance().data.scenario.expertise.niveauDetails == 2);
 		}
 	});
 }

@@ -33,6 +33,7 @@
 			"collaboration": "Collaboration",
 			"configuration": "Administration",
 			"constanteScience" : "Points Scientifiques",
+			"dernierExpert": "Consulter le dernier rapport",
 			"expertise": "Expertise",
 			"lancement": "Lancement",
 			"lanceur": "Lanceur",
@@ -79,6 +80,11 @@
 		},
 		"planetes": "Planètes",
 		"poidsMax": "Charge Max",
+		"rapport": {
+			"incompatible": "Des cartes sont incompatibles avec la carte :",
+			"necessite": "Des cartes sont nécessaires pour le bon fonctionnement de la carte :",
+			"tag": "Une des cartes ci-dessous est nécessaire :"
+		},
 		"scenario": {
 			"actif": "Activé",
 			"budget": "Budget",

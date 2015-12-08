@@ -21,6 +21,7 @@ Accounts.onCreateUser(function(options, user){
 	}
 
 	if (options.profile) user.profile = options.profile;
+  user.profile.pattern = user.username+" "+user.profile.firstname+" "+user.profile.lastname;
 	return user;
 });
 

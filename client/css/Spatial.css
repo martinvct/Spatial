@@ -55,9 +55,9 @@ div.listScenarios div.scenario div.descScenario, div.listScenarios div.scenario 
 
 div.listParties div.partie div.descPartie, div.listParties div.partie div.tagsPartie, div.listParties div.partie div.statsPartie { font-size: small; }
 
-div.toolbarForm ul, nav.navPartieMenu ul, nav.navPartieConstantes ul { list-style: none;  margin-left: 0; padding-left: 0; }
-div.toolbarForm ul li, nav.navPartieMenu ul li, nav.navPartieConstantes ul li {  display: inline; list-style-type:none; }
-div.toolbarForm ul li button { border: 0.1em solid white; width: 7em; margin: 0.2em; padding: 0.2em 0; text-align: center; background: none; color: white; }
+div.toolbarForm > ul, nav.navPartieMenu > ul, nav.navPartieConstantes > ul { list-style: none;  margin-left: 0; padding-left: 0; }
+div.toolbarForm > ul > li, nav.navPartieMenu > ul > li, nav.navPartieConstantes > ul > li {  display: inline; list-style-type:none; }
+div.toolbarForm > ul > li button { border: 0.1em solid white; width: 7em; margin: 0.2em; padding: 0.2em 0; text-align: center; background: none; color: white; }
 nav.navPartieMenu button, nav.navPartieConstantes button { border: none; }
 span.partieConstante { font-family: "Digital-7"; }
 
@@ -128,6 +128,10 @@ div.partieCategorie { cursor: pointer; }
 div.partieCategorieLabel {  font-family: "nasalization"; }
 button.carteLien, button.categorieLien { display: inline-block; border: none; cursor: pointer; background: none; font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: medium; color: white; }
 
+.-autocomplete-container { position: absolute; background: white; color: #333; border: 1px solid #DDD; border-radius: 3px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); min-width: 300px; z-index: 1000; }
+.-autocomplete-list { list-style: none; margin: 0; padding: 0; }
+.-autocomplete-item { display: block; width: 300px; padding: 5px 10px; border-bottom: 1px solid #DDD; }
+.-autocomplete-item.selected { color: white; background: #4183C4; text-decoration: none; }
 
 /* S: 320*480; M: 1024*768; L: 1920*1080; */
 /* tester en remplaçant dans @media width par device-width  */

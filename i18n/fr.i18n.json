@@ -29,6 +29,7 @@
 			"addScenario": "Nouveau Scénario",
 			"aide": "Aide",
 			"appelExpert": "Appeler un expert",
+			"appelPeer": "Appeler un pair",
 			"chargerPartie": "Charger",
 			"collaboration": "Collaboration",
 			"configuration": "Administration",
@@ -43,6 +44,7 @@
 			"magasin": "Composants",
 			"meilleursScores": "Scores",
 			"mesBadges": "Mes badges",
+			"messages": "Messages",
 			"nouvellePartie": "Nouvelle",
 			"ok": "Ok",
 			"orbite": "Orbite",
@@ -52,6 +54,15 @@
 			"supprimer": "Supprimer"
 		},
 		"budget": "Budget",
+		"collaboration":{
+			"appel": "Appel vers",
+			"appelPeer" : "Appel à un pair",
+			"appelPeerDescription": "Un pair peut échanger des messages et modifier vos composants en temps réel.",
+			"messages": "Discussion",
+			"nbrPeersAppeles": "Appels à un pair effectués",
+			"rechercherPeer": "Nom ou identifiant",
+			"reponse": "Réponse de"
+		},
 		"cubesat": "CubeSat",
 		"dateModif": "Mise à jour",
 		"editionScenario": "Edition du scénario __intitule__",

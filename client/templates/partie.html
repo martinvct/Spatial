@@ -197,4 +197,44 @@
         </ul>
     </div>
 </template>
+<template name="PartieCollaborationConfirmation">
+    <h2>{{_ "interface.collaboration.appelPeer" }}</h2>
+    <p>{{_ "interface.collaboration.appelPeerDescription" }}</p>
+    <ul>
+        <li>{{_ "interface.scenario.nbrMaxAppels" }}: {{ scenario.collaboration.nbrMaxAppels }}</li>
+        <li>{{_ "interface.scenario.malusTemps" }}: {{ scenario.collaboration.malusTemps }}</li>
+        <li>{{_ "interface.scenario.malusBudget" }}: {{ scenario.collaboration.malusBudget }}</li>
+        <li>{{_ "interface.scenario.malusNbrEvenements" }}: {{ scenario.collaboration.malusNbrEvenements }}</li>
+        <li>{{_ "interface.scenario.nbrAppelsGratuits" }}: {{ scenario.collaboration.nbrAppelsGratuits }}</li>
+        <li>{{_ "interface.scenario.tpsMaxParAppel"}}: {{ scenario.collaboration.tpsMaxParAppel }}</li>
+        <li>{{_ "interface.collaboration.nbrPeersAppeles" }}: {{nbrPeersAppeles}}</li>
+    </ul>
+    <div class="toolbarForm">
+        <ul>
+            <li>{{> inputAutocomplete settings=settings id="peer" placeholder="..." }} <button id="appelPeer">{{_ "interface.bouton.appelPeer" }}</button></li>
+            {{#if messageExiste}}<li><button id="messages">{{_ "interface.bouton.messages" }}</button></li>{{/if}}
+        </ul>
+    </div>
+</template>
+<template name="PartieCollaborationMessages">
+     <h2>{{_ "interface.collaboration.messages" }}</h2>
+     <div class="messages">
+        {{#each messageItems}}
+            {{#if message}}
+        <div class="message">
+            <div class="messageHeader"><span class="date">{{formatDate date "MM/DD/YYYY hh:mm"}}</span><span class="sujet">{{concat "interface.collaboration." typeItem}} {{pair.firstname}} {{pair.lastname}} ({{pair.username}})</span></div>
+            <div class="messageAvatar"><img id="avatarMinified" src="{{#if pair.avatar}} {{pair.avatar}} {{else}} /defaultAvatar.png {{/if}}"/></div>
+            <div class="messageTexte">{{message}}</div>
+        </div>    
+            {{else}}
+        <div class="{{ typeItem }}"><span class="date">{{formatDate date "MM/DD/YYYY hh:mm"}}</span><span class="sujet">{{concat "interface.collaboration." typeItem}} {{pair.firstname}} {{pair.lastname}} ({{pair.username}})</span></div>    
+            {{/if}}
+        {{/each}}
+     </div>
+</template>
+<template name="UserAutoComplete">
+    ({{username}}) {{profile.firstname}} {{profile.lastname}}
+</template>
+
+
 

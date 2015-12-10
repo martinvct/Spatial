@@ -7,6 +7,7 @@ h2 { font-family: "nasalization"; margin: 2em 0em 1em 0.5em; }
 h3 { font-family: "nasalization"; margin: 2em 0em 1em 0.5em; }
 button { font-family: "nasalization"; cursor: pointer; }
 button.lien { border: none; background: none;  text-decoration: underline; color: white; }
+button.bouton { border: 0.1em solid white; width: 7em; margin: 0.2em; padding: 0.2em 0; text-align: center; background: none; color: white; }
 nav.navMain { font-family: "nasalization"; vertical-align: top; }
 #navMainHR { width: 100%; height: 7px; background-image: url('ligne.png'); }
 ul.buttonsBar, div.statsScenario ul { list-style: none;  margin-left: 0; padding-left: 0; }
@@ -25,6 +26,11 @@ ul.menuMain > li > button { border: 0.1em solid white; width: 11em; margin: 0.5e
 #buttonAvatar { display: inline-block; float: right; }
 button.buttonAvatar { padding: 0; margin: 0; background: none; border: none; }
 #avatarMinified { display: block; padding: 0; margin: 0; }
+
+#buttonNotifications { display: inline-block; float: right; }
+button.buttonNotifications { padding: 0; margin: 0; background: none; border: none; }
+#notificationMinified { display: block; padding: 0; margin: 0; }
+div.nNotifications { display: inline-block; background: red; font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: small; color: white; padding: 2px 4px 0 4px; position: relative; top: -30px; right: -15px; border-radius: 3px; }
 
 ul.menuProfile { position: absolute; top: 50px; right: 0; border: 0.5em solid black; background: white; list-style: none; margin-left: 0; padding: 0 0.5em; max-width: 20em; z-index: 1000;}
 ul.menuProfile > li:first-child { height: 24px; }
@@ -116,7 +122,7 @@ div.carteConstantes { width: 230px; height: 30px; padding: 2px; font-size: small
 div.carteConstante { display: inline-block; }
 div.carteConstanteBudget { display: inline-block; background: url('/Cartes/icoBPG-euro.png'); width: 21px; height: 26px; }
 div.carteConstanteMasse { display: inline-block; background: url('/Cartes/icoBPG-kg.png'); width: 21px; height: 26px; }
-div.carteConstanteVolume { display: inline-block; background: url('/Cartes/icoBPG-kg.png'); width: 21px; height: 26px; }
+div.carteConstanteVolume { display: inline-block; background: url('/Cartes/icoBPG-vol.png'); width: 21px; height: 26px; }
 div.carteConstanteEnergie { display: inline-block; background: url('/Cartes/icoBPG-nrj.png'); width: 21px; height: 26px; }
 div.carteConstanteScience { display: inline-block; background: url('/Cartes/icoBPG-star.png'); width: 21px; height: 26px; }
 div.carteConstanteValeur { display: inline-block; background: url('/Cartes/icoBPG-INTER.png') repeat; height: 26px; min-width: 5px; color: #333; line-height: 26px; position: relative; top: -9px; left: 0; }
@@ -132,6 +138,21 @@ button.carteLien, button.categorieLien { display: inline-block; border: none; cu
 .-autocomplete-list { list-style: none; margin: 0; padding: 0; }
 .-autocomplete-item { display: block; width: 300px; padding: 5px 10px; border-bottom: 1px solid #DDD; }
 .-autocomplete-item.selected { color: white; background: #4183C4; text-decoration: none; }
+div.message {}
+div.reponse { color: #8eb935; }
+div.appel { color: #f7941e; }
+div.messages div.date { display: inline-block; font-family: "Digital-7"; width: 7em; }
+div.messageHeader { color: #25aae1; }
+div.messageAvatar { display: inline-block; text-align: center; width: 7em; }
+div.messageAvatar img { display: block; margin: 0 auto; text-align: center; }
+div.messageTexte { display: inline-block; vertical-align: top; }
+div.newMessage, div.newMessage button { vertical-align: top; }
+#percentLanceurModal { display: block; height: 40px; line-height: 40px; }
+div.iconePcLanceur { display: inline-block; width: 40px; height: 40px; background: url('/icones_S/L320b_prc.png') no-repeat; }
+div.pcLanceur { display: inline-block; position: relative; top: -10px; } 
+#partiePcLanceur { display: inline; height: 40px; vertical-align: middle; }
+#percentLanceur { position: relative; top: -5px; }
+
 
 /* S: 320*480; M: 1024*768; L: 1920*1080; */
 /* tester en remplaçant dans @media width par device-width  */
@@ -145,7 +166,7 @@ button.carteLien, button.categorieLien { display: inline-block; border: none; cu
     #partieMagasin { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/mag320.png') no-repeat; }
     #partieOrbite { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/O320.png') no-repeat; }
     #partieLanceur { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/L320.png') no-repeat; }
-    #partieScenario { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/infos.png') no-repeat; }
+    #partieScenario { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/obj320.png') no-repeat; }
     button.euro-rd1 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/euro-rd1.png') no-repeat; }
     button.euro-rd2 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/euro-rd2.png') no-repeat; }
     button.euro-rd3 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/euro-rd3.png') no-repeat; }
@@ -163,6 +184,17 @@ button.carteLien, button.categorieLien { display: inline-block; border: none; cu
     button.cm-rd3 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/cm-rd3.png') no-repeat; }
     button.cm-rd4 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/cm-rd4.png') no-repeat; }
     button.star-rd4 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/star-rd4.png') no-repeat; }
+    button.L-rd0 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/L-rd00.png') no-repeat; }
+    button.L-rd1 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/L-rd01.png') no-repeat; }
+    button.L-rd2 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/L-rd02.png') no-repeat; }
+    button.L-rd3 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/L-rd03.png') no-repeat; }
+    button.L-rd4 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/L-rd04.png') no-repeat; }
+    button.L-rd5 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/L-rd05.png') no-repeat; }
+    button.L-rd6 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/L-rd06.png') no-repeat; }
+    button.L-rd7 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/L-rd07.png') no-repeat; }
+    button.L-rd8 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/L-rd08.png') no-repeat; }
+    button.L-rd9 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/L-rd09.png') no-repeat; }
+    button.L-rd10 { display: inline-block; width: 36px; height: 36px; background: url('/icones_S/L-rd10.png') no-repeat; }
     span.partieConstante { display: none; }
     div.partieCategorie { display: block; width: 100%; }
     div.partieCategorieIcone { display: inline-block; width: 44px; height: 44px; font-size:0; vertical-align: top; }
@@ -178,9 +210,9 @@ button.carteLien, button.categorieLien { display: inline-block; border: none; cu
     div.partieCategorieIcone.Z { background: url('/icones_S/Z0.png'); }
     div.partieCategorieLabel span { height: 44px; line-height: 44px; }
     div.partieCategorieLabel span.stat { font-size: small; }
-
-    #percentLanceurModal { display: none; width: 100%; }
     #percentLanceur { display: inline; }
+    textarea.newMessage { width:300px; }
+
 }
 @media only screen and (min-width: 480px){
     div.infosScenario, div.infosPartie { display: inline-block; width: calc(100% - 15em); }
@@ -191,7 +223,7 @@ button.carteLien, button.categorieLien { display: inline-block; border: none; cu
     #partieMagasin { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/mag1024.png') no-repeat; }
     #partieOrbite { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/O1024.png') no-repeat; }
     #partieLanceur { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/L1024.png') no-repeat; }
-    #partieScenario { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/infos.png') no-repeat; }
+    #partieScenario { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/obj1024.png') no-repeat; }
     button.euro-rd1 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/euro-rd1.png') no-repeat; }
     button.euro-rd2 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/euro-rd2.png') no-repeat; }
     button.euro-rd3 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/euro-rd3.png') no-repeat; }
@@ -209,6 +241,17 @@ button.carteLien, button.categorieLien { display: inline-block; border: none; cu
     button.cm-rd3 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/cm-rd3.png') no-repeat; }
     button.cm-rd4 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/cm-rd4.png') no-repeat; }
     button.star-rd4 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/star-rd4.png') no-repeat; }
+    button.L-rd0 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/L-rd00.png') no-repeat; }
+    button.L-rd1 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/L-rd01.png') no-repeat; }
+    button.L-rd2 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/L-rd02.png') no-repeat; }
+    button.L-rd3 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/L-rd03.png') no-repeat; }
+    button.L-rd4 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/L-rd04.png') no-repeat; }
+    button.L-rd5 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/L-rd05.png') no-repeat; }
+    button.L-rd6 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/L-rd06.png') no-repeat; }
+    button.L-rd7 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/L-rd07.png') no-repeat; }
+    button.L-rd8 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/L-rd08.png') no-repeat; }
+    button.L-rd9 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/L-rd09.png') no-repeat; }
+    button.L-rd10 { display: inline-block; width: 55px; height: 55px; background: url('/icones_M/L-rd10.png') no-repeat; }
     div.carte { display: inline-block; margin: 10px; }
     div.partieCategorie { display: inline-block; width: 20em;  height: 47px; margin-bottom: 1em; } 
     div.partieCategorieIcone { display: inline-block; width: 47px; height: 47px; font-size:0; vertical-align: top; }
@@ -225,8 +268,8 @@ button.carteLien, button.categorieLien { display: inline-block; border: none; cu
     div.partieCategorieLabel { display: inline-block; width: calc(20em - 47px); height: 47px; line-height: 47px;  }
     div.partieCategorieLabel span { display: inline-block; vertical-align: middle; line-height: normal; font-size: medium; padding-left: 0.5em; }
     div.partieCategorieLabel span.stat { font-size: small; }
+    textarea.newMessage { width:400px; }
 
-    #percentLanceurModal { display: inline-block; }
 }
 @media only screen and (min-width: 480px) and (max-width: 1024px){
 	body { background: #111111 url('/fond1024x1024.jpg') no-repeat fixed center top; }

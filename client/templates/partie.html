@@ -70,16 +70,18 @@
             <li><button id="partiePoids" class="iconeConstante {{getIconeConstante 'Kg-rd' partie.deck.poidsMax partie.deck.masse}}" title="{{_ 'interface.bouton.constantePoids' }}"></button><span id="partiePoidsConstante" class="partieConstante">{{ partie.deck.masse }}</span></li>
             <li><button id="partieVolume" class="iconeConstante {{getIconeConstante 'cm-rd' partie.deck.volumeMax partie.deck.volume}}" title="{{_ 'interface.bouton.constanteVolume' }}"></button><span id="partieVolumeConstante" class="partieConstante">{{ partie.deck.volume }}</span></li>
             <li><button id="partieScience" class="iconeConstante star-rd4" title="{{_ 'interface.bouton.constanteScience' }}"></button><span id="partieScienceConstante" class="partieConstante">{{ partie.deck.science }}</span></li>
-            {{#if hasLanceur }}
-            <li><span id="percentLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span></li>
-            <li id="percentLanceurModal"><input id="partiePctLanceur" type="range" min="10" max="100" step="10" value="{{multi100 partie.budgetLanceur }}"/></li>
-            {{/if}}
+            <li><button id="partieBudgetLanceur" class="iconeConstante {{getIconeConstante 'L-rd' 10 partie.budgetLanceur }}" title="{{_ 'interface.bouton.constantePcLanceur' }}"></button><span id="budgetLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span></li>
         </ul>
     </nav>
 
 </template>
 
 <template name="PartieLanceur">
+    {{#if hasLanceur }}
+        <div id="percentLanceurModal">
+            <div class="iconePcLanceur"></div><!-- --><div class="pcLanceur"><input id="partiePctLanceur" type="range" min="10" max="100" step="10" value="{{multi100 partie.budgetLanceur }}"/> <span id="percentLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span></div>
+        </div>
+    {{/if}}
     {{#each cartes}}
         {{> Carte }}
     {{/each}}
@@ -222,14 +224,18 @@
         {{#each messageItems}}
             {{#if message}}
         <div class="message">
-            <div class="messageHeader"><span class="date">{{formatDate date "MM/DD/YYYY hh:mm"}}</span><span class="sujet">{{concat "interface.collaboration." typeItem}} {{pair.firstname}} {{pair.lastname}} ({{pair.username}})</span></div>
-            <div class="messageAvatar"><img id="avatarMinified" src="{{#if pair.avatar}} {{pair.avatar}} {{else}} /defaultAvatar.png {{/if}}"/></div>
+            <div class="messageHeader"><div class="date">{{formatDate date "MM/DD/YYYY HH:mm"}}</div><span class="sujet">{{concat "interface.collaboration." typeItem}} {{pair.firstname}} {{pair.lastname}} ({{pair.username}})</span></div>
+            <div class="messageAvatar"><img src="{{#if pair.avatar}} {{pair.avatar}} {{else}} /defaultAvatar.png {{/if}}"/></div>
             <div class="messageTexte">{{message}}</div>
         </div>    
             {{else}}
-        <div class="{{ typeItem }}"><span class="date">{{formatDate date "MM/DD/YYYY hh:mm"}}</span><span class="sujet">{{concat "interface.collaboration." typeItem}} {{pair.firstname}} {{pair.lastname}} ({{pair.username}})</span></div>    
+        <div class="{{ typeItem }}"><div class="date">{{formatDate date "MM/DD/YYYY HH:mm"}}</div><span class="sujet">{{concat "interface.collaboration." typeItem}} {{pair.firstname}} {{pair.lastname}} ({{pair.username}})</span></div>    
             {{/if}}
         {{/each}}
+        <div class="newMessage">
+            <textarea class="newMessage" id="newMessage" placeholder="{{_ 'interface.collaboration.nouveauMessage'}}"></textarea>
+            <button id="addMessage" class="bouton">{{_ "interface.bouton.envoyer" }}</button>
+        </div>
      </div>
 </template>
 <template name="UserAutoComplete">

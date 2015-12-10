@@ -9,7 +9,21 @@ if (Meteor.isClient) {
 		return illustration;
 	});
 	Template.registerHelper('formatDate', function(valeur, format){
-			return moment(valeur).format(format);
+		return moment(valeur).format(format);
+	});
+	Template.registerHelper('getIconeConstante', function(nom, valeurMax, valeur){
+		if(nom == "L-rd"){
+			return nom + (valeur * 10);
+		} else {
+			var d = (valeurMax > 0 ? (valeur / valeurMax) * 100 : 0);
+			if(d == 100) d--;
+		//console.log(nom + ' ' + valeur + "/" + valeurMax + " = " + d + " => " + (Math.floor(d / 25) + 1));
+			return nom + (Math.floor(d / 25) + 1);
+		}
+	});
+	Template.registerHelper('multi100', function(percent){
+		if(percent > 0)	return 100 * percent;
+		return 10;
 	});
 	Template.Partie.onCreated(function(){
 		this.templateDictionary = new ReactiveDict();
@@ -57,7 +71,16 @@ if (Meteor.isClient) {
 			return  Template.instance().templateDictionary.get('currentScenarioObj');
 		},
 		partie: function(){
+			var user = Meteor.user();	
 			var partie = Parties.findOne({_id: Template.instance().templateDictionary.get('currentPartie')});
+			if(partie.userId != user._id){
+				if(_.findWhere(partie.peers, {userId: user._id})){
+					if(_.findWhere(partie.peers, {dateDebut: 0, userId: user._id})) Meteor.call('replyPeer', partie._id);
+				} else if(!user.isAdmin) {
+					Router.go('Home');
+				}
+			}
+
 			if(!Session.get("dateModif")){
 				Session.set("dateModif", partie.dateModif.getTime());
 			}
@@ -146,11 +169,15 @@ if (Meteor.isClient) {
 		'click #dernierExpert': function(event){
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseRapport');
 		},
-		'click #appelPeer': function(event){
-			if($('#peer').val().length > 0){
-				Meteor.call("callPeer", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), $('#peer').val(), Session.get("dateModif"));
-				Template.instance().templateDictionary.set('currentTemplate', 'PartieCollaborationMessages');
+		'click #addMessage': function(event){
+			if($('#newMessage').val().length > 0){
+				Meteor.call("addMessage",Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), $('#newMessage').val(), Session.get("dateModif"));
 			}
+		},
+		'click #messages': function(event){
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieCollaborationMessages');
+		},
+		'click #appelPeer': function(event){
 		},
 		'click .carteLien': function(event){
 			Template.instance().templateDictionary.set('currentCategorie', this.categorie);
@@ -164,16 +191,6 @@ if (Meteor.isClient) {
 		}
 	});
 	Template.PartieHeader.helpers({
-		multi100: function(percent){
-			if(percent > 0)	return 100 * percent;
-			return 10;
-		},
-		getIconeConstante: function(nom, valeurMax, valeur){
-			var d = (valeurMax > 0 ? (valeur / valeurMax) * 100 : 0);
-			if(d == 100) d--;
-			//console.log(nom + ' ' + valeur + "/" + valeurMax + " = " + d + " => " + (Math.floor(d / 25) + 1));
-			return nom + (Math.floor(d / 25) + 1);
-		},
 		hasPlanete: function(){
 			// si scenario == cubesat => ok
 			// sinon si objectif : 1 seule planete : si pas encore dans partie => on ajoute la planete dans la partie => tjs OK
@@ -198,6 +215,10 @@ if (Meteor.isClient) {
 	Template.PartieLanceur.helpers({
 		cartes: function(){
 			return Cartes.find({tags: "lanceur", cubesat: Template.instance().data.scenario.initialisation.cubesat});
+		},
+		hasLanceur: function(){
+			if(_.find(Template.parentData(0).partie.deck.cartes, function(obj){ return (_.indexOf(obj.tags, "lanceur") > -1); })) return true;
+			return false;
 		}
 	});
 	Template.PartieOrbite.helpers({
@@ -268,7 +289,9 @@ if (Meteor.isClient) {
 			return (_.filter(Template.instance().data.partie.peers, function(peer){ return peer.dateDebut > 0; })).length;
 		},
 		messageExiste: function(){
-			return (Template.instance().data.partie.chat.length > 0);
+			var now = new Date();
+			var t = _.find(Template.instance().data.partie.peers, function(peer){ return ((peer.dateDebut > 0) && ((peer.dureeMax == 0) || (peer.dateDebut.getTime() + peer.dureeMax > now.getTime())));   } );
+			return ((Template.instance().data.partie.chat.length > 0) || t);
 		},
 		settings: function(){
 			return {
@@ -296,6 +319,9 @@ if (Meteor.isClient) {
 			var usrObject;
 			var listUsers = [];
 			listUsers[Meteor.userId()] = Meteor.user();
+			if(Meteor.userId() != Template.instance().data.partie.userId) {
+				listUsers[Template.instance().data.partie.userId] = Meteor.users.findOne({_id: Template.instance().data.partie.userId},{fields: {username:1, profile:1}});
+			}
 			for(var p=0; p < Template.instance().data.partie.peers.length; p++){
 				if(Template.instance().data.partie.peers[p].userId == Meteor.userId()) {
 					usrObject = Meteor.user();
@@ -311,10 +337,13 @@ if (Meteor.isClient) {
 				}
 			}
 			for(var m=0; m < Template.instance().data.partie.chat.length; m++){
+				//console.log("messageItemChat");
+				//console.log("chat "+Template.instance().data.partie.chat[m].auteurId);
 				usrObject = listUsers[Template.instance().data.partie.chat[m].auteurId];
-				messageItems.push({typeItem: "message", message: Template.instance().data.partie.chat[m].message, date: Template.instance().data.partie.peers[p].dateTime, pair:{ username: usrObject.profile.username, firstname: usrObject.profile.firstname, lastname: usrObject.profile.lastname, avatar: usrObject.profile.avatar}});
+				//console.log(usrObject);
+				messageItems.push({typeItem: "message", message: Template.instance().data.partie.chat[m].message, date: Template.instance().data.partie.chat[m].dateTime, pair:{ username: usrObject.profile.username, firstname: usrObject.profile.firstname, lastname: usrObject.profile.lastname, avatar: usrObject.profile.avatar}});
 			}
-			return _.sortBy(messageItems, "date");
+			return (_.sortBy(messageItems, "date")).reverse();
 		}
 	});
 }

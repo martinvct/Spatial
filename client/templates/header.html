@@ -4,7 +4,10 @@
 		<div id="logoApplication"></div>
 		{{#if currentUser}}
 		<div id="buttonAvatar">
-			<button class="buttonAvatar"><img id="avatarMinified" src="{{#if currentUser.profile.avatar}} {{currentUser.profile.avatar}} {{else}} /defaultAvatar.png {{/if}}"/></button>
+			<button class="buttonAvatar"><img id="avatarMinified" src="{{#if currentUser.profile.avatar}} {{currentUser.profile.avatar}} {{else}} /avatar-75.png {{/if}}"/></button>
+		</div>
+		<div id="buttonNotifications">
+			<button class="buttonNotifications"><img id="notificationMinified" src="/notification-75.png"/>{{#if nNotifications}}<div class="nNotifications">{{ nNotifications }}</div>{{/if}}</button>
 		</div>
 		{{/if}}
 	</nav>

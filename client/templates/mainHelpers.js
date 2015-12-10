@@ -9,13 +9,26 @@ if (Meteor.isClient) {
 	Template.registerHelper('concat', function(prefix, fieldName){
 		return TAPi18n.__(prefix + fieldName);
 	});
+	Template.Header.onRendered(function() {
+		
+	});
+	Template.Header.helpers({
+		nNotifications: function(){
+			console.log(Meteor.user());
+			return Meteor.user().profile.nNotifications;
+		}
+	});
 	Template.Header.events({
 		'click button.buttonAvatar': function (event, template) {
 			Blaze.render(Template.MenuProfile, document.getElementById('main'));
+		},
+		'click #logoApplication': function(){
+			Router.go('Home');
+		},
+		'click #buttonNotifications': function(event, template){
+			console.log("ntoification menu");
+			Blaze.render(Template.NotificationsMenu, document.getElementById('main'));
 		}
-	});
-	Template.Header.onRendered(function() {
-		
 	});
 	Template.Login.events({
 	    'click button.loginWithLDAP': function (event, template) {

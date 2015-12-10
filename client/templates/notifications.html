@@ -1,0 +1,24 @@
+<template name="NotificationsMenu">
+<div class="notificationsMenu">
+	{{#each notifications}}
+		{{> Notification }}
+	{{/each}}
+	<div class="notificationsToolBar"><button id="notificationsToPage">{{_ "interface.notifications.afficherTout" }}</button></div>
+</div>
+</template>
+<template name="NotificationsPage">
+<div class="notificationsPage">
+	{{#each notifications}}
+		{{> Notification }}
+	{{/each}}
+</div>	
+</template>
+<template name="Notification">
+	<div class="notification">
+		<div class="notificationAvatar">{{getAvatar this.uid}}</div>
+		<div class="notificationTexte">
+			{{getNotificationTexte this.action this.data}}
+			<div class="notificationDate">{{formatDate this.datetime "MM/DD/YYYY HH:mm"}}</div>
+		</div>
+	</div>
+</template>

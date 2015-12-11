@@ -15,10 +15,10 @@
 </template>
 <template name="Notification">
 	<div class="notification">
-		<div class="notificationAvatar">{{getAvatar this.uid}}</div>
-		<div class="notificationTexte">
-			{{getNotificationTexte this.action this.data}}
+		<div class="notificationAvatar"><img src="{{getAvatar this.action this.data}}"/></div><!--
+		--><div class="notificationBody">
+			<div class="notificationTexte">	{{{getNotificationTexte this.action this.data}}}</div>
 			<div class="notificationDate">{{formatDate this.datetime "MM/DD/YYYY HH:mm"}}</div>
-		</div>
+		</div>	
 	</div>
 </template>

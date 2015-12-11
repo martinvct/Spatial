@@ -22,6 +22,10 @@ if (Meteor.isClient) {
 	Template.NotificationsMenu.events({
 		'click #notificationsToPage':function(){
 			Router.go('Notifications');
+		},
+		'click .lienPartie': function(){
+			//console.log(this);
+			Router.go('Partie', {_scenarioId: this.data.scenarioId, _id: this.data.partieId});
 		}
 	});
 	Template.NotificationsPage.helpers({
@@ -34,13 +38,13 @@ if (Meteor.isClient) {
 	Template.NotificationsPage.events({
 	});
 	Template.Notification.helpers({
-		getAvatar: function(userId){
-			/*var user = Meteor.user.findOne({_id: userId},{"profile.avatar": 1});
-			return user.profile.avatar;*/
-			return "avatar";
+		getAvatar: function(action, data){
+			//console.log(action);
+			//console.log(data);
+			return getNotificationAvatar(action, data);
 		},
 		getNotificationTexte: function(action, data){
-			return action;
+			return getNotificationString(action, data);
 		}
 	});
 }

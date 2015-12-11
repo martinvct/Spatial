@@ -26,8 +26,8 @@ if (Meteor.isClient) {
 			Router.go('Home');
 		},
 		'click #buttonNotifications': function(event, template){
-			console.log("ntoification menu");
-			Blaze.render(Template.NotificationsMenu, document.getElementById('main'));
+			//console.log("ntoification menu");
+			Blaze.render(Template.NotificationsMenu, document.getElementById('backgroundModal'));
 		}
 	});
 	Template.Login.events({

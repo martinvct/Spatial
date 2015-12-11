@@ -153,6 +153,14 @@ div.pcLanceur { display: inline-block; position: relative; top: -10px; }
 #partiePcLanceur { display: inline; height: 40px; vertical-align: middle; }
 #percentLanceur { position: relative; top: -5px; }
 
+div.notificationsMenu { color: #DDD; width: 320px; }
+div.notification {}
+div.notificationAvatar { display: inline-block; width: 35px; float: left; }
+div.notificationAvatar img { width: 32px; }
+div.notificationBody { vertical-align: top; font-size: small; }
+
+div.notificationDate { margin-left: 35px; }
+span.lienPartie { cursor: pointer; text-decoration: underline; }
 
 /* S: 320*480; M: 1024*768; L: 1920*1080; */
 /* tester en remplaçant dans @media width par device-width  */
@@ -212,7 +220,6 @@ div.pcLanceur { display: inline-block; position: relative; top: -10px; }
     div.partieCategorieLabel span.stat { font-size: small; }
     #percentLanceur { display: inline; }
     textarea.newMessage { width:300px; }
-
 }
 @media only screen and (min-width: 480px){
     div.infosScenario, div.infosPartie { display: inline-block; width: calc(100% - 15em); }

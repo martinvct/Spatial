@@ -5,7 +5,7 @@ Meteor.startup(function(){
 
   // If this is the first user going into the database, make them an admin
   if (Meteor.users.find().count() === 0) {
-  	Accounts.createUser({username: "admin", email: "vincent.martin@ulg.ac.be", password: "M@str3r", profile: { firstname: "Vincent", lastname:"Martin" }});
+  	Accounts.createUser({username: "admin", email: "vincent.martin@ulg.ac.be", password: "M@str3r", profile: { username: "admin", firstname: "Jean", lastname:"Martin" }});
   }
 
   Accounts.config({

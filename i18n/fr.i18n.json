@@ -1,10 +1,13 @@
 {
 	"notification":{
-		"carte-active": "",
-		"carte-del": "",
-		"carte-new": "",
-		"carte-upd": "",
-		"deck-add": "",
+		"ilA": "a ",
+		"vousAvez": "Vous avez ",
+		"carte-active": "rendu disponible la carte __intitule__ (__carteId__).",
+		"carte-del": "supprimé définitivement la carte __intitule__ (__carteId__).",
+		"carte-new": "créé la carte __intitule__ (__carteId__).",
+		"carte-unactive": "supprimé la carte __intitule__ (__carteId__).",
+		"carte-upd": "modifié la carte __intitule__ (__carteId__).",
+		"deck-add": "ajouté la carte __intitule__ (__carteId__) à la partie <span class='lienPartie' data-partieId='__partieId__' data-scenarioId='__scenarioId__'>__partie__</span>",
 		"deck-rem": "",
 		"event-active": "",
 		"event-del": "",

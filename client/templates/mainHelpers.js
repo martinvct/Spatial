@@ -20,14 +20,22 @@ if (Meteor.isClient) {
 	});
 	Template.Header.events({
 		'click button.buttonAvatar': function (event, template) {
-			Blaze.render(Template.MenuProfile, document.getElementById('main'));
+			//Blaze.render(Template.MenuProfile, document.getElementById('main'));
+			Modal.show("MenuProfile");
 		},
 		'click #logoApplication': function(){
 			Router.go('Home');
 		},
 		'click #buttonNotifications': function(event, template){
 			//console.log("ntoification menu");
-			Blaze.render(Template.NotificationsMenu, document.getElementById('backgroundModal'));
+			//Blaze.render(Template.NotificationsMenu, document.getElementById('backgroundModal'));
+			Meteor.call('updateNNotifications');
+			Modal.show("NotificationsMenu");
+		}
+	});
+	Template.MenuProfile.events({
+		'click button.menuProfileLogout': function(event, template){
+			Meteor.logout();
 		}
 	});
 	Template.Login.events({

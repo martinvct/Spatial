@@ -1,5 +1,6 @@
 
 body { margin: 0; padding: 0; font-family: "MyriadPro", Helvetica, Arial, sans-serif; color: white; }
+input, select { color: #333; }
 .container { max-width: 1024px; height: 100%; margin: 0 auto; padding: 0; background-color: black; }
 #main { padding: 0 0.5em; }
 h1 { font-family: "nasalization"; margin: 2em 0em 1em 0.5em; }
@@ -8,6 +9,7 @@ h3 { font-family: "nasalization"; margin: 2em 0em 1em 0.5em; }
 button { font-family: "nasalization"; cursor: pointer; }
 button.lien { border: none; background: none;  text-decoration: underline; color: white; }
 button.bouton { border: 0.1em solid white; width: 7em; margin: 0.2em; padding: 0.2em 0; text-align: center; background: none; color: white; }
+button.petitBouton { border: 0.1em solid white; margin: 0.2em; text-align: center; background: none; color: white; font-size: x-small; width: 105px; }
 nav.navMain { font-family: "nasalization"; vertical-align: top; }
 #navMainHR { width: 100%; height: 7px; background-image: url('ligne.png'); }
 ul.buttonsBar, div.statsScenario ul { list-style: none;  margin-left: 0; padding-left: 0; }
@@ -32,13 +34,14 @@ button.buttonNotifications { padding: 0; margin: 0; background: none; border: no
 #notificationMinified { display: block; padding: 0; margin: 0; }
 div.nNotifications { display: inline-block; background: red; font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: small; color: white; padding: 2px 4px 0 4px; position: relative; top: -30px; right: -15px; border-radius: 3px; }
 
-ul.menuProfile { position: absolute; top: 50px; right: 0; border: 0.5em solid black; background: white; list-style: none; margin-left: 0; padding: 0 0.5em; max-width: 20em; z-index: 1000;}
+/*ul.menuProfile { position: absolute; top: 50px; right: 0; border: 0.5em solid black; list-style: none; margin-left: 0; padding: 0 0.5em; max-width: 20em; z-index: 1000;}*/
+ul.menuProfile { border: 0.5px dashed white; color: #DDD; width: 324px; float: right; margin-top: 75px; list-style: none; }
 ul.menuProfile > li:first-child { height: 24px; }
 ul.menuProfile li { vertical-align: top; }
 div.menuProfileIcone { display: inline-block; }
-div.menuProfileIcone > img { width: 2em; height: 2em; }
-div.menuProfileInfo { display: inline-block; }
-div.menuProfileLien { display: inline-block; }
+div.menuProfileIcone > img { width: 24px; height: 24px; }
+div.menuProfileInfo { display: inline-block; vertical-align: top; }
+div.menuProfileLien { display: inline-block; vertical-align: top; float: right; }
 button.menuProfileLogout { display: inline-block; }
 
 
@@ -153,14 +156,16 @@ div.pcLanceur { display: inline-block; position: relative; top: -10px; }
 #partiePcLanceur { display: inline; height: 40px; vertical-align: middle; }
 #percentLanceur { position: relative; top: -5px; }
 
-div.notificationsMenu { color: #DDD; width: 320px; }
-div.notification {}
-div.notificationAvatar { display: inline-block; width: 35px; float: left; }
+div.notificationsMenu { border: 0.5px dashed white; color: #DDD; width: 324px; float: right; margin-top: 75px; }
+div.notification { margin: 2px 0px;  }
+div.notificationAvatar { display: inline-block; width: 35px; }
 div.notificationAvatar img { width: 32px; }
-div.notificationBody { vertical-align: top; font-size: small; }
-
-div.notificationDate { margin-left: 35px; }
+div.notificationBody { display: inline-block;  vertical-align: top; font-size: small; }
+div.notificationsMenu div.notificationBody { width: calc(320px - 35px); background-color: red; }
+div.notificationTexte { background-color: #111; padding: 2px 5px 1px 5px; }
+div.notificationDate { background-color: #333; padding: 1px 5px 2px 5px; }
 span.lienPartie { cursor: pointer; text-decoration: underline; }
+div.notificationsMenu button { border: 0.1em solid white; width: 320px; margin: 0.2em; padding: 0.2em 0; text-align: center; background: none; color: white; }
 
 /* S: 320*480; M: 1024*768; L: 1920*1080; */
 /* tester en remplaçant dans @media width par device-width  */
@@ -277,6 +282,7 @@ span.lienPartie { cursor: pointer; text-decoration: underline; }
     div.partieCategorieLabel span.stat { font-size: small; }
     textarea.newMessage { width:400px; }
 
+
 }
 @media only screen and (min-width: 480px) and (max-width: 1024px){
 	body { background: #111111 url('/fond1024x1024.jpg') no-repeat fixed center top; }
@@ -286,6 +292,7 @@ span.lienPartie { cursor: pointer; text-decoration: underline; }
 	body { background: #111111 url('/fond1920x1080.jpg') no-repeat fixed center top; }
     .container { background: #111111 url('/fond1024x1024.jpg') no-repeat fixed center top; }
 	#logoApplication { display: inline-block; width: 300px; height: 100px; background: url('/logoApplication_L.png') no-repeat; }
+    div.notificationsMenu, ul.menuProfile { margin-right: calc((100% - 1024px) / 2); }
 }
 @font-face {
     font-family: "nasalization";

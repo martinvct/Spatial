@@ -31,3 +31,5 @@ momentjs:moment
 reactive-var
 reactive-dict
 mizzao:autocomplete
+twbs:bootstrap
+peppelg:bootstrap-3-modal

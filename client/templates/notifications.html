@@ -1,9 +1,11 @@
 <template name="NotificationsMenu">
-<div class="notificationsMenu">
-	{{#each notifications}}
-		{{> Notification }}
-	{{/each}}
-	<div class="notificationsToolBar"><button id="notificationsToPage">{{_ "interface.notifications.afficherTout" }}</button></div>
+<div class="modal fade">
+	<div class="notificationsMenu">
+		{{#each notifications}}
+			{{> Notification }}
+		{{/each}}
+		<div class="notificationsToolBar"><button id="notificationsToPage">{{_ "interface.notifications.afficherTout" }}</button></div>
+	</div>
 </div>
 </template>
 <template name="NotificationsPage">
@@ -18,7 +20,7 @@
 		<div class="notificationAvatar"><img src="{{getAvatar this.action this.data}}"/></div><!--
 		--><div class="notificationBody">
 			<div class="notificationTexte">	{{{getNotificationTexte this.action this.data}}}</div>
-			<div class="notificationDate">{{formatDate this.datetime "MM/DD/YYYY HH:mm"}}</div>
+			<div class="notificationDate">{{formatDate this.datetime "DD/MM/YYYY HH:mm:ss"}}</div>
 		</div>	
 	</div>
 </template>

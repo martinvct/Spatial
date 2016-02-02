@@ -1,5 +1,9 @@
 <template name="ConfigUtilisateurs">
 	<button class="lien" id="retour">{{_ "interface.bouton.retour" }}</button>
+	<div class="filtreUtilisateurs">
+		<label for="filtreUtilisateurs">{{_ "interface_filtre"}}</label>
+		<input type="text" id="filtreUtilisateurs" name="filtreUtilisateurs" value="{{ filtreUtilisateurs }}"/>
+	</div>
 	{{#each utilisateurs}}
 		{{> ConfigUtilisateur }}
 	{{/each}}
@@ -10,6 +14,6 @@
 		<div class="utilisateurInfo">{{ username }}</div>
 		<div class="utilisateurInfo">{{ profile.firstname }}</div>
 		<div class="utilisateurInfo">{{ profile.lastname }}</div>
-		<div class="utilisateurInfo">{{ profile.lastLogin }}</div>
+		<div class="utilisateurInfo">({{_ "interface.lastLogin"}}: {{formatDate profile.lastlogin "DD/MM/YYYY HH:mm"}})</div>
 	</div>
 </template>

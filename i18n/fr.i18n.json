@@ -83,7 +83,9 @@
 			"appelExpertDescription": "L'expert fournit un rapport plus ou moins détaillé de la validité de votre mission.",
 			"nbrExpertsAppeles": "Appels à un expert effectués"
 		},
+		"filtre": "Filtre de recherche",
 		"finie": "Score final",
+		"lastLogin": "Dernière connexion",
 		"login": "Se connecter",
 		"loginWithFaceBook": "Facebook",
 		"logout": "Se déconnecter",
@@ -107,8 +109,15 @@
 		"planetes": "Planètes",
 		"poidsMax": "Charge Max",
 		"rapport": {
+			"absurde": "Cette carte n'est pas réaliste, elle est ignorée.",
+			"energie": "Cette carte n'a pas assez d'énergie pour fonctionner :",
+			"evenement": "Evènement durant le lancement :",
+			"fiabilite": "Cette carte est tombée en panne :",
 			"incompatible": "Des cartes sont incompatibles avec la carte :",
+			"isKO": "Votre mission est invalide.",
+			"isOK": "Votre mission est réussie.",
 			"necessite": "Des cartes sont nécessaires pour le bon fonctionnement de la carte :",
+			"score": "Score final :",
 			"tag": "Une des cartes ci-dessous est nécessaire :"
 		},
 		"scenario": {
@@ -169,6 +178,9 @@
 			"volumeMax": "Place Maximale",
 			"volumeMaxInfo": "en mm"
 		},
+		"scores" : {
+			"aucunScore": "Pour l'instant, aucune partie n'a abouti à un score."
+		},
 		"test" : "Vous avez appuyé sur le bouton __n__ fois",
 		"tpsTotal" : "Temps",
 		"U": "U",
@@ -193,8 +205,9 @@
 		"privilege_anonyme": "Vous devez vous authentifier",
 		"privilege_user": "Vous n'êtes pas autorisé à faire cette action",
 		"scenario_id": "Scénario inconnu", 
-		"scenario_utilise": "Scénario utilisé",
 		"scenario_inactif": "Scénario inexistant",
+		"scenario_planetes": "Au moins une planète doit être sélectionnée pour les missions planétaires",
+		"scenario_utilise": "Scénario utilisé",
 		"syntaxe_carte_regles": "Erreur de syntaxe des règles d'une carte %s"
 	},
 	"validation":{

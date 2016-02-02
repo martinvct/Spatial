@@ -69,6 +69,7 @@ div.toolbarForm > ul > li, nav.navPartieMenu > ul > li, nav.navPartieConstantes 
 div.toolbarForm > ul > li button { border: 0.1em solid white; width: 7em; margin: 0.2em; padding: 0.2em 0; text-align: center; background: none; color: white; }
 nav.navPartieMenu button, nav.navPartieConstantes button { border: none; }
 span.partieConstante { font-family: "Digital-7"; }
+span.valUnite { font-family: "MyriadPro", Helvetica, Arial, sans-serif; }
 
 #nomPartieForm { display: none; }
 #nomPartie h1, #nomPartieTxt { font-family: "nasalization"; margin: 0em 0.5em 0.1em 0.5em; font-size: medium; color: white; }
@@ -118,6 +119,7 @@ div.carteConstantes.Z { background: #c88855; }
 div.carteIntitule div.intitule { position: absolute; display: inline-block; width: 144px; height: 45px; top: 14px; left: 60px; line-height: 45px; }
 div.carteIntitule div.intitule span { display: inline-block; vertical-align: middle; line-height: 1.3; }
 div.carteIntitule div.carteId { position: absolute; display: inline-block; width: 25px; height: 25px; top: 16px; right: 13px; text-align: center; font-size: small; }
+div.carteIntitule div.carteCopyright { position: absolute; display: inline-block; width: 200px; height: 5px; top: 55.5px; right: 13px; text-align: right; font-size: xx-small; color: #333; }
 div.carteIllustration { width: 244px; margin: 2px 0; }
 div.carteIllustration img { display: block; width: 244px; border: none; margin: 0; padding: 0; }
 div.carteDescription { background: white; color: #333; padding: 0 5px; font-size: small; margin: 0 5px;}

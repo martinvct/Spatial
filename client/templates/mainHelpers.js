@@ -14,7 +14,7 @@ if (Meteor.isClient) {
 	});
 	Template.Header.helpers({
 		nNotifications: function(){
-			console.log(Meteor.user());
+			//console.log(Meteor.user());
 			return Meteor.user().profile.nNotifications;
 		}
 	});
@@ -35,6 +35,11 @@ if (Meteor.isClient) {
 	});
 	Template.MenuProfile.events({
 		'click button.menuProfileLogout': function(event, template){
+			if((Session.get('sPartieId')) && (Session.get('sCountTimer') > 0)){
+				//sauvegarder time
+				saveTimer();
+
+			}
 			Meteor.logout();
 		}
 	});
@@ -43,16 +48,29 @@ if (Meteor.isClient) {
 	        Meteor.loginWithLDAP(template.find('#login').value, template.find('#password').value, { dn: "uid=" + template.find('#login').value + ",ou=people,dc=ulg,dc=ac,dc=be" }, function(err){
 	          if(err){
 	            if(! Meteor.userId()){
-	              Meteor.loginWithPassword(template.find('#login').value, template.find('#password').value,  function(err) { if (err) return throwError("login_echoue", TAPi18n.__("error.login_echoue")); });
+	              Meteor.loginWithPassword(template.find('#login').value, template.find('#password').value,  function(err) { 
+	              	if (err) return throwError("login_echoue", TAPi18n.__("error.login_echoue")); 
+	              	var currUser = Meteor.user();
+	           	  	var now      = new Date();
+	           	  	Meteor.users.update({_id: currUser._id},{$set: {"profile.lastlogin": now}});
+	              });
+	            }
+	           } else {
+	           	  var currUser = Meteor.user();
+	           	  var now      = new Date();
+	           	  Meteor.users.update({_id: currUser._id},{$set: {"profile.lastlogin": now}});
 	           }
-	          }
-	        });
+	        });   
 	    },
 	    'click button.loginWithFaceBook': function(event){ //voir : http://bulenttastan.net/login-with-facebook-using-meteor-js/
 	    	Meteor.loginWithFacebook({}, function(err){
 	            if (err) {
 	                throwError("login_echoue", TAPi18n.__("error.login_echoue")); 
-	            }
+	            } else {
+	           	  var currUser = Meteor.user();
+	           	  var now      = new Date();
+	           	  Meteor.users.update({_id: currUser._id},{$set: {"profile.lastlogin": now}});
+	           }
 	        });
 	    },
 	    'keypress #password': function(event, template){
@@ -60,6 +78,13 @@ if (Meteor.isClient) {
 	    		$('button.loginWithLDAP').click();
 	    	}
 	    }
+	});
+	Template.MenuPrincipal.onCreated(function(){
+		saveTimer();
+	});
+	Template.MenuPrincipal.helpers({
+		counttimer: function(){ return Session.get('sCountTimer'); },
+		partieid: function(){ return Session.get('sPartieId'); }
 	});
 	Template.MenuPrincipal.events({
 		'click #configuration': function(event){
@@ -70,6 +95,26 @@ if (Meteor.isClient) {
 		},
 		'click #chargerPartie': function(event){
 			Router.go('Parties');
+		},
+		'click #meilleursScores': function(event){
+			Router.go('Scores');
+		}
+	});
+	Template.Scores.helpers({
+		scores: function(){
+			var parties = Parties.find({finie: true, active: true},{"deck.cartes": 0, logs: 0, peers: 0, chat: 0, experts: 0, sort: {score: -1}, limit: 20}); //.sort({score: -1}).limit(20);
+			var scores = [];
+			for(var p=0; p < parties.length; p++){
+				var scenario = Scenarios.findOne({_id: parties[p].scenarioId },{services: 0});
+				var user     = Meteor.users.findOne({_id: parties[p].userId});
+				scores.push({user: user, partie: {score: parties[p].score, science: parties[p].deck.science, tempsTotal: parties[p].tempsTotal}, scenario: {_id: scenario._id, intitule: scenario.intitule, budget: scenario.initialisation.budget, cubesat: scenario.initialisation.cubesat }});
+			}
+			return scores;
+		}
+	});
+	Template.Scores.events({
+		'click #retour': function(event){
+			Router.go('Home');
 		}
 	});
 	Template.Config.events({
@@ -85,12 +130,22 @@ if (Meteor.isClient) {
 	});
 	Template.ConfigUtilisateurs.helpers({
 		utilisateurs: function(){
+			if(Session.get("filtreUtilisateurs")) {
+				var pattern = "/"+Session.get("filtreUtilisateurs")+"/i";
+				return Meteor.users.find({$or:[{"profile.username": {$regex: pattern}}, {"profile.firstname": {$regex: pattern}}, {"profile.lastname": {$regex: pattern}}, {"profile.email": {$regex: pattern}}]},{services: 0, sort: {"profile.lastname": 1, "profile.firstname" :1}}); //.sort("profile.lastname": 1, "profile.firstname" :1);
+			}
 			return Meteor.users.find();
+		},
+		filtreUtilisateurs: function(){
+			return Session.get("filtreUtilisateurs");
 		}
 	});
 	Template.ConfigUtilisateurs.events({
 		'click #retour': function(event){
 			Router.go('Config');
+		},
+		'change #filtreUtilisateurs': function(event){
+			Session.set("filtreUtilisateurs", $('#filtreUtilisateurs').val());
 		}
 	});
 	Template.ConfigScenarios.helpers({
@@ -131,6 +186,33 @@ if (Meteor.isClient) {
 		}
 	});
 	
+	Template.ViewScenario.helpers({
+		nomPlanete: function(_planeteId){
+			return TAPi18n.__("planetes." + _planeteId);
+		},
+		isPlaneteChecked: function(_planeteId){
+			if((Template.parentData(1).partie.planete) && (Template.parentData(1).partie.planete.planeteId == _planeteId)) return "checked";
+		},
+		planetes: function(){
+			if(Session.get("sPartieId")){
+				var planetes = [];
+				for(var p=0; p < Template.instance().data.scenario.initialisation.planetes.length; p++){
+					planetes.push(_.find(Planetes, function(planete){ return planete.planeteId == Template.instance().data.scenario.initialisation.planetes[p]}));
+				}
+				return planetes;
+			}
+			return Planetes;
+		},
+		hasPartieId: function(){
+			return (Session.get("sPartieId"));
+		}
+	});
+	Template.ViewScenario.events({
+		'click #savePlanetePartie': function(event){
+			console.log(_.findWhere(Planetes, {planeteId: $('input[type=radio][name=planetes]:checked').val()}));
+			Meteor.call("setPlaneteToPartie", Template.instance().data.partie, Template.instance().data.scenario, (_.findWhere(Planetes, {planeteId: $('input[type=radio][name=planetes]:checked').val()})));
+		}
+	});
 	Template.EditScenario.helpers({
 		nomPlanete: function(_planeteId){
 			return TAPi18n.__("planetes." + _planeteId);

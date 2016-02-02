@@ -6,6 +6,8 @@ if (Meteor.isServer) {
     //  last.forEach(function(m){ console.log(m.maxU); });
 
     Meteor.call("initTest");
+    console.log("Pour les tests voir Spatial.js...");
+        //console.log(Test.find({donnees:{$elemMatch:{$or:[{id:1, t:2},{id:1, t:8}]}}}).count());
   });
   
   Meteor.publish("users", function(){

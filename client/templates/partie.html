@@ -17,9 +17,9 @@
             <div class="titrePartie"><button class="lien" data-partieId="{{ _id }}"  data-scenarioId="{{ scenarioId }}">{{nom}}</button></div>
             <div class="descPartie">{{scenario.intitule}}</div>
             <div class="tagsPartie">
-                <span class="tagPartie">{{_ "interface.budget" }}: {{convertir deck.budget "EUR"}}€</span>
+                <span class="tagPartie">{{_ "interface.budget" }}: {{formatValeurRegle deck.budget "eur"}}</span>
                 {{#if cubesat }}
-                    <span class="tagPartie">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{scenario.initialisation.cubesatLimites.poidsMax}}gr, {{_ "interface.volumeMax"}}: {{scenario.initialisation.cubesatLimites.volumeMax}}mm)</span>
+                    <span class="tagPartie">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{formatValeurRegle scenario.initialisation.cubesatLimites.poidsMax "pds"}}, {{_ "interface.volumeMax"}}: {{formatValeurRegle scenario.initialisation.cubesatLimites.volumeMax "vol"}})</span>
                 {{else}}
                     <span class="tagPartie">{{_ "interface.objectif" }}: {{tr "interface.objectifs." objectif}} {{#if planete}}, {{_ "interface.planetes"}}: {{nomPlanete planete.planeteId}} {{/if}}</span>
                 {{/if}}
@@ -53,23 +53,25 @@
     <nav class="navPartieMenu">
         <ul>
             <li><button id="partieScenario" class="image" title="{{_ 'interface.bouton.scenario'}}" ></button></li>
+            {{#if hasPlanete}}
+            {{#unless partie.cubesat}}<li><button id="partieOrbite" class="image" title="{{_ 'interface.bouton.orbite'}}" ></button></li>{{/unless}}
             <li><button id="partieLanceur" class="image" title="{{_ 'interface.bouton.lanceur'}}" ></button></li>
             {{#if hasLanceur }}
-            {{#unless partie.cubesat}}<li><button id="partieOrbite" class="image" title="{{_ 'interface.bouton.orbite'}}" ></button></li>{{/unless}}
             <li><button id="partieMagasin" class="image" title="{{_ 'interface.bouton.magasin'}}" ></button></li>
             <li><button id="partieCollaboration" class="image" title="{{_ 'interface.bouton.collaboration'}}" ></button></li>
             <li><button id="partieExpertise" class="image" title="{{_ 'interface.bouton.expertise'}}" ></button></li>
             <li><button id="partieLancement" class="image" title="{{_ 'interface.bouton.lancement'}}" ></button></li>
             {{/if}}
+            {{/if}}
         </ul>
     </nav>
     <nav class="navPartieConstantes">
         <ul>
-            <li><button id="partieBudget" class="iconeConstante {{getIconeConstante 'euro-rd' partie.deck.budgetMax partie.deck.budget}}" title="{{_ 'interface.bouton.constanteBudget' }}"></button><span id="partieBudgetConstante" class="partieConstante">{{convertir partie.deck.budget 'EUR'}}</span></li>
-            <li><button id="partieEnergie" class="iconeConstante {{getIconeConstante 'nrj-rd' partie.deck.energieMax partie.deck.energie}}" title="{{_ 'interface.bouton.constanteEnergie' }}"></button><span id="partieEnergieConstante" class="partieConstante">{{ partie.deck.energie }}</span></li>
-            <li><button id="partiePoids" class="iconeConstante {{getIconeConstante 'Kg-rd' partie.deck.poidsMax partie.deck.masse}}" title="{{_ 'interface.bouton.constantePoids' }}"></button><span id="partiePoidsConstante" class="partieConstante">{{ partie.deck.masse }}</span></li>
-            <li><button id="partieVolume" class="iconeConstante {{getIconeConstante 'cm-rd' partie.deck.volumeMax partie.deck.volume}}" title="{{_ 'interface.bouton.constanteVolume' }}"></button><span id="partieVolumeConstante" class="partieConstante">{{ partie.deck.volume }}</span></li>
-            <li><button id="partieScience" class="iconeConstante star-rd4" title="{{_ 'interface.bouton.constanteScience' }}"></button><span id="partieScienceConstante" class="partieConstante">{{ partie.deck.science }}</span></li>
+            <li><button id="partieBudget" class="iconeConstante {{getIconeConstante 'euro-rd' partie.deck.budgetMax partie.deck.budget}}" title="{{_ 'interface.bouton.constanteBudget' }}"></button><span id="partieBudgetConstante" class="partieConstante">{{{formatValeurRegle partie.deck.budget 'eur'}}}</span></li>
+            <li><button id="partieEnergie" class="iconeConstante {{getIconeConstante 'nrj-rd' partie.deck.energieMax partie.deck.energie}}" title="{{_ 'interface.bouton.constanteEnergie' }}"></button><span id="partieEnergieConstante" class="partieConstante">{{{formatValeurRegle partie.deck.energie 'nrg'}}}</span></li>
+            <li><button id="partiePoids" class="iconeConstante {{getIconeConstante 'Kg-rd' partie.deck.poidsMax partie.deck.masse}}" title="{{_ 'interface.bouton.constantePoids' }}"></button><span id="partiePoidsConstante" class="partieConstante">{{{formatValeurRegle partie.deck.masse 'pds'}}}</span></li>
+            <li><button id="partieVolume" class="iconeConstante {{getIconeConstante 'cm-rd' partie.deck.volumeMax partie.deck.volume}}" title="{{_ 'interface.bouton.constanteVolume' }}"></button><span id="partieVolumeConstante" class="partieConstante">{{{formatValeurRegle partie.deck.volume 'vol'}}}</span></li>
+            <li><button id="partieScience" class="iconeConstante star-rd4" title="{{_ 'interface.bouton.constanteScience' }}"></button><span id="partieScienceConstante" class="partieConstante">{{{formatValeurRegle partie.deck.science 'sci'}}}</span></li>
             <li><button id="partieBudgetLanceur" class="iconeConstante {{getIconeConstante 'L-rd' 10 partie.budgetLanceur }}" title="{{_ 'interface.bouton.constantePcLanceur' }}"></button><span id="budgetLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span></li>
         </ul>
     </nav>
@@ -106,33 +108,33 @@
 </template>
 <template name="Carte">
     <div id="{{carteId}}" class="carte {{isDeck}}" data-carteId="{{ carteId }}" ><!--
-        --><div class="carteIntitule {{ categorie }}"><div class="intitule"><span>{{ intitule.fr }}</span></div><div class="carteId">{{ carteId }}</div></div><!--
+        --><div class="carteIntitule {{ categorie }}"><div class="intitule"><span>{{ intitule.fr }}</span></div><div class="carteId">{{ carteId }}</div><div class="carteCopyright">{{ copyright }}</div></div><!--
         --><div class="carteIllustration"><img src="{{illustration carteId cubesat}}" /></div><!--
         --><div class="carteDescription">{{ description.fr }}</div><!--
         --><div class="carteConstantes {{ categorie }}">
           {{#if valEur}}<div class="carteConstante"><!--
             --><div class="carteConstanteBudget"></div><!--
-            --><div class="carteConstanteValeur"><span>{{ valEur }}</span></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valEur) 'eur' }}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--
           --></div>{{/if}}
           {{#if valPds}}<div class="carteConstante"><!--
             --><div class="carteConstanteMasse"></div><!--
-            --><div class="carteConstanteValeur"><span>{{ valPds }}</span></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valPds)  'pds' }}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--
           --></div>{{/if}}
           {{#if valVol}}<div class="carteConstante"><!--
             --><div class="carteConstanteVolume"></div><!--
-            --><div class="carteConstanteValeur"><span>{{ valVol }}</span></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valVol)  'vol' }}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--
           --></div>{{/if}}
           {{#if valNrg}}<div class="carteConstante"><!--
             --><div class="carteConstanteEnergie"></div><!--
-            --><div class="carteConstanteValeur"><span>{{ valNrg }}</span></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valNrg)  'nrg' }}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--
           --></div>{{/if}}
           {{#if valSci}}<div class="carteConstante"><!--
             --><div class="carteConstanteScience"></div><!--
-            --><div class="carteConstanteValeur"><span>{{ valSci }}</span></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valSci)  'sci' }}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--
           --></div>{{/if}}    
         </div>
@@ -159,13 +161,21 @@
     </div>
 </template>
 <template name="PartieExpertiseRapport">
-    <!-- revoir validation de deck : 1) modifier niveau détail 2 :obtenir les cartes , 2) sauver dans partie ) faire l'affichage -->
     <ul class="rapport">
     {{#if erreurs._ }}
         {{#each erreurs._}}
         <li>{{concat "validation." constante }}</li>
         {{/each}}
     {{/if}}
+    {{#unless niveauDetailsCategorie}}
+        {{#unless niveauDetailsCartes}}
+            {{#if erreurs.isOk}}
+                {{_ "interface.rapport.isOK"}}
+            {{else}}
+                {{_ "interface.rapport.isKO"}}
+            {{/if}}
+        {{/unless}}
+    {{/unless}}
     {{#if niveauDetailsCategorie }}
         {{#each erreurs.categories }}
         <li><button class="categorieLien" data-categorieId="{{this}}">{{concat "categories." this }}</button></li>
@@ -188,7 +198,9 @@
         {{#if necessite }}
         <li>{{_ "interface.rapport.necessite" }} <button class="carteLien" data-carteId="{{carteId}}" >{{carte.carteId}} {{carte.intitule.fr}}</button></li>
         {{/if}}
-        
+        {{#if absurde }}
+        <li>{{_ "interface.rapport.absurde" }} <button class="carteLien" data-carteId="{{carteId}}" >{{carte.carteId}} {{carte.intitule.fr}}</button></li>
+        {{/if}}
        {{/each}} 
        
     {{/if}}
@@ -237,6 +249,62 @@
             <button id="addMessage" class="bouton">{{_ "interface.bouton.envoyer" }}</button>
         </div>
      </div>
+</template>
+<template name="PartieScore">
+    <ul class="rapport">
+    {{#each erreurs.evenementsFinaux }}
+        <li>{{_ "interface.rapport.evenement" }} <button class="evenementLien" data-eventId="{{_id}}" >{{intitule.fr}} : {{description.fr}}</button></li>
+    {{/each}} 
+    {{#if erreurs._ }}
+        {{#each erreurs._}}
+        <li>{{concat "validation." constante }}</li>
+        {{/each}}
+    {{/if}}
+    {{#unless niveauDetailsCategorie}}
+        {{#unless niveauDetailsCartes}}
+            {{#if erreurs.isOk}}
+                {{_ "interface.rapport.isOK"}}
+            {{else}}
+                {{_ "interface.rapport.isKO"}}
+            {{/if}}
+        {{/unless}}
+    {{/unless}}
+    {{#if niveauDetailsCategorie }}
+        {{#each erreurs.categories }}
+        <li><button class="categorieLien" data-categorieId="{{this}}">{{concat "categories." this }}</button></li>
+        {{/each}}
+    {{/if}}
+    {{#if niveauDetailsCartes }}
+        {{#each erreurs.cartes }}
+        {{#if tag }}
+        <li>{{_ "interface.rapport.tag" }}
+
+            <ul>{{#each cartes }}
+                <li><button class="carteLien" data-categorieId="{{categorie}}" data-carteId="{{carteId}}" >{{carteId}} {{intitule.fr}}</button></li>
+                {{/each}}
+            </ul>
+        </li>
+        {{/if}}
+        {{#if incompatible }}
+        <li>{{_ "interface.rapport.incompatible" }} <button class="carteLien" data-carteId="{{carteId}}" >{{carte.carteId}} {{carte.intitule.fr}}</button></li>
+        {{/if}}
+        {{#if necessite }}
+        <li>{{_ "interface.rapport.necessite" }} <button class="carteLien" data-carteId="{{carteId}}" >{{carte.carteId}} {{carte.intitule.fr}}</button></li>
+        {{/if}}
+        {{#if fiabilite }}
+        <li>{{_ "interface.rapport.fiabilite" }} <button class="carteLien" data-carteId="{{carteId}}" >{{carte.carteId}} {{carte.intitule.fr}}</button></li>
+        {{/if}}
+        {{#if energie }}
+        <li>{{_ "interface.rapport.energie" }} <button class="carteLien" data-carteId="{{carteId}}" >{{carte.carteId}} {{carte.intitule.fr}}</button></li>
+        {{/if}}
+        {{#if absurde }}
+        <li>{{_ "interface.rapport.absurde" }} <button class="carteLien" data-carteId="{{carteId}}" >{{carte.carteId}} {{carte.intitule.fr}}</button></li>
+        {{/if}}
+       {{/each}} 
+       
+    {{/if}}
+    </ul>
+    <p class="scoreFinal"><label>{{_ "interface.rapport.score" }}</label> {{score}}</p>
 </template>
 <template name="UserAutoComplete">
     ({{username}}) {{profile.firstname}} {{profile.lastname}}

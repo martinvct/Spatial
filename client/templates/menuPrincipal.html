@@ -8,6 +8,7 @@
 			<li><button id="aide">{{_ "interface.bouton.aide" }}</button></li>
 		</ul>
 	</div>
+
 </template>
 <template name="Config">
 	<div id="menuMain">
@@ -18,4 +19,21 @@
 			<li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
 		</ul>
 	</div>
+</template>
+<template name="Scores">
+	<button class="lien" id="retour">{{_ "interface.bouton.retour" }}</button>
+	{{#unless scores}}<p>{{_ "interface.scores.aucunScore"}}</p>{{/unless}}
+	<ol>
+		{{#each scores }}
+		<li>
+			<img id="avatarMinified" src="{{#if user.profile.avatar}} {{user.profile.avatar}} {{else}} /avatar-75.png {{/if}}"/>
+			<div class="scoreInfo">{{ user.profile.lastname }}</div>
+			<div class="scoreInfo">{{ user.profile.firstname }}</div>
+			<div class="scoreInfo">{{ partie.score }}</div>
+			<div class="scoreInfo">{{ partie.budget }}</div>
+			<div class="scoreInfo">{{ partie.science }}</div>
+			<div class="scoreInfo">{{ partie.tempsTotal }}</div>
+		</li>
+		{{/each}}
+	</ol>
 </template>

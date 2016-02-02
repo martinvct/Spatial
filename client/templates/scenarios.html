@@ -214,9 +214,8 @@
 	</div>
 </template>
 <template name="ViewScenario">
-	<form method="post">
-		<input type="hidden" name="_id" id="_id" value="{{ scenario._id }}" />
-		<h2>{{_ "interface.viewScenario" intitule=scenario.intitule}}</h2>
+	
+		<h2>{{_ "interface.viewScenario" intitule=scenario.intitule}} {{partieId}}</h2>
 
 		<h3>{{_ "interface.scenario.infos" }}</h3>
 		<div class="scenarioParametre">
@@ -249,10 +248,17 @@
 		</div>
 		<div class="scenarioParametre">
 			{{#each planetes}}
-				<input type="checkbox" name="planetes" id="planete_{{ planeteId }}" value="{{ planeteId }}" {{isPlaneteChecked planeteId scenario.initialisation.planetes}} />
+				{{#if hasPartieId}}<input type="radio" name="planetes" id="planete_{{ planeteId }}" value="{{ planeteId }}" {{isPlaneteChecked planeteId scenario.initialisation.planetes}} />{{/if}}
 				<label for="planete_{{ planeteId }}">{{nomPlanete planeteId }}</label>
 			{{/each}}
 
+		</div>
+		<div class="toolbarForm">
+			<ul>
+				{{#if hasPartieId}}
+					<li><button id="savePlanetePartie">{{_ "interface.bouton.sauver" }}</button></li>
+				{{/if}}
+			</ul>
 		</div>
 		<h3>{{_ "interface.scenario.construction" }}</h3>
 		<div class="scenarioParametre">
@@ -337,10 +343,6 @@
 			<label for="ptsParTps">{{_ "interface.scenario.ptsParTps" }}</label>
 			<span>{{ scenario.score.ptsParTps }}</span>
 		</div>
-	</form>
-	<div class="toolbarForm">
-		<ul>
-			<li><button id="saveScenario">{{_ "interface.bouton.sauver" }}</button></li>
-		</ul>
-	</div>
+	
+	
 </template>

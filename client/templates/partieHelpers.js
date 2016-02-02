@@ -25,6 +25,48 @@ if (Meteor.isClient) {
 		if(percent > 0)	return 100 * percent;
 		return 10;
 	});
+	Template.registerHelper('getValeurDeRegle', function(valeurStr){
+		return getValeurDeRegle(Session.get("sPartieId"), valeurStr);
+	});
+	Template.registerHelper('formatValeurRegle', function(valeur, unite){
+		if(unite == "pds"){
+			if(valeur < 10000){
+				return valeur + " <span class='valUnite'>gr"+"</span>";
+			} 
+			if(valeur < 10000000){
+				if(Math.round(valeur / 1000) != (valeur / 1000)) return "~"+(valeur / 1000)+ " <span class='valUnite'>kg"+"</span>";
+				return (valeur / 1000)+ " <span class='valUnite'>kg"+"</span>";
+			}
+			if(Math.round(valeur / 100000000) != (valeur / 1000000)) return "~"+(valeur / 1000000)+ " <span class='valUnite'>T"+"</span>";
+			return (valeur / 1000000)+ " <span class='valUnite'>T"+"</span>";
+		}
+		if(unite == "vol"){
+			if(valeur < 10000){
+				return valeur + " <span class='valUnite'>mm";
+			} 
+			if(valeur < 10000000){
+				if(Math.round(valeur / 1000) != (valeur / 1000)) return "~"+(valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
+				return (valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
+			}
+			if(Math.round(valeur / 100000000) != (valeur / 1000000)) return "~"+(valeur / 1000000)+ " <span class='valUnite'>km"+"</span>";
+			return (valeur / 1000000)+ " <span class='valUnite'>km"+"</span>";
+		}
+		switch(unite){
+			case "eur": unite = "€"; break;
+			case "nrg": unite = "W"; break;
+			case "sci": unite = ""; break;
+		}
+		if(valeur < 10000){
+			return valeur + " <span class='valUnite'>"+unite+"</span>";
+		} 
+		if(valeur < 10000000){
+			if(Math.round(valeur / 1000) != (valeur / 1000)) return "~"+(valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
+			return (valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
+		}
+		if(Math.round(valeur / 1000000) != (valeur / 1000000)) return "~"+(valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
+		return (valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
+	});
+
 	Template.Partie.onCreated(function(){
 		this.templateDictionary = new ReactiveDict();
 		this.templateDictionary.set('currentPartie', this.data.partieId);
@@ -32,6 +74,10 @@ if (Meteor.isClient) {
 		this.templateDictionary.set('currentTemplate', 'partieTest');
 		this.templateDictionary.set('currentScenarioObj', Scenarios.findOne({_id: Template.instance().templateDictionary.get('currentScenario')}));
 		this.templateDictionary.set('currentCategorie',"");
+		initTimer(this.data.partieId);		
+	});
+	Template.Parties.onCreated(function(){
+		saveTimer();
 	});
 	Template.Parties.helpers({
 		parties: function(){
@@ -102,15 +148,19 @@ if (Meteor.isClient) {
 		},
 		'click #partieScenario': function(event){
 			Template.instance().templateDictionary.set('currentTemplate', 'ViewScenario');
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #partieLanceur': function(event){
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieLanceur');
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #partieOrbite': function(event){
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieOrbite');
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #partieMagasin': function(event){
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategories');
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #partieExpertise': function(event){
 			var partie = Parties.findOne({_id: Template.instance().templateDictionary.get('currentPartie')});
@@ -119,10 +169,11 @@ if (Meteor.isClient) {
 			} else {
 				Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseConfirmation');
 			}
-			
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #appelExpertConfirmation': function(event){
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseConfirmation');
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #partieCollaboration': function(event){
 			var partie = Parties.findOne({_id: Template.instance().templateDictionary.get('currentPartie')});
@@ -131,6 +182,7 @@ if (Meteor.isClient) {
 			} else {
 				Template.instance().templateDictionary.set('currentTemplate', 'PartieCollaborationConfirmation');
 			}
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click div.carte': function(event){
 			var carteId = $(event.currentTarget).attr("data-carteId");
@@ -141,6 +193,7 @@ if (Meteor.isClient) {
 				Meteor.call("addCarteToDeck", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), this, Session.get("dateModif"));
 				//$(event.currentTarget).addClass("isDeck");
 			}
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click .partieCategorie': function(event){
 			Template.instance().templateDictionary.set('currentCategorie', this[0]);
@@ -156,6 +209,7 @@ if (Meteor.isClient) {
 				}
 				
 			}
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'input #partiePctLanceur': function(event){
 			event.stopPropagation();
@@ -165,6 +219,7 @@ if (Meteor.isClient) {
 		'click #appelExpert': function(event){
 			Meteor.call("callExpert", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Session.get("dateModif"));
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseRapport');
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #dernierExpert': function(event){
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseRapport');
@@ -173,9 +228,11 @@ if (Meteor.isClient) {
 			if($('#newMessage').val().length > 0){
 				Meteor.call("addMessage",Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), $('#newMessage').val(), Session.get("dateModif"));
 			}
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #messages': function(event){
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieCollaborationMessages');
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #appelPeer': function(event){
 		},
@@ -188,6 +245,11 @@ if (Meteor.isClient) {
 			Template.instance().templateDictionary.set('currentCategorie', this.categorie);
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategorie');
 			Template.instance().templateDictionary.set('currentLocationHash', '');
+		},
+		'click #partieLancement': function(event){
+			Meteor.call("lancementProjet", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Session.get("dateModif"));
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieScore');
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		}
 	});
 	Template.PartieHeader.helpers({
@@ -199,13 +261,14 @@ if (Meteor.isClient) {
 			
 			if(Template.parentData(0).partie.cubesat) return true;
 			if(!Template.parentData(0).partie.planete){
-				var scenario = Template.instance().templateDictionary.get('currentScenarioObj');
+				var scenario = Scenarios.findOne({_id : Template.parentData(0).partie.scenarioId});
 				if(scenario.initialisation.planetes.length == 1){
 					Meteor.call("setPlaneteToPartie", Template.parentData(0).partie, scenario, (_.findWhere(Planetes, {planeteId: scenario.intialisation.planetes[0]})));
 					return true;
 				}
+				return false;
 			}
-			return false;
+			return true;
 		},
 		hasLanceur: function(){
 			if(_.find(Template.parentData(0).partie.deck.cartes, function(obj){ return (_.indexOf(obj.tags, "lanceur") > -1); })) return true;
@@ -344,6 +407,20 @@ if (Meteor.isClient) {
 				messageItems.push({typeItem: "message", message: Template.instance().data.partie.chat[m].message, date: Template.instance().data.partie.chat[m].dateTime, pair:{ username: usrObject.profile.username, firstname: usrObject.profile.firstname, lastname: usrObject.profile.lastname, avatar: usrObject.profile.avatar}});
 			}
 			return (_.sortBy(messageItems, "date")).reverse();
+		}
+	});
+	Template.PartieScore.helpers({
+		erreurs: function(){
+			return Template.instance().data.partie.rapportFinal;
+		},
+		score: function(){
+			return Template.instance().data.partie.score;
+		},
+		niveauDetailsCategorie: function(){
+			return (Template.instance().data.scenario.validation.niveauDetails == 1);
+		},
+		niveauDetailsCartes: function(){
+			return (Template.instance().data.scenario.validation.niveauDetails == 2);
 		}
 	});
 }

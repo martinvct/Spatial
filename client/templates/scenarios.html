@@ -16,7 +16,7 @@
 		<div class="illustrationScenario"></div>
 		<div class="infosScenario">
 			<div class="titreScenario"><button class="lien" data-scenarioId="{{ _id }}" >{{intitule}}</button></div>
-			<div class="descScenario">{{description}}</div>
+			<div class="descScenario">{{{description}}}</div>
 			<div class="tagsScenario">
 				<span class="tagScenario">{{_ "interface.budget" }}: {{convertir initialisation.budget "EUR"}}€</span>
 				{{#if initialisation.cubesat }}
@@ -195,7 +195,7 @@
 		<div class="illustrationScenario"></div>
 		<div class="infosScenario">
 			<div class="titreScenario"><button class="lien" data-scenarioId="{{ _id }}" >{{intitule}}</button></div>
-			<div class="descScenario">{{description}}</div>
+			<div class="descScenario">{{{description}}}</div>
 			<div class="tagsScenario">
 				<span class="tagScenario">{{_ "interface.budget" }}: {{convertir initialisation.budget "EUR"}}€</span>
 				{{#if initialisation.cubesat }}
@@ -255,9 +255,9 @@
 		</div>
 		<div class="toolbarForm">
 			<ul>
-				{{#if hasPartieId}}
+				{{#if hasPartieId}}{{#if planetes}}
 					<li><button id="savePlanetePartie">{{_ "interface.bouton.sauver" }}</button></li>
-				{{/if}}
+				{{/if}}{{/if}}
 			</ul>
 		</div>
 		<h3>{{_ "interface.scenario.construction" }}</h3>

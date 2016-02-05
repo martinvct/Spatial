@@ -1,18 +1,14 @@
 Meteor.startup(function(){
 
-
+  Accounts.config({
+    forbidClientAccountCreation: true
+  });
 
 
   // If this is the first user going into the database, make them an admin
   if (Meteor.users.find().count() === 0) {
   	Accounts.createUser({username: "admin", email: "vincent.martin@ulg.ac.be", password: "M@st3r", profile: { username: "admin", firstname: "Jean", lastname:"Martin" }});
   }
-
-  Accounts.config({
-    forbidClientAccountCreation: true
-  });
-
-
 });
 
 Accounts.onCreateUser(function(options, user){
@@ -51,6 +47,3 @@ LDAP_DEFAULTS.defaultDomain= false;
 LDAP_DEFAULTS.searchResultsProfileMap= [{resultKey:'uid', profileProperty:'username'}, {resultKey:'mail', profileProperty:'email'}, {resultKey:'givenName', profileProperty:'firstname'}, {resultKey:'sn', profileProperty:'lastname'}]; 
 LDAP_DEFAULTS.base= 'ou=people,dc=ulg,dc=ac,dc=be'; 
 LDAP_DEFAULTS.search= '(objectclass=*)';
- 
-
-//TODO : ajouter lors d'un login d'un user: profile.lastLogin est la date de la dernière connexion !

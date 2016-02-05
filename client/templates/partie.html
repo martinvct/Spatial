@@ -17,9 +17,9 @@
             <div class="titrePartie"><button class="lien" data-partieId="{{ _id }}"  data-scenarioId="{{ scenarioId }}">{{nom}}</button></div>
             <div class="descPartie">{{scenario.intitule}}</div>
             <div class="tagsPartie">
-                <span class="tagPartie">{{_ "interface.budget" }}: {{formatValeurRegle deck.budget "eur"}}</span>
+                <span class="tagPartie">{{_ "interface.budget" }}: {{{formatValeurRegle deck.budget "eur"}}}</span>
                 {{#if cubesat }}
-                    <span class="tagPartie">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{formatValeurRegle scenario.initialisation.cubesatLimites.poidsMax "pds"}}, {{_ "interface.volumeMax"}}: {{formatValeurRegle scenario.initialisation.cubesatLimites.volumeMax "vol"}})</span>
+                    <span class="tagPartie">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{{formatValeurRegle scenario.initialisation.cubesatLimites.poidsMax "pds"}}}, {{_ "interface.volumeMax"}}: {{{formatValeurRegle scenario.initialisation.cubesatLimites.volumeMax "vol"}}})</span>
                 {{else}}
                     <span class="tagPartie">{{_ "interface.objectif" }}: {{tr "interface.objectifs." objectif}} {{#if planete}}, {{_ "interface.planetes"}}: {{nomPlanete planete.planeteId}} {{/if}}</span>
                 {{/if}}
@@ -27,7 +27,7 @@
         </div>
         <div class="statsPartie">
             <ul>
-                <li><span class="label">{{_ "interface.dateModif" }}</span>: <span class="info">{{formatDate dateModif "MM/DD/YYYY"}}</span></li>
+                <li><span class="label">{{_ "interface.dateModif" }}</span>: <span class="info">{{formatDate dateModif "DD/MM/YYYY"}}</span></li>
                 <li><span class="label">{{_ "interface.tpsTotal" }}</span>: <span class="info">{{ tempsTotal }}</span></li>
                 {{#if finie }}
                 <li><span class="label">{{_ "interface.finie" }}</span>: <span class="info">{{ score }}</span></li>
@@ -70,7 +70,7 @@
             <li><button id="partieBudget" class="iconeConstante {{getIconeConstante 'euro-rd' partie.deck.budgetMax partie.deck.budget}}" title="{{_ 'interface.bouton.constanteBudget' }}"></button><span id="partieBudgetConstante" class="partieConstante">{{{formatValeurRegle partie.deck.budget 'eur'}}}</span></li>
             <li><button id="partieEnergie" class="iconeConstante {{getIconeConstante 'nrj-rd' partie.deck.energieMax partie.deck.energie}}" title="{{_ 'interface.bouton.constanteEnergie' }}"></button><span id="partieEnergieConstante" class="partieConstante">{{{formatValeurRegle partie.deck.energie 'nrg'}}}</span></li>
             <li><button id="partiePoids" class="iconeConstante {{getIconeConstante 'Kg-rd' partie.deck.poidsMax partie.deck.masse}}" title="{{_ 'interface.bouton.constantePoids' }}"></button><span id="partiePoidsConstante" class="partieConstante">{{{formatValeurRegle partie.deck.masse 'pds'}}}</span></li>
-            <li><button id="partieVolume" class="iconeConstante {{getIconeConstante 'cm-rd' partie.deck.volumeMax partie.deck.volume}}" title="{{_ 'interface.bouton.constanteVolume' }}"></button><span id="partieVolumeConstante" class="partieConstante">{{{formatValeurRegle partie.deck.volume 'vol'}}}</span></li>
+            {{#if partie.cubesat}}<li><button id="partieVolume" class="iconeConstante {{getIconeConstante 'cm-rd' partie.deck.volumeMax partie.deck.volume}}" title="{{_ 'interface.bouton.constanteVolume' }}"></button><span id="partieVolumeConstante" class="partieConstante">{{{formatValeurRegle partie.deck.volume 'vol'}}}</span></li>{{/if}}
             <li><button id="partieScience" class="iconeConstante star-rd4" title="{{_ 'interface.bouton.constanteScience' }}"></button><span id="partieScienceConstante" class="partieConstante">{{{formatValeurRegle partie.deck.science 'sci'}}}</span></li>
             <li><button id="partieBudgetLanceur" class="iconeConstante {{getIconeConstante 'L-rd' 10 partie.budgetLanceur }}" title="{{_ 'interface.bouton.constantePcLanceur' }}"></button><span id="budgetLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span></li>
         </ul>
@@ -108,7 +108,7 @@
 </template>
 <template name="Carte">
     <div id="{{carteId}}" class="carte {{isDeck}}" data-carteId="{{ carteId }}" ><!--
-        --><div class="carteIntitule {{ categorie }}"><div class="intitule"><span>{{ intitule.fr }}</span></div><div class="carteId">{{ carteId }}</div><div class="carteCopyright">{{ copyright }}</div></div><!--
+        --><div class="carteIntitule {{ categorie }}"><div class="intitule"><span>{{ intitule.fr }}</span></div><div class="carteId">{{ carteId }}</div><div class="carteCopyright">&copy; {{ copyright }}</div></div><!--
         --><div class="carteIllustration"><img src="{{illustration carteId cubesat}}" /></div><!--
         --><div class="carteDescription">{{ description.fr }}</div><!--
         --><div class="carteConstantes {{ categorie }}">

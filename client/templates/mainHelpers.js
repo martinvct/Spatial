@@ -45,22 +45,37 @@ if (Meteor.isClient) {
 	});
 	Template.Login.events({
 	    'click button.loginWithLDAP': function (event, template) {
-	        Meteor.loginWithLDAP(template.find('#login').value, template.find('#password').value, { dn: "uid=" + template.find('#login').value + ",ou=people,dc=ulg,dc=ac,dc=be" }, function(err){
-	          if(err){
-	            if(! Meteor.userId()){
-	              Meteor.loginWithPassword(template.find('#login').value, template.find('#password').value,  function(err) { 
-	              	if (err) return throwError("login_echoue", TAPi18n.__("error.login_echoue")); 
-	              	var currUser = Meteor.user();
-	           	  	var now      = new Date();
-	           	  	Meteor.users.update({_id: currUser._id},{$set: {"profile.lastlogin": now}});
-	              });
-	            }
-	           } else {
-	           	  var currUser = Meteor.user();
-	           	  var now      = new Date();
-	           	  Meteor.users.update({_id: currUser._id},{$set: {"profile.lastlogin": now}});
-	           }
-	        });   
+	        console.log("Tentative de login...");
+	        console.log("username: "+ template.find('#login').value);
+	        console.log("password: "+ template.find('#password').value);
+	        try {
+		        Meteor.loginWithLDAP(template.find('#login').value, template.find('#password').value, { dn: "uid=" + template.find('#login').value + ",ou=people,dc=ulg,dc=ac,dc=be" }, function(err){
+		          if(err){
+		          	console.log("WithLDAP Erreur");
+		            if(! Meteor.userId()){
+		              console.log("Tentative de login interne...");	
+		              try {
+			              Meteor.loginWithPassword(template.find('#login').value, template.find('#password').value,  function(erreur) { 
+			              	if (erreur) { console.log("login interne erreur"); throwError("login_echoue", TAPi18n.__("error.login_echoue")); }
+			              	else {
+				              	var currUser = Meteor.user();
+				           	  	var now      = new Date();
+				           	  	Meteor.users.update({_id: currUser._id},{$set: {"profile.lastlogin": now}});
+				           	}
+			              });
+			          } catch(ex){
+
+		    		  }    
+		            }
+		           } else {
+		           	  var currUser = Meteor.user();
+		           	  var now      = new Date();
+		           	  Meteor.users.update({_id: currUser._id},{$set: {"profile.lastlogin": now}});
+		           }
+		        });
+		    } catch(e){
+
+		    }   
 	    },
 	    'click button.loginWithFaceBook': function(event){ //voir : http://bulenttastan.net/login-with-facebook-using-meteor-js/
 	    	Meteor.loginWithFacebook({}, function(err){

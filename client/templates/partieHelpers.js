@@ -30,6 +30,46 @@ if (Meteor.isClient) {
 	});
 	Template.registerHelper('formatValeurRegle', function(valeur, unite){
 		if(unite == "pds"){
+			if(valeur < 1000){
+				return valeur + " <span class='valUnite'>gr"+"</span>";
+			} 
+			if(valeur < 1000000){
+				if(Math.round(valeur / 1000) != (valeur / 1000)) return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>kg"+"</span>";
+				return (valeur / 1000)+ " <span class='valUnite'>kg"+"</span>";
+			}
+			if(Math.round(valeur / 1000000) != (valeur / 1000000)) return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>T"+"</span>";
+			return (valeur / 1000000)+ " <span class='valUnite'>T"+"</span>";
+		}
+		if(unite == "vol"){
+			if(valeur < 1000){
+				return valeur + " <span class='valUnite'>";
+			} 
+			if(valeur < 1000000){
+				if(Math.round(valeur / 1000) != (valeur / 1000)) return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
+				return (valeur / 1000)+ " <span class='valUnite'>"+"</span>";
+			}
+			if(Math.round(valeur / 1000000) != (valeur / 1000000)) return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>km"+"</span>";
+			return (valeur / 1000000)+ " <span class='valUnite'>"+"</span>";
+		}
+		switch(unite){
+			case "eur": unite = ""; break;
+			case "nrg": unite = ""; break;
+			case "sci": unite = ""; break;
+		}
+		if(valeur < 1000){
+			return valeur + " <span class='valUnite'>"+unite+"</span>";
+		} 
+		if(valeur < 1000000){
+			if(Math.round(valeur / 1000) != (valeur / 1000)) return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
+			return (valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
+		}
+		if(Math.round(valeur / 1000000) != (valeur / 1000000)) return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
+		return (valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
+	});
+	/*
+
+	Template.registerHelper('formatValeurRegle', function(valeur, unite){
+		if(unite == "pds"){
 			if(valeur < 10000){
 				return valeur + " <span class='valUnite'>gr"+"</span>";
 			} 
@@ -66,6 +106,7 @@ if (Meteor.isClient) {
 		if(Math.round(valeur / 1000000) != (valeur / 1000000)) return "~"+(valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
 		return (valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
 	});
+	*/
 
 	Template.Partie.onCreated(function(){
 		this.templateDictionary = new ReactiveDict();

@@ -221,7 +221,7 @@
 		"carte_enregistree": "La carte %s est enregistrée",
 		"evenement_enregistre": "L'évènement %s est enregistré",
 		"partie_supprimee": "La partie ' __partie__ ' est supprimée.",
-		"scenario_enregistre": "Le scénario est enregistré"
+		"scenario_enregistre": "Le scénario est enregistré: %s"
 	},
 	"planetes": {
 		"MERCURE": "Mercure",

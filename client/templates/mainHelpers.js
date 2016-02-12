@@ -143,26 +143,6 @@ if (Meteor.isClient) {
 			Router.go('Home');
 		}
 	});
-	Template.ConfigUtilisateurs.helpers({
-		utilisateurs: function(){
-			if(Session.get("filtreUtilisateurs")) {
-				var pattern = "/"+Session.get("filtreUtilisateurs")+"/i";
-				return Meteor.users.find({$or:[{"profile.username": {$regex: pattern}}, {"profile.firstname": {$regex: pattern}}, {"profile.lastname": {$regex: pattern}}, {"profile.email": {$regex: pattern}}]},{services: 0, sort: {"profile.lastname": 1, "profile.firstname" :1}}); //.sort("profile.lastname": 1, "profile.firstname" :1);
-			}
-			return Meteor.users.find();
-		},
-		filtreUtilisateurs: function(){
-			return Session.get("filtreUtilisateurs");
-		}
-	});
-	Template.ConfigUtilisateurs.events({
-		'click #retour': function(event){
-			Router.go('Config');
-		},
-		'change #filtreUtilisateurs': function(event){
-			Session.set("filtreUtilisateurs", $('#filtreUtilisateurs').val());
-		}
-	});
 	Template.ConfigScenarios.helpers({
 		scenarios: function(){
 			return Scenarios.find();
@@ -390,4 +370,5 @@ if (Meteor.isClient) {
 						
 		}
 	});
+
 }

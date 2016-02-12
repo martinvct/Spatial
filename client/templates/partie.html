@@ -60,7 +60,7 @@
             <li><button id="partieMagasin" class="image" title="{{_ 'interface.bouton.magasin'}}" ></button></li>
             <li><button id="partieCollaboration" class="image" title="{{_ 'interface.bouton.collaboration'}}" ></button></li>
             <li><button id="partieExpertise" class="image" title="{{_ 'interface.bouton.expertise'}}" ></button></li>
-            <li><button id="partieLancement" class="image" title="{{_ 'interface.bouton.lancement'}}" ></button></li>
+            <li><button id="partieLancementConfirmation" class="image" title="{{_ 'interface.bouton.lancement'}}" ></button></li>
             {{/if}}
             {{/if}}
         </ul>
@@ -247,8 +247,14 @@
         <div class="newMessage">
             <textarea class="newMessage" id="newMessage" placeholder="{{_ 'interface.collaboration.nouveauMessage'}}"></textarea>
             <button id="addMessage" class="bouton">{{_ "interface.bouton.envoyer" }}</button>
+            <button id="appelPeerConfirmation" class="bouton">{{_ "interface.bouton.appelPeer" }}</button>
         </div>
      </div>
+</template>
+<template name="PartieLancementConfirmation">
+    {{{_ "interface.confirmationLancement"}}}
+    <br />
+    <button id="partieLancement" class="bouton">{{_ 'interface.bouton.lancement'}}</button>
 </template>
 <template name="PartieScore">
     <ul class="rapport">

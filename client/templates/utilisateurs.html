@@ -1,19 +1,109 @@
 <template name="ConfigUtilisateurs">
-	<button class="lien" id="retour">{{_ "interface.bouton.retour" }}</button>
+	<div class="toolbarForm">
+		<ul>
+			<li><button id="addUtilisateur">{{_ "interface.bouton.addUtilisateur" }}</button></li>
+			<li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+		</ul>
+	</div>
 	<div class="filtreUtilisateurs">
-		<label for="filtreUtilisateurs">{{_ "interface_filtre"}}</label>
+		<label for="filtreUtilisateurs">{{_ "interface.utilisateur.filtre"}}</label>
 		<input type="text" id="filtreUtilisateurs" name="filtreUtilisateurs" value="{{ filtreUtilisateurs }}"/>
 	</div>
+	{{> ConfigListUtilisateurs }}
+</template>
+<template name="ConfigListUtilisateurs">	
+	<table class="utilisateurs">
+		<thead>
+			<tr>
+				<th class="ptCol"><input type="checkbox" name="utilisateursSelectAll" value="" id="utilisateursSelectAll"/></th>
+				<th>{{_ "interface.utilisateur.username"}}</th>
+				<th>{{_ "interface.utilisateur.firstname"}}</th>
+				<th>{{_ "interface.utilisateur.lastname"}}</th>
+				<th>{{_ "interface.utilisateur.lastLogin"}}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
 	{{#each utilisateurs}}
 		{{> ConfigUtilisateur }}
 	{{/each}}
+		</tbody>
+	</table>
 </template>
 <template name="ConfigUtilisateur">
-	<div class="utilisateur">
-		<div class="utilisateurAvatar"><img class="utilisateurAvatar" src="{{#if avatar}} {{avatar}} {{else}} /defaultAvatar.png {{/if}}" /></div>
-		<div class="utilisateurInfo">{{ username }}</div>
-		<div class="utilisateurInfo">{{ profile.firstname }}</div>
-		<div class="utilisateurInfo">{{ profile.lastname }}</div>
-		<div class="utilisateurInfo">({{_ "interface.lastLogin"}}: {{formatDate profile.lastlogin "DD/MM/YYYY HH:mm"}})</div>
-	</div>
+	<tr class="utilisateur">
+		<td class="ptCol"><input type="checkbox" value="{{_id}}" id="utilisateurChkbox{{_id}}" name="utilisateursChkboxes"/></td>
+		<td class="lien" data-utilisateurId="{{ _id }}">
+			<div class="utilisateurAvatar"><img class="utilisateurAvatar" src="{{#if avatar}} {{avatar}} {{else}} /defaultAvatar.png {{/if}}" /></div>
+			<div class="utilisateurInfo">{{ username }}</div>
+		</td>	
+		<td><div class="utilisateurInfo">{{ profile.firstname }}</div></td>
+		<td><div class="utilisateurInfo">{{ profile.lastname }}</div></td>
+		<td class="notMobile"><div class="utilisateurInfo">{{formatDate profile.lastlogin "DD/MM/YYYY HH:mm"}}</div></td>
+	</tr>
+</template>
+<template name="ConfigEditUtilisateur">
+	<form method="post">
+		<input type="hidden" name="_id" id="_id" value="{{ utilisateur._id }}" />
+		<h2>{{#if utilisateur}} {{_ "interface.editionUtilisateur" username=utilisateur.username}} {{else}} {{_ "interface.nouveauUtilisateur" }} {{/if}}</h2>
+
+		<div class="utilisateurParametre">
+			<label for="username" class="required">{{_ "interface.utilisateur.username" }}</label>
+			<input type="text" class="longText" id="username" name="username" value="{{ utilisateur.username }}" placeholder="{{_ 'interface.utilisateur.username' }}"/>
+		</div>
+		<div class="utilisateurParametre">
+			<label for="firstname" class="required">{{_ "interface.utilisateur.firstname" }}</label>
+			<input type="text" class="longText" id="firstname" name="firstname" value="{{ utilisateur.profile.firstname }}" placeholder="{{_ 'interface.utilisateur.firstname' }}"/>
+		</div>
+		<div class="utilisateurParametre">
+			<label for="lastname" class="required">{{_ "interface.utilisateur.lastname" }}</label>
+			<input type="text" class="longText" id="lastname" name="lastname" value="{{ utilisateur.profile.lastname }}" placeholder="{{_ 'interface.utilisateur.lastname' }}"/>
+		</div>
+		<div class="utilisateurParametre">
+			<label for="email" class="required">{{_ "interface.utilisateur.email" }}</label>
+			<input type="text" class="longText" id="email" name="email" value="{{ utilisateur.profile.email }}" placeholder="{{_ 'interface.utilisateur.email' }}"/>
+		</div>
+		<div class="utilisateurParametre">
+			<label for="password" class="required">{{_ "interface.utilisateur.password" }}</label>
+			<input type="text" class="longText" id="password" name="password" value="{{ utilisateur.password }}" placeholder="{{_ 'interface.utilisateur.password' }}"/>
+		</div>
+		<div class="utilisateurParametre">
+			<label for="passwordConf" class="required">{{_ "interface.utilisateur.passwordConf" }}</label>
+			<input type="text" class="longText" id="passwordConf" name="passwordConf" value="{{ utilisateur.passwordConf }}" placeholder="{{_ 'interface.utilisateur.passwordConf' }}"/>
+		</div>
+		<div class="scenarioParametre">
+			<label for="admin">{{_ "interface.utilisateur.admin"}}</label>
+			<input type="checkbox" id="admin" name="admin" value="1" {{isChecked utilisateur.profile.admin}} />
+		</div>
+	</form>
+	<div class="toolbarForm">
+		<ul>
+			<li><button id="saveUtilisateur">{{_ "interface.bouton.sauver" }}</button></li>
+			<li><button id="delUtilisateur">{{_ "interface.bouton.supprimer" }}</button></li>
+			<li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+		</ul>
+	</div>	
+</template>
+<template name="RecoverPassword">
+	{{#if resetPassword}}
+		<form id="set-new-password" method="post">
+			<div class="utilisateurParametre">
+				<label for="password" class="required">{{_ "interface.utilisateur.password" }}</label>
+				<input type="text" class="longText" id="password" name="password" value="{{ utilisateur.password }}" placeholder="{{_ 'interface.utilisateur.password' }}"/>
+			</div>
+			<div class="utilisateurParametre">
+				<label for="passwordConf" class="required">{{_ "interface.utilisateur.passwordConf" }}</label>
+				<input type="text" class="longText" id="passwordConf" name="passwordConf" value="{{ utilisateur.passwordConf }}" placeholder="{{_ 'interface.utilisateur.passwordConf' }}"/>
+			</div>
+			<button id="ok">{{_ "interface.bouton.ok" }}</button>
+		</form>
+	{{else}}
+		<form id="forgot-password" method="post">
+			<div class="utilisateurParametre">
+				<label for="email" class="required">{{_ "interface.utilisateur.email" }}</label>
+				<input type="text" class="longText" id="email" name="email" value="{{ utilisateur.profile.email }}" placeholder="{{_ 'interface.utilisateur.email' }}"/>
+			</div>
+			<button id="ok">{{_ "interface.bouton.ok" }}</button>
+		</form>
+	{{/if}}
 </template>

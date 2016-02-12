@@ -276,6 +276,15 @@ if (Meteor.isClient) {
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #appelPeer': function(event){
+			if($('#peer').val().length > 0){
+				Meteor.call("callPeer", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), $('#peer').val() , Session.get("dateModif"));
+				saveTimer(Template.instance().templateDictionary.get('currentPartie'));
+			}
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieCollaborationMessages');		
+		},
+		'click #appelPeerConfirmation' : function(event){
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieCollaborationConfirmation');
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click .carteLien': function(event){
 			Template.instance().templateDictionary.set('currentCategorie', this.categorie);
@@ -286,6 +295,10 @@ if (Meteor.isClient) {
 			Template.instance().templateDictionary.set('currentCategorie', this.categorie);
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategorie');
 			Template.instance().templateDictionary.set('currentLocationHash', '');
+		},
+		'click #partieLancementConfirmation': function(event){
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieLancementConfirmation');
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #partieLancement': function(event){
 			Meteor.call("lancementProjet", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Session.get("dateModif"));

@@ -7,18 +7,19 @@ Meteor.startup(function(){
 
   // If this is the first user going into the database, make them an admin
   if (Meteor.users.find().count() === 0) {
-  	Accounts.createUser({username: "admin", email: "vincent.martin@ulg.ac.be", password: "M@st3r", profile: { username: "admin", firstname: "Jean", lastname:"Martin" }});
+  	Accounts.createUser({username: "admin", password: "M@st3r", profile: { username: "admin", firstname: "Jean", lastname:"Martin", email: "vincent.martin@ulg.ac.be", admin: true }});
   }
 });
 
 Accounts.onCreateUser(function(options, user){
-	if (Meteor.users.find().count() === 0){
-		user.admin = true;
-	}
-
 	if (options.profile) user.profile = options.profile;
   user.profile.pattern = user.username+" "+user.profile.firstname+" "+user.profile.lastname;
 	return user;
+});
+
+Accounts.validateNewUser(function(user){
+
+  return true;
 });
 
 Meteor.publish("getMyProfile", function(){

@@ -36,6 +36,7 @@
 	"interface": {
 		"bouton": {
 			"addScenario": "Nouveau Scénario",
+			"addUtilisateur": "Ajouter utilisateur",
 			"aide": "Aide",
 			"appelExpert": "Appeler un expert",
 			"appelPeer": "Appeler un pair",
@@ -75,9 +76,11 @@
 			"rechercherPeer": "Nom ou identifiant",
 			"reponse": "Réponse de"
 		},
+		"confirmationLancement":"Le lancement de la mission est irréversible.",
 		"cubesat": "CubeSat",
 		"dateModif": "Mise à jour",
 		"editionScenario": "Edition du scénario __intitule__",
+		"editionUtilisateur": "Edition de l'utilisateur __username__",
 		"expertise":{
 			"appelExpert" : "Appel à un expert",
 			"appelExpertDescription": "L'expert fournit un rapport plus ou moins détaillé de la validité de votre mission.",
@@ -95,6 +98,7 @@
 			"afficherTout": "Tout afficher"
 		},
 		"nouveauScenario": "Création d'un nouveau scénario",
+		"nouveauUtilisateur": "Création d'un utilisateur",
 		"motDePasse": "Mot de passe",
 		"objectif": "Objectif",
 		"objectifs": {
@@ -184,16 +188,28 @@
 		"test" : "Vous avez appuyé sur le bouton __n__ fois",
 		"tpsTotal" : "Temps",
 		"U": "U",
+		"utilisateur": {
+			"admin": "Administrateur",
+			"email": "Courriel",
+			"filtre": "Recherche",
+			"firstname": "Prénom",
+			"lastLogin": "Dernière connexion",
+			"lastname": "Nom",
+			"password": "Mot de passe",
+			"passwordConf": "Confirmation mot de passe",
+			"username": "Nom d'utilisateur"
+		},
 		"viewScenario" : "Scénario: __intitule__",
 		"volumeMax": "Taille Max"
 	},
 	"error": {
-		"budget_insuffissant": "Budget insuffisant",
+		"budget_insuffisant": "Budget insuffisant",
 		"carte_inactive": "Carte inexistante",
 		"carte_incompatible": "Carte incompatible avec le scénario choisi",
 		"carte_utilisee": "Vous ne pouvez pas supprimer une carte qui a été utilisée",
 		"champs_requis_vide": "Certains champs requis sont vides",
 		"database_request": "La requête %s a échouée",
+		"email": "Courriel invalide",
 		"evenement_inactif": "Evènement inexistant",
 		"evenement_incompatible": "Evènement incompatible avec le scénario choisi",
 		"evenement_utilise": "Vous ne pouvez pas supprimer un évènement qui a été utilisé",
@@ -201,6 +217,8 @@
 		"partie_close": "Vous ne pouvez modifier une partie terminée ou supprimée",
 		"partie_commencee": "Vous ne pouvez modifier le scénario d'une partie entamée",
 		"partie_id": "Partie inconnue",
+		"passwords_diff": "Veuillez écrire votre mot de passe et sa confirmation à nouveau.",
+		"password_upd": "Une erreur est survenur lors du changement de mot de passe !",
 		"planete_interdite": "Vous ne pouvez sélectionner cette planète dans cette partie",
 		"privilege_anonyme": "Vous devez vous authentifier",
 		"privilege_user": "Vous n'êtes pas autorisé à faire cette action",
@@ -209,6 +227,10 @@
 		"scenario_planetes": "Au moins une planète doit être sélectionnée pour les missions planétaires",
 		"scenario_utilise": "Scénario utilisé",
 		"syntaxe_carte_regles": "Erreur de syntaxe des règles d'une carte %s"
+	},
+	"success": {
+		"password_upd": "Votre mot de passe est modifié.",
+		"reset_password": "Un courriel de récupération de mot de passe envoyé à l'adresse %s"
 	},
 	"validation":{
 		"budget": "Vous avez dépensé plus que le budget alloué",

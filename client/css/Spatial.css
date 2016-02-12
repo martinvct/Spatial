@@ -154,9 +154,10 @@ div.messageTexte { display: inline-block; vertical-align: top; }
 div.newMessage, div.newMessage button { vertical-align: top; }
 #percentLanceurModal { display: block; height: 40px; line-height: 40px; }
 div.iconePcLanceur { display: inline-block; width: 40px; height: 40px; background: url('/icones_S/L320b_prc.png') no-repeat; }
-div.pcLanceur { display: inline-block; position: relative; top: -10px; } 
+div.pcLanceur { display: inline-block; position: relative; top: -10px; height: 40px; } 
 #partiePcLanceur { display: inline; height: 40px; vertical-align: middle; }
 #percentLanceur { position: relative; top: -5px; }
+#partiePctLanceur { display: inline-block; width: 160px; }
 
 div.notificationsMenu { border: 0.5px dashed white; color: #DDD; width: 324px; float: right; margin-top: 75px; }
 div.notification { margin: 2px 0px;  }
@@ -169,13 +170,21 @@ div.notificationDate { background-color: #333; padding: 1px 5px 2px 5px; }
 span.lienPartie { cursor: pointer; text-decoration: underline; }
 div.notificationsMenu button { border: 0.1em solid white; width: 320px; margin: 0.2em; padding: 0.2em 0; text-align: center; background: none; color: white; }
 
+table.utilisateurs { margin-top: 10px; }
+table.utilisateurs thead tr { background: #222; }
+table.utilisateurs th { text-align: center; height: 50px; }
+table.utilisateurs tbody tr:nth-child(odd) { background-color: rgba(255, 255, 255, 0.2); }
+table.utilisateurs tbody tr:nth-child(even) {  }
+table.utilisateurs td,th { padding: 0 3px 0 3px; margin: 0; }
+table.utilisateurs td.lien { cursor: pointer; }
+
 /* S: 320*480; M: 1024*768; L: 1920*1080; */
 /* tester en remplaçant dans @media width par device-width  */
 @media only screen and (max-width: 480px) {
 	body { background: #111111 url('/fond480x480.jpg') no-repeat fixed center top; }
 	#logoApplication { display: inline-block; width: 200px; height: 50px; background: url('/logoApplication_S.png') no-repeat; }
     div.statsScenario ul li, div.statsPartie ul li { display: inline; list-style-type:none;  }
-    #partieLancement { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/submit.png') no-repeat; }
+    #partieLancementConfirmation { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/submit.png') no-repeat; }
     #partieExpertise { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/exprt320.png') no-repeat; }
     #partieCollaboration { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/collab320.png') no-repeat; }
     #partieMagasin { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/mag320.png') no-repeat; }
@@ -227,11 +236,12 @@ div.notificationsMenu button { border: 0.1em solid white; width: 320px; margin: 
     div.partieCategorieLabel span.stat { font-size: 11px; }
     #percentLanceur { display: inline; }
     textarea.newMessage { width:300px; }
+    td.notMobile { display: none; }
 }
 @media only screen and (min-width: 480px){
     div.infosScenario, div.infosPartie { display: inline-block; width: calc(100% - 15em); }
     div.statsScenario, div.statsPartie { display: inline-block; width: 15em; }
-    #partieLancement { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/submit.png') no-repeat; }
+    #partieLancementConfirmation { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/submit.png') no-repeat; }
     #partieExpertise { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/exprt1024.png') no-repeat; }
     #partieCollaboration { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/collab1024.png') no-repeat; }
     #partieMagasin { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/mag1024.png') no-repeat; }

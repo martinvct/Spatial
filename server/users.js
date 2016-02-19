@@ -3,8 +3,9 @@ Meteor.startup(function(){
   Accounts.config({
     forbidClientAccountCreation: true
   });
-
-
+  process.env.MAIL_URL = 'smtp://smtp.ulg.ac.be';
+  process.env.MAIL_EXP = 'vincent.martin@ulg.ac.be';
+  
   // If this is the first user going into the database, make them an admin
   if (Meteor.users.find().count() === 0) {
   	Accounts.createUser({username: "admin", password: "M@st3r", profile: { username: "admin", firstname: "Jean", lastname:"Martin", email: "vincent.martin@ulg.ac.be", admin: true }});
@@ -38,9 +39,26 @@ Meteor.publish("getUsers", function(){
   }
 });
 
+Meteor.methods({
+  sendEmail: function(to, from, subject, text){
+    check([to, from, subject, text], [String]);
+    this.unblock();
+    if (from == "default") from = "vincent.martin@ulg.ac.be";
+    console.log('senEmail');
+    console.log(text);
+    console.log(from);
+    console.log(to);
+    Email.send({
+      to: to,
+      from: from,
+      subject: subject,
+      text: text
+    });
+  }
+});
 
 
-LDAP_DEFAULTS.url= 'ldap://ldap.ulg.ac.be'; 
+LDAP_DEFAULTS.url= 'ldap://ldap.ulg.ac.be:25'; 
 LDAP_DEFAULTS.port= '389'; 
 //LDAP_DEFAULTS.dn= 'uid'; 
 LDAP_DEFAULTS.createNewUser= true; 

@@ -204,7 +204,7 @@ if (Meteor.isClient) {
 	});
 	Template.ViewScenario.events({
 		'click #savePlanetePartie': function(event){
-			console.log(_.findWhere(Planetes, {planeteId: $('input[type=radio][name=planetes]:checked').val()}));
+			//console.log(_.findWhere(Planetes, {planeteId: $('input[type=radio][name=planetes]:checked').val()}));
 			Meteor.call("setPlaneteToPartie", Template.instance().data.partie, Template.instance().data.scenario, (_.findWhere(Planetes, {planeteId: $('input[type=radio][name=planetes]:checked').val()})));
 		}
 	});
@@ -234,28 +234,41 @@ if (Meteor.isClient) {
 	});
 	Template.EditScenario.onRendered(function() {
 		if($('#cubesat').is(':checked')){
-				$('#poidsMax').parent().show();
-				$('#volumeMax').parent().show();
-				$('#objectif').parent().hide();
+			$('#nU').parent().show();
+			$('#objectif').parent().hide();
+			$('#objectif').parent().next().hide();
+		} else {
+			$('#nU').parent().hide();
+			$('#objectif').parent().show();			
+			if($('#objectif').val() == "espace"){
 				$('#objectif').parent().next().hide();
 			} else {
-				$('#poidsMax').parent().hide();
-				$('#volumeMax').parent().hide();
-				$('#objectif').parent().show();
 				$('#objectif').parent().next().show();
 			}
+		}
+
 	});
 	Template.EditScenario.events({
 		'change #cubesat': function(event, template){
 			if($(event.target).is(':checked')){
-				$('#poidsMax').parent().show();
-				$('#volumeMax').parent().show();
+				$('#nU').parent().show();
 				$('#objectif').parent().hide();
 				$('#objectif').parent().next().hide();
 			} else {
-				$('#poidsMax').parent().hide();
-				$('#volumeMax').parent().hide();
+				$('#nU').parent().hide();
 				$('#objectif').parent().show();
+				$('#objectif').parent().next().show();
+				if($('#objectif').val() == "espace"){
+					$('#objectif').parent().next().hide();
+				} else {
+					$('#objectif').parent().next().show();
+				}
+			}
+		},
+		'change #objectif': function(event, template){
+			if($('#objectif').val() == "espace"){
+				$('#objectif').parent().next().hide();
+			} else {
 				$('#objectif').parent().next().show();
 			}
 		},
@@ -364,7 +377,7 @@ if (Meteor.isClient) {
 			var partie = Meteor.apply('newPartie', [$(event.target).attr('data-scenarioId')], {returnStubValue: true});
 			if(partie) {
 				Session.set('currentPartie', partie);
-				console.log('nouvelle partie' + partie.userId);
+				//console.log('nouvelle partie' + partie.userId);
 				Router.go('Partie', {_scenarioId: $(event.target).attr('data-scenarioId'), _id: partie._id});
 			}
 						

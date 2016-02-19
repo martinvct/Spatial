@@ -71,7 +71,7 @@
             <li><button id="partieEnergie" class="iconeConstante {{getIconeConstante 'nrj-rd' partie.deck.energieMax partie.deck.energie}}" title="{{_ 'interface.bouton.constanteEnergie' }}"></button><span id="partieEnergieConstante" class="partieConstante">{{{formatValeurRegle partie.deck.energie 'nrg'}}}</span></li>
             <li><button id="partiePoids" class="iconeConstante {{getIconeConstante 'Kg-rd' partie.deck.poidsMax partie.deck.masse}}" title="{{_ 'interface.bouton.constantePoids' }}"></button><span id="partiePoidsConstante" class="partieConstante">{{{formatValeurRegle partie.deck.masse 'pds'}}}</span></li>
             {{#if partie.cubesat}}<li><button id="partieVolume" class="iconeConstante {{getIconeConstante 'cm-rd' partie.deck.volumeMax partie.deck.volume}}" title="{{_ 'interface.bouton.constanteVolume' }}"></button><span id="partieVolumeConstante" class="partieConstante">{{{formatValeurRegle partie.deck.volume 'vol'}}}</span></li>{{/if}}
-            <li><button id="partieScience" class="iconeConstante star-rd4" title="{{_ 'interface.bouton.constanteScience' }}"></button><span id="partieScienceConstante" class="partieConstante">{{{formatValeurRegle partie.deck.science 'sci'}}}</span></li>
+            <li><button id="partieScience" class="iconeConstante {{getIconeConstante 'star-rd' partie.deck.science partie.deck.science}}" title="{{_ 'interface.bouton.constanteScience' }}"></button><span id="partieScienceConstante" class="partieConstante">{{{formatValeurRegle partie.deck.science 'sci'}}}</span></li>
             <li><button id="partieBudgetLanceur" class="iconeConstante {{getIconeConstante 'L-rd' 10 partie.budgetLanceur }}" title="{{_ 'interface.bouton.constantePcLanceur' }}"></button><span id="budgetLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span></li>
         </ul>
     </nav>
@@ -81,7 +81,7 @@
 <template name="PartieLanceur">
     {{#if hasLanceur }}
         <div id="percentLanceurModal">
-            <div class="iconePcLanceur"></div><!-- --><div class="pcLanceur"><input id="partiePctLanceur" type="range" min="10" max="100" step="10" value="{{multi100 partie.budgetLanceur }}"/> <span id="percentLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span></div>
+            <div class="iconePcLanceur"></div><!-- --><div class="pcLanceur"><input id="partiePctLanceur" type="range" min="25" max="100" step="25" value="{{multi100 partie.budgetLanceur }}"/> <span id="percentLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span></div>
         </div>
     {{/if}}
     {{#each cartes}}
@@ -94,6 +94,7 @@
     {{/each}}
 </template>
 <template name="PartieCategorie">
+    <p class="categorieLegende">{{{ categorieLegende }}}</p>
     {{#each cartes}}{{> Carte }}{{/each}}
 </template>
 <template name="PartieCategories">
@@ -116,23 +117,19 @@
             --><div class="carteConstanteBudget"></div><!--
             --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valEur) 'eur' }}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--
-          --></div>{{/if}}
-          {{#if valPds}}<div class="carteConstante"><!--
+          --></div>{{/if}}{{#if valPds}}<div class="carteConstante"><!--
             --><div class="carteConstanteMasse"></div><!--
             --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valPds)  'pds' }}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--
-          --></div>{{/if}}
-          {{#if valVol}}<div class="carteConstante"><!--
+          --></div>{{/if}}{{#if valVol}}<div class="carteConstante"><!--
             --><div class="carteConstanteVolume"></div><!--
             --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valVol)  'vol' }}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--
-          --></div>{{/if}}
-          {{#if valNrg}}<div class="carteConstante"><!--
+          --></div>{{/if}}{{#if valNrg}}<div class="carteConstante"><!--
             --><div class="carteConstanteEnergie"></div><!--
             --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valNrg)  'nrg' }}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--
-          --></div>{{/if}}
-          {{#if valSci}}<div class="carteConstante"><!--
+          --></div>{{/if}}{{#if valSci}}<div class="carteConstante"><!--
             --><div class="carteConstanteScience"></div><!--
             --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valSci)  'sci' }}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--

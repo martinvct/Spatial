@@ -1,4 +1,10 @@
 {
+	"courriel":{
+		"inscription":{
+			"sujet": "Votre accès à ScienceSat",
+			"message": "Bonjour __firstname__ __lastname__,\n\n Vous pouvez dès à présent accéder à ScienceSat (__link__) avec l'accès : \n\n\t Identifiant: __username__\n\n\t Mot de passe: __password__\n\nBien à vous,\n\tL'équipe ScienceSat"
+		}
+	},
 	"notification":{
 		"ilA": "a ",
 		"vousAvez": "Vous avez ",
@@ -40,13 +46,15 @@
 			"aide": "Aide",
 			"appelExpert": "Appeler un expert",
 			"appelPeer": "Appeler un pair",
-			"chargerPartie": "Charger",
+			"batchUtilisateurs": "Importer des utilisateurs",
+			"chargerPartie": "Charger partie",
 			"collaboration": "Collaboration",
 			"configuration": "Administration",
 			"constanteScience" : "Points Scientifiques",
 			"dernierExpert": "Consulter le dernier rapport",
 			"envoyer": "Envoyer",
 			"expertise": "Expertise",
+			"importer": "Importer",
 			"lancement": "Lancement",
 			"lanceur": "Lanceur",
 			"listeRapports": "Rapports",
@@ -56,7 +64,7 @@
 			"meilleursScores": "Scores",
 			"mesBadges": "Mes badges",
 			"messages": "Messages",
-			"nouvellePartie": "Nouvelle",
+			"nouvellePartie": "Nouvelle partie",
 			"ok": "Ok",
 			"orbite": "Orbite",
 			"retour": "Retour",
@@ -64,6 +72,7 @@
 			"scenario": "Scénario",
 			"supprimer": "Supprimer"
 		},
+		"batchUtilisateurs": "Chaque ligne comporte les champs suivants : <ul><li>identifiant</li><li>Nom</li><li>Prénom</li><li>Courriel</li><li>Mot de passe</li></ul>. Le séparateur est soit une tabulation soit une virgule ou un point-virgule.",
 		"budget": "Budget",
 		"collaboration":{
 			"appel": "Appel à",
@@ -88,7 +97,12 @@
 		},
 		"filtre": "Filtre de recherche",
 		"finie": "Score final",
+		"importUtilisateurs": "Importation d'utilisateurs",
 		"lastLogin": "Dernière connexion",
+		"legende" : {
+			"enSecondes" : "(en secondes)",
+			"ptsParMinute" : "(points par minute)"
+		},
 		"login": "Se connecter",
 		"loginWithFaceBook": "Facebook",
 		"logout": "Se déconnecter",
@@ -203,6 +217,10 @@
 		"volumeMax": "Taille Max"
 	},
 	"error": {
+		"batch_username_existe": "Nom d'utilisateur ou courriel existant",
+		"batch_utilisateur_champsVides": "Champs manquant(s)",
+		"batch_utilisateur_erreur": "Erreur lors de la création du compte",
+		"batch_utilisateur_nbrChamps": "Nombre de champs incorrect",
 		"budget_insuffisant": "Budget insuffisant",
 		"carte_inactive": "Carte inexistante",
 		"carte_incompatible": "Carte incompatible avec le scénario choisi",
@@ -226,11 +244,14 @@
 		"scenario_inactif": "Scénario inexistant",
 		"scenario_planetes": "Au moins une planète doit être sélectionnée pour les missions planétaires",
 		"scenario_utilise": "Scénario utilisé",
-		"syntaxe_carte_regles": "Erreur de syntaxe des règles d'une carte %s"
+		"syntaxe_carte_regles": "Erreur de syntaxe des règles d'une carte %s",
+		"username_existe": "Un autre utilisateur possède déjà cet identifiant"
 	},
 	"success": {
+		"batch_utilisateur_ajoute": "Compte ajouté",
 		"password_upd": "Votre mot de passe est modifié.",
-		"reset_password": "Un courriel de récupération de mot de passe envoyé à l'adresse %s"
+		"reset_password": "Un courriel de récupération de mot de passe envoyé à l'adresse %s",
+		"utilisateur_sauve": "Les données de l'utilisateur %s sont sauvegardées"
 	},
 	"validation":{
 		"budget": "Vous avez dépensé plus que le budget alloué",
@@ -268,5 +289,20 @@
 		"S" : "Segment sol",
 		"T" : "Contrôle thermique",
 		"Z" : "Structure"
+	},
+	"categories_legendes" : {
+		"A" : "La position et l'orientation d'un vaisseau doivent être mesurées et contrôlées en permanence.",
+		"C" : "Pour communiquer avec la Terre, le vaisseau a besoin d'un système de communication.",
+		"E" : "Le vaisseau fonctionne avec de l'électricité, qu'il faut produire, stocker, gérer et amener partout.",
+		"I" : "Les instruments scientifiques sont la raison d'être de la mission. Ils améliorent notre connaissance des astres en mesurant divers paramètres.",
+		"J" : "Les atterrisseurs interplanétaires ont besoin de systèmes supplémentaires et peuvent aussi emporter quelques instruments particuliers.",
+		"L" : "Le lanceur permet de quitter la Terre et rejoindre l'espace.",
+		"M" : "Pour fonctionner, le vaisseau a besoin de mémoire pour stocker les informations recueillies (car il ne communique pas continuellement avec la Terre) et d'un ensemble microprocesseur + logiciel adapté - véritable cerveau, il commande tous les systèmes grâce aux ordres reçus de la Terre et prépare l'envoi des données.",
+		"O" : "L'orbite est la trajectoire suivie par la mission spatiale.",
+		"P" : "La propulsion permet au vaisseau de corriger l'orientation du vaisseau ou de passer d'une planète à l'autre.",
+		"S" : "Le segment sol rassemble les stations permettant de communiquer avec la mission et le centre de contrôle qui surveille l'état des composants, prépare les commandes, traite et distribue les données reçues.",
+		"T" : "Un vaisseau spatial est soumis à des températures extrêmes (très chaud côté éclairé, très froid dans l'ombre) : son intérieur doit être protégé pour fonctionner correctement.",
+		"Z" : "La structure est le squelette du vaisseau. Elle assure la rigidité et contient tous les câbles électriques."
 	}
+
 }

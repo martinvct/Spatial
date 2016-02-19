@@ -2,6 +2,7 @@
 	<div class="toolbarForm">
 		<ul>
 			<li><button id="addUtilisateur">{{_ "interface.bouton.addUtilisateur" }}</button></li>
+			<li><button id="batchUtilisateurs">{{_ "interface.bouton.batchUtilisateurs" }}</button></li>
 			<li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
 		</ul>
 	</div>
@@ -64,14 +65,14 @@
 			<input type="text" class="longText" id="email" name="email" value="{{ utilisateur.profile.email }}" placeholder="{{_ 'interface.utilisateur.email' }}"/>
 		</div>
 		<div class="utilisateurParametre">
-			<label for="password" class="required">{{_ "interface.utilisateur.password" }}</label>
+			<label for="password" class="{{#unless utilisateur}}required{{/unless}}">{{_ "interface.utilisateur.password" }}</label>
 			<input type="text" class="longText" id="password" name="password" value="{{ utilisateur.password }}" placeholder="{{_ 'interface.utilisateur.password' }}"/>
 		</div>
 		<div class="utilisateurParametre">
-			<label for="passwordConf" class="required">{{_ "interface.utilisateur.passwordConf" }}</label>
+			<label for="passwordConf" class="{{#unless utilisateur}}required{{/unless}}">{{_ "interface.utilisateur.passwordConf" }}</label>
 			<input type="text" class="longText" id="passwordConf" name="passwordConf" value="{{ utilisateur.passwordConf }}" placeholder="{{_ 'interface.utilisateur.passwordConf' }}"/>
 		</div>
-		<div class="scenarioParametre">
+		<div class="utilisateurParametre">
 			<label for="admin">{{_ "interface.utilisateur.admin"}}</label>
 			<input type="checkbox" id="admin" name="admin" value="1" {{isChecked utilisateur.profile.admin}} />
 		</div>
@@ -83,6 +84,30 @@
 			<li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
 		</ul>
 	</div>	
+</template>
+<template name="ConfigBatchUtilisateurs">
+	<form method="post">
+		<h2>{{_ "interface.importUtilisateurs" }}</h2>
+
+		<textarea id="batchUtilisateurs" name="batchUtilisateurs"></textarea>
+		<div id="batchResults"></div>
+		<div class="batchUtilisateurs">{{{_ "interface.batchUtilisateurs"}}}</div>
+	</form>
+	<div class="toolbarForm">
+		<ul>
+			<li><button id="importUtilisateurs">{{_ "interface.bouton.importer" }}</button></li>
+			<li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+		</ul>
+	</div>
+</template>
+<template name="ConfigBatchUtilisateursResult">
+	<ul class="batchResults">
+	{{#each results}}
+		<li class="">
+			<span class="ligne">{{ligne}}</span>{{status}}{{message}}
+		</li>
+	{{/each}}
+	</ul>
 </template>
 <template name="RecoverPassword">
 	{{#if resetPassword}}

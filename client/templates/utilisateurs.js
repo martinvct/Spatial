@@ -28,6 +28,9 @@ if (Meteor.isClient) {
 		'click #addUtilisateur': function(event){
 			Router.go('ConfigEditUtilisateur', {_id: 0});
 		},
+		'click #batchUtilisateurs': function(event){
+			Router.go('ConfigBatchUtilisateurs');
+		},
 		'click #retour': function(event){
 			Router.go('Config');
 		},
@@ -48,38 +51,48 @@ if (Meteor.isClient) {
 			$("div.utilisateurParametre").each( function(){ $(this).removeClass('error'); });
 			if(!$('#username').val()){
 				$(this).parent().addClass('error');
-				throwError("champs_requis", TAPi18n.__("error.champs_requis_vide"));
-				return;
+				return throwAlert("error","champs_requis", TAPi18n.__("error.champs_requis_vide"));
 			}
-			if(!$('#_id').val()){
-				if(!$('#password').val() || ($('#password').val() != $('#passwordConf').val())){
-					throwError("champs_requis", TAPi18n.__("error.champs_requis_vide"));
-					return;
-				}
+			if(!$('#firstname').val()){
+				$(this).parent().addClass('error');
+				return throwAlert("error","champs_requis", TAPi18n.__("error.champs_requis_vide"));
+			}
+			if(!$('#lastname').val()){
+				$(this).parent().addClass('error');
+				return throwAlert("error","champs_requis", TAPi18n.__("error.champs_requis_vide"));
+			}
+			if(!$('#email').val()){
+				$(this).parent().addClass('error');
+				return throwAlert("error","champs_requis", TAPi18n.__("error.champs_requis_vide"));
 			}
 			var newUser = {
+				_id: $('#_id').val(),
 				username: $('#username').val(),
 				password: $('#password').val(),
 				email: $('#email').val(),
-				profile: {
-					firstname: $('#firstname').val(),
-					lastname: $('#lastname').val(),
-					email: $('#email').val(),
-					admin: $('#admin').val()
-				}
+				firstname: $('#firstname').val(),
+				lastname: $('#lastname').val(),
+				email: $('#email').val(),
+				admin: ($('#admin:checked').length > 0 ? true : false)
 			};
 
-			Accounts.createUser(newUser, function(error){
-				if(error){
-					console.log(error);
-				}
-
-			});
+			Meteor.call('setUserAccount', newUser, $('#passwordConf').val(), false);			
 			return false;
 
 		},
 		'click #retour': function(event){
 			Router.go('ConfigUtilisateurs');
+		}
+	});
+	Template.ConfigBatchUtilisateurs.events({
+		'click #retour': function(event){
+			Router.go('ConfigUtilisateurs');
+		},
+		'click #importUtilisateurs': function(event){
+			var results = Meteor.apply('importUtilisateurs', [$('#batchUtilisateurs').val()], {returnStubValue: true});
+			$('#batchResults').val("");
+			Blaze.renderWithData(Template.ConfigBatchUtilisateursResult, {results: results}, $('#batchResults').get(0));
+			return false;
 		}
 	});
 

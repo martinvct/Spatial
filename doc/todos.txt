@@ -1,0 +1,3 @@
+[] modifier users.js et userAccount.js : placer les méthodes en serveur et renvoyer le resultat d'affichage pour le client (pas de d'alerte directement)
+[] possibilité d'uploader une photo d'avatar ou sélection d'avatars par défaut
+[] affichage des évènements !

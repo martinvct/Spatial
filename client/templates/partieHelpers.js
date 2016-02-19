@@ -12,13 +12,17 @@ if (Meteor.isClient) {
 		return moment(valeur).format(format);
 	});
 	Template.registerHelper('getIconeConstante', function(nom, valeurMax, valeur){
+		if(nom == "star-rd"){
+			if(valeur == 0) return nom+"0";
+			return nom+"1";
+		}
 		if(nom == "L-rd"){
 			return nom + (valeur * 10);
 		} else {
 			var d = (valeurMax > 0 ? (valeur / valeurMax) * 100 : 0);
-			if(d == 100) d--;
+			if(d == 0) return nom + "0";
 		//console.log(nom + ' ' + valeur + "/" + valeurMax + " = " + d + " => " + (Math.floor(d / 25) + 1));
-			return nom + (Math.floor(d / 25) + 1);
+			return nom + (Math.floor((d-1) / 25) + 1);
 		}
 	});
 	Template.registerHelper('multi100', function(percent){
@@ -31,18 +35,18 @@ if (Meteor.isClient) {
 	Template.registerHelper('formatValeurRegle', function(valeur, unite){
 		if(unite == "pds"){
 			if(valeur < 1000){
-				return valeur + " <span class='valUnite'>gr"+"</span>";
+				return valeur + " <span class='valUnite'>g"+"</span>";
 			} 
 			if(valeur < 1000000){
-				if(Math.round(valeur / 1000) != (valeur / 1000)) return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>kg"+"</span>";
-				return (valeur / 1000)+ " <span class='valUnite'>kg"+"</span>";
+				if(Math.round(valeur / 1000) != (valeur / 1000)) return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>kg</span>";
+				return (valeur / 1000)+ " <span class='valUnite'>kg</span>";
 			}
-			if(Math.round(valeur / 1000000) != (valeur / 1000000)) return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>T"+"</span>";
-			return (valeur / 1000000)+ " <span class='valUnite'>T"+"</span>";
+			if(Math.round(valeur / 1000000) != (valeur / 1000000)) return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>T</span>";
+			return (valeur / 1000000)+ " <span class='valUnite'>T</span>";
 		}
 		if(unite == "vol"){
 			if(valeur < 1000){
-				return valeur + " <span class='valUnite'>";
+				return valeur + " <span class='valUnite'>mm</span>";
 			} 
 			if(valeur < 1000000){
 				if(Math.round(valeur / 1000) != (valeur / 1000)) return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
@@ -53,7 +57,7 @@ if (Meteor.isClient) {
 		}
 		switch(unite){
 			case "eur": unite = ""; break;
-			case "nrg": unite = ""; break;
+			case "nrg": unite = "W"; break;
 			case "sci": unite = ""; break;
 		}
 		if(valeur < 1000){
@@ -372,7 +376,11 @@ if (Meteor.isClient) {
 	Template.PartieCategorie.helpers({
 		cartes : function(){
 			return Cartes.find({categorie: Template.instance().data.categorie, cubesat: Template.instance().data.scenario.initialisation.cubesat});
+		},
+		categorieLegende: function(){
+			return TAPi18n.__("categories_legendes."+Template.instance().data.categorie);
 		}
+
 	});
 	Template.PartieExpertiseConfirmation.helpers({
 		nbrExpertsAppeles: function(){

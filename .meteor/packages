@@ -24,7 +24,6 @@ tap:i18n
 meteorhacks:aggregate
 check
 juliancwirko:s-alert
-
 sacha:spin
 momentjs:moment
 reactive-var
@@ -33,4 +32,6 @@ mizzao:autocomplete
 twbs:bootstrap
 peppelg:bootstrap-3-modal
 email
+
+
 typ:accounts-ldap

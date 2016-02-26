@@ -220,7 +220,10 @@
 	</div>
 </template>
 <template name="ViewScenario">
-	
+		<div id="nomPartieForm">
+        	<input type="text" id="nomPartieTxt" value="{{ partie.nom }}"/>
+            <button id="nomPartieBouton">{{_ "interface.bouton.renommer" }}</button>    
+    	</div>
 		<h2>{{_ "interface.viewScenario" intitule=scenario.intitule}} {{partieId}}</h2>
 
 		<h3>{{_ "interface.scenario.infos" }}</h3>

@@ -16,6 +16,12 @@ if (Meteor.isClient) {
 		nNotifications: function(){
 			//console.log(Meteor.user());
 			return Meteor.user().profile.nNotifications;
+		},
+		currentPartie: function(){
+			return (Template.instance().data.partieId.length > 0);
+		},
+		nomPartie: function(){
+			return Parties.findOne({_id: Template.instance().data.partieId},{nom: 1});
 		}
 	});
 	Template.Header.events({
@@ -45,18 +51,25 @@ if (Meteor.isClient) {
 	});
 	Template.Login.events({
 	    'click button.loginWithLDAP': function (event, template) {
-	        console.log("Tentative de login...");
-	        console.log("username: "+ template.find('#login').value);
-	        console.log("password: "+ template.find('#password').value);
+	        //console.log("Tentative de login...");
+	       // console.log("username: "+ template.find('#login').value);
+	       //console.log("password: "+ template.find('#password').value);
+	        
 	        try {
-		        Meteor.loginWithLDAP(template.find('#login').value, template.find('#password').value, { dn: "uid=" + template.find('#login').value + ",ou=people,dc=ulg,dc=ac,dc=be" }, function(err){
+	        	LDAP_DEFAULTS.dn = LDAP_DEFAULTS.dn.replace("{{username}}", template.find('#login').value);
+	        	LDAP_DEFAULTS.search = LDAP_DEFAULTS.search.replace("{{username}}", template.find('#login').value);
+	        	Meteor.loginWithLDAP(template.find('#login').value, template.find('#password').value, LDAP_DEFAULTS, function(err, result){
 		          if(err){
-		          	console.log("WithLDAP Erreur");
+		          	//console.log("WithLDAP Erreur");
+		          	//console.log(err);
 		            if(! Meteor.userId()){
-		              console.log("Tentative de login interne...");	
+		              //console.log("Tentative de login interne...");	
 		              try {
 			              Meteor.loginWithPassword(template.find('#login').value, template.find('#password').value,  function(erreur) { 
-			              	if (erreur) { console.log("login interne erreur"); throwError("login_echoue", TAPi18n.__("error.login_echoue")); }
+			              	if (erreur) { 
+			              		//console.log("login interne erreur"); 
+			              		return throwAlert("error","login_echoue",  TAPi18n.__("error.login_echoue"));
+			              	}
 			              	else {
 				              	var currUser = Meteor.user();
 				           	  	var now      = new Date();
@@ -74,8 +87,8 @@ if (Meteor.isClient) {
 		           }
 		        });
 		    } catch(e){
-
-		    }   
+		    	console.log(e.message);
+		    }  
 	    },
 	    'click button.loginWithFaceBook': function(event){ //voir : http://bulenttastan.net/login-with-facebook-using-meteor-js/
 	    	Meteor.loginWithFacebook({}, function(err){
@@ -182,6 +195,7 @@ if (Meteor.isClient) {
 	});
 	
 	Template.ViewScenario.helpers({
+
 		nomPlanete: function(_planeteId){
 			return TAPi18n.__("planetes." + _planeteId);
 		},
@@ -206,6 +220,9 @@ if (Meteor.isClient) {
 		'click #savePlanetePartie': function(event){
 			//console.log(_.findWhere(Planetes, {planeteId: $('input[type=radio][name=planetes]:checked').val()}));
 			Meteor.call("setPlaneteToPartie", Template.instance().data.partie, Template.instance().data.scenario, (_.findWhere(Planetes, {planeteId: $('input[type=radio][name=planetes]:checked').val()})));
+		},
+		'click #nomPartieBouton': function(event){
+			Meteor.call("updateNomPartie", Template.instance().data.partie._id, $('#nomPartieTxt').val());
 		}
 	});
 	Template.EditScenario.helpers({

@@ -1,14 +1,14 @@
 Meteor.startup(function(){
 
-  Accounts.config({
+ /* Accounts.config({
     forbidClientAccountCreation: true
-  });
+  });*/
   process.env.MAIL_URL = 'smtp://smtp.ulg.ac.be';
   process.env.MAIL_EXP = 'vincent.martin@ulg.ac.be';
   
   // If this is the first user going into the database, make them an admin
   if (Meteor.users.find().count() === 0) {
-  	Accounts.createUser({username: "admin", password: "M@st3r", profile: { username: "admin", firstname: "Jean", lastname:"Martin", email: "vincent.martin@ulg.ac.be", admin: true }});
+  	Accounts.createUser({username: "admin", password: "M@st3r", admin: true, profile: { username: "admin", firstname: "Jean", lastname:"Martin", email: "vincent.martin@ulg.ac.be", admin: true }});
   }
 });
 
@@ -57,12 +57,11 @@ Meteor.methods({
   }
 });
 
-
-LDAP_DEFAULTS.url= 'ldap://ldap.ulg.ac.be:25'; 
+//LDAP_DEFAULTS = {};
+LDAP_DEFAULTS.url= 'ldap://ldap.ulg.ac.be'; 
 LDAP_DEFAULTS.port= '389'; 
 //LDAP_DEFAULTS.dn= 'uid'; 
 LDAP_DEFAULTS.createNewUser= true; 
-LDAP_DEFAULTS.defaultDomain= false; 
+//LDAP_DEFAULTS.defaultDomain= false; 
 LDAP_DEFAULTS.searchResultsProfileMap= [{resultKey:'uid', profileProperty:'username'}, {resultKey:'mail', profileProperty:'email'}, {resultKey:'givenName', profileProperty:'firstname'}, {resultKey:'sn', profileProperty:'lastname'}]; 
-LDAP_DEFAULTS.base= 'ou=people,dc=ulg,dc=ac,dc=be'; 
-LDAP_DEFAULTS.search= '(objectclass=*)';
+LDAP_DEFAULTS.base= 'ou=people, dc=ulg, dc=ac, dc=be'; 

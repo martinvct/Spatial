@@ -1,4 +1,4 @@
-if (Meteor.isClient) {
+/*if (Meteor.isClient) {
 	Template.Login.events({
     'click button.loginWithLDAP': function (event, template) {
         Meteor.loginWithLDAP(template.find('#login').value, template.find('#password').value, { dn: "uid=" + template.find('#login').value + ",ou=people,dc=ulg,dc=ac,dc=be" }, function(err){
@@ -22,4 +22,4 @@ if (Meteor.isClient) {
     	}
     }
   });
-}
+}*/

@@ -1,3 +1,24 @@
 [] modifier users.js et userAccount.js : placer les méthodes en serveur et renvoyer le resultat d'affichage pour le client (pas de d'alerte directement)
 [] possibilité d'uploader une photo d'avatar ou sélection d'avatars par défaut
 [] affichage des évènements !
+
+
+***  Questions Yael Naze ****
+[] I1- I9 pour mission observation spatiales (tagués instrumentEspace), autres pour planètes (tagués instrumentPlanete) : est-ce contraignant ? règles sur cartes ou globales nécessaires ?
+[] En commentaires sur cartes Instruments : (1) sol => { altimètre : NON, atterrissage : NON }   (2) atmosphère => { bseoijn parachute et bouclier } . Que signifie le (1) ?
+[] C5 Antenne pour relais, nécessite ou incompatibilité ? { non C3 pour atterrisseur, il existe Z1,Z2,ouZ3 mais pas Z4 + carte J}.  ( necessite; (Z4 ou Z5 ou C3)) ? Sous entendu que Z4 [Module de croisière] et Z5 [plateforme atterrisseur] contiennent déjà une antenne intégrée ??) => règle globale pour tout Z1,Z2,Z3 (et pas Z4,Z5) : il faut ((C1 [antenne haut gain]  ou C2 [antenne bas gain]) ET C3 [gestion des communications])
+
+
+
+Structure et combinaison ?
+
+Pour n occurence de Z  (Z1, Z2, Z3) : 
+	-	Présence de n éléments tagués « thermiquePassif » (i.e. : T1)
+	-	Présence de n éléments tagués « communicationsAntenne » (i.e. : C1, C2)
+	-	Présence de n éléments tagués « communicationsGestion » (i.e. : C3)
+	-	Présence de n éléments tagués « commandesMemoire » (i.e. : M1, M2, M3)
+	-	Présence de n éléments tagués « commandesCalculateur » (i.e. : M4, M5, M6)
+	-	Présence de n éléments tagués « energieGenerateur » (i.e. : E1, E2, E3, E4, E5)
+	-	Présence de n éléments tagués « energieGestion » (i.e. : E7)
+	-	Présence de n éléments tagués « attitudeGestion » (i.e. : A7)
+Pour n occurence de Z (Z4)

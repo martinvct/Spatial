@@ -3,7 +3,7 @@
 		<ul class="menuMain">
 			<li><button id="nouvellePartie">{{_ "interface.bouton.nouvellePartie" }}</button></li>
 			<li><button id="chargerPartie">{{_ "interface.bouton.chargerPartie" }}</button></li>
-			{{#if currentUser.admin }}<li><button id="configuration">{{_ "interface.bouton.configuration" }}</button></li>{{/if}}
+			{{#if currentUser.profile.admin }}<li><button id="configuration">{{_ "interface.bouton.configuration" }}</button></li>{{/if}}
 			<li><button id="meilleursScores">{{_ "interface.bouton.meilleursScores" }}</button></li>
 			<li><button id="aide">{{_ "interface.bouton.aide" }}</button></li>
 		</ul>

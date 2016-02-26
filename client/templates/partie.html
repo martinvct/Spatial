@@ -17,9 +17,9 @@
             <div class="titrePartie"><button class="lien" data-partieId="{{ _id }}"  data-scenarioId="{{ scenarioId }}">{{nom}}</button></div>
             <div class="descPartie">{{scenario.intitule}}</div>
             <div class="tagsPartie">
-                <span class="tagPartie">{{_ "interface.budget" }}: {{{formatValeurRegle deck.budget "eur"}}}</span>
+                <span class="tagPartie">{{_ "interface.budget" }}: {{{formatValeurRegle deck.budget "eur" false}}}</span>
                 {{#if cubesat }}
-                    <span class="tagPartie">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{{formatValeurRegle scenario.initialisation.cubesatLimites.poidsMax "pds"}}}, {{_ "interface.volumeMax"}}: {{{formatValeurRegle scenario.initialisation.cubesatLimites.volumeMax "vol"}}})</span>
+                    <span class="tagPartie">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{{formatValeurRegle scenario.initialisation.cubesatLimites.poidsMax "pds" false}}}, {{_ "interface.volumeMax"}}: {{{formatValeurRegle scenario.initialisation.cubesatLimites.volumeMax "vol" false}}})</span>
                 {{else}}
                     <span class="tagPartie">{{_ "interface.objectif" }}: {{tr "interface.objectifs." objectif}} {{#if planete}}, {{_ "interface.planetes"}}: {{nomPlanete planete.planeteId}} {{/if}}</span>
                 {{/if}}
@@ -37,13 +37,6 @@
     </div>
 </template>
 <template name="Partie">
-    <div id="nomPartie">
-        <h1 id="nomPartieView">{{ partie.nom }}</h1>
-        <div id="nomPartieForm">
-            <input type="text" id="nomPartieTxt" value="{{ partie.nom }}"/>
-            <button id="nomPartieBouton">{{_ 'interface.bouton.ok' }}</button>
-        </div>    
-    </div>
     {{> PartieHeader partie=partie }}	
     <div id="plateau">
     	{{> Template.dynamic template=partieTemplate data=partieData}}
@@ -67,11 +60,11 @@
     </nav>
     <nav class="navPartieConstantes">
         <ul>
-            <li><button id="partieBudget" class="iconeConstante {{getIconeConstante 'euro-rd' partie.deck.budgetMax partie.deck.budget}}" title="{{_ 'interface.bouton.constanteBudget' }}"></button><span id="partieBudgetConstante" class="partieConstante">{{{formatValeurRegle partie.deck.budget 'eur'}}}</span></li>
-            <li><button id="partieEnergie" class="iconeConstante {{getIconeConstante 'nrj-rd' partie.deck.energieMax partie.deck.energie}}" title="{{_ 'interface.bouton.constanteEnergie' }}"></button><span id="partieEnergieConstante" class="partieConstante">{{{formatValeurRegle partie.deck.energie 'nrg'}}}</span></li>
-            <li><button id="partiePoids" class="iconeConstante {{getIconeConstante 'Kg-rd' partie.deck.poidsMax partie.deck.masse}}" title="{{_ 'interface.bouton.constantePoids' }}"></button><span id="partiePoidsConstante" class="partieConstante">{{{formatValeurRegle partie.deck.masse 'pds'}}}</span></li>
-            {{#if partie.cubesat}}<li><button id="partieVolume" class="iconeConstante {{getIconeConstante 'cm-rd' partie.deck.volumeMax partie.deck.volume}}" title="{{_ 'interface.bouton.constanteVolume' }}"></button><span id="partieVolumeConstante" class="partieConstante">{{{formatValeurRegle partie.deck.volume 'vol'}}}</span></li>{{/if}}
-            <li><button id="partieScience" class="iconeConstante {{getIconeConstante 'star-rd' partie.deck.science partie.deck.science}}" title="{{_ 'interface.bouton.constanteScience' }}"></button><span id="partieScienceConstante" class="partieConstante">{{{formatValeurRegle partie.deck.science 'sci'}}}</span></li>
+            <li><button id="partieBudget" class="iconeConstante {{getIconeConstante 'euro-rd' partie.deck.budgetMax partie.deck.budget}}" title="{{_ 'interface.bouton.constanteBudget' }}"></button><span id="partieBudgetConstante" class="partieConstante">{{{formatValeurRegle partie.deck.budget 'eur' false}}}</span></li>
+            <li><button id="partieEnergie" class="iconeConstante {{getIconeConstante 'nrj-rd' partie.deck.energieMax partie.deck.energie}}" title="{{_ 'interface.bouton.constanteEnergie' }}"></button><span id="partieEnergieConstante" class="partieConstante">{{{formatValeurRegle partie.deck.energie 'nrg' false}}}</span></li>
+            <li><button id="partiePoids" class="iconeConstante {{getIconeConstante 'Kg-rd' partie.deck.poidsMax partie.deck.masse}}" title="{{_ 'interface.bouton.constantePoids' }}"></button><span id="partiePoidsConstante" class="partieConstante">{{{formatValeurRegle partie.deck.masse 'pds' false}}}</span></li>
+            {{#if partie.cubesat}}<li><button id="partieVolume" class="iconeConstante {{getIconeConstante 'cm-rd' partie.deck.volumeMax partie.deck.volume}}" title="{{_ 'interface.bouton.constanteVolume' }}"></button><span id="partieVolumeConstante" class="partieConstante">{{{formatValeurRegle partie.deck.volume 'vol' false}}}</span></li>{{/if}}
+            <li><button id="partieScience" class="iconeConstante {{getIconeConstante 'star-rd' partie.deck.science partie.deck.science}}" title="{{_ 'interface.bouton.constanteScience' }}"></button><span id="partieScienceConstante" class="partieConstante">{{{formatValeurRegle partie.deck.science 'sci' false}}}</span></li>
             <li><button id="partieBudgetLanceur" class="iconeConstante {{getIconeConstante 'L-rd' 10 partie.budgetLanceur }}" title="{{_ 'interface.bouton.constantePcLanceur' }}"></button><span id="budgetLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span></li>
         </ul>
     </nav>
@@ -79,7 +72,7 @@
 </template>
 
 <template name="PartieLanceur">
-    {{#if hasLanceur }}
+    {{#if hasLanceurLourd }}
         <div id="percentLanceurModal">
             <div class="iconePcLanceur"></div><!-- --><div class="pcLanceur"><input id="partiePctLanceur" type="range" min="25" max="100" step="25" value="{{multi100 partie.budgetLanceur }}"/> <span id="percentLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span></div>
         </div>
@@ -109,32 +102,28 @@
 </template>
 <template name="Carte">
     <div id="{{carteId}}" class="carte {{isDeck}}" data-carteId="{{ carteId }}" ><!--
-        --><div class="carteIntitule {{ categorie }}"><div class="intitule"><span>{{ intitule.fr }}</span></div><div class="carteId">{{ carteId }}</div><div class="carteCopyright">&copy; {{ copyright }}</div></div><!--
+        --><div class="carteIntitule {{ categorie }}"><div class="carteStars">{{#each stars}}<div class="carteStar">&#9733;</div>{{/each}}</div><div class="intitule"><span>{{ intitule.fr }}</span></div><div class="carteId">{{ carteId }}</div><div class="carteCopyright">&copy; {{ copyright }}</div></div><!--
         --><div class="carteIllustration"><img src="{{illustration carteId cubesat}}" /></div><!--
         --><div class="carteDescription">{{ description.fr }}</div><!--
         --><div class="carteConstantes {{ categorie }}">
           {{#if valEur}}<div class="carteConstante"><!--
             --><div class="carteConstanteBudget"></div><!--
-            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valEur) 'eur' }}}</span></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valEur) 'eur' true}}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--
           --></div>{{/if}}{{#if valPds}}<div class="carteConstante"><!--
-            --><div class="carteConstanteMasse"></div><!--
-            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valPds)  'pds' }}}</span></div><!--
+            --><div class="carteConstanteMasse{{isLanceur}}"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valPds)  'pds' true}}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--
           --></div>{{/if}}{{#if valVol}}<div class="carteConstante"><!--
             --><div class="carteConstanteVolume"></div><!--
-            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valVol)  'vol' }}}</span></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valVol)  'vol' true}}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--
           --></div>{{/if}}{{#if valNrg}}<div class="carteConstante"><!--
-            --><div class="carteConstanteEnergie"></div><!--
-            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valNrg)  'nrg' }}}</span></div><!--
+            --><div class="carteConstanteEnergie{{isEnergieGenerateur}}"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valNrg)  'nrg' true}}}</span></div><!--
             --><div class="carteConstanteFin"></div><!--
-          --></div>{{/if}}{{#if valSci}}<div class="carteConstante"><!--
-            --><div class="carteConstanteScience"></div><!--
-            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valSci)  'sci' }}}</span></div><!--
-            --><div class="carteConstanteFin"></div><!--
-          --></div>{{/if}}    
-        </div>
+          --></div>{{/if}}<!--    
+        --></div>
         {{#if tip.fr }}<div class="carteTips">{{ tip.fr }}</div>{{/if}}
     </div>
 </template>
@@ -152,8 +141,8 @@
     </ul>
     <div class="toolbarForm">
         <ul>
-            <li><button id="appelExpert">{{_ "interface.bouton.appelExpert" }}</button></li>
-            {{#if rapportExiste}}<li><button id="dernierExpert">{{_ "interface.bouton.dernierExpert" }}</button></li>{{/if}}
+            <li><button class="icone" id="appelExpert"><img src="/icones_S/exprt320b.png" />{{_ "interface.bouton.appelExpert" }}</button></li>
+            {{#if rapportExiste}}<li><button class="icone" id="dernierExpert"><img src="/icones_S/rapport320b.png" />{{_ "interface.bouton.dernierExpert" }}</button></li>{{/if}}
         </ul>
     </div>
 </template>
@@ -204,7 +193,7 @@
     </ul>
     <div class="toolbarForm">
         <ul>
-            <li><button id="appelExpertConfirmation">{{_ "interface.bouton.appelExpert" }}</button></li>
+            <li><button id="appelExpertConfirmation" class="icone"><img src="/icones_S/exprt320b.png" />{{_ "interface.bouton.appelExpert" }}</button></li>
         </ul>
     </div>
 </template>
@@ -222,7 +211,7 @@
     </ul>
     <div class="toolbarForm">
         <ul>
-            <li>{{> inputAutocomplete settings=settings id="peer" placeholder="..." }} <button id="appelPeer">{{_ "interface.bouton.appelPeer" }}</button></li>
+            <li>{{> inputAutocomplete settings=settings id="peer" placeholder="..." }} <button class="icone" id="appelPeer"><img src="/icones_S/collab320b.png"/>{{_ "interface.bouton.appelPeer" }}</button></li>
             {{#if messageExiste}}<li><button id="messages">{{_ "interface.bouton.messages" }}</button></li>{{/if}}
         </ul>
     </div>

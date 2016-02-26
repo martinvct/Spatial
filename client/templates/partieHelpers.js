@@ -14,7 +14,7 @@ if (Meteor.isClient) {
 	Template.registerHelper('getIconeConstante', function(nom, valeurMax, valeur){
 		if(nom == "star-rd"){
 			if(valeur == 0) return nom+"0";
-			return nom+"1";
+			return nom+"4";
 		}
 		if(nom == "L-rd"){
 			return nom + (valeur * 10);
@@ -32,16 +32,22 @@ if (Meteor.isClient) {
 	Template.registerHelper('getValeurDeRegle', function(valeurStr){
 		return getValeurDeRegle(Session.get("sPartieId"), valeurStr);
 	});
-	Template.registerHelper('formatValeurRegle', function(valeur, unite){
+	Template.registerHelper('formatValeurRegle', function(valeur, unite, isCarte){
 		if(unite == "pds"){
 			if(valeur < 1000){
 				return valeur + " <span class='valUnite'>g"+"</span>";
 			} 
 			if(valeur < 1000000){
-				if(Math.round(valeur / 1000) != (valeur / 1000)) return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>kg</span>";
+				if(Math.round(valeur / 1000) != (valeur / 1000)) {
+					if(isCarte) return (valeur / 1000)+ " <span class='valUnite'>kg</span>";
+					return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>kg</span>";
+				}
 				return (valeur / 1000)+ " <span class='valUnite'>kg</span>";
 			}
-			if(Math.round(valeur / 1000000) != (valeur / 1000000)) return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>T</span>";
+			if(Math.round(valeur / 1000000) != (valeur / 1000000)){
+				if(isCarte) return (valeur / 1000000)+ " <span class='valUnite'>T</span>";
+				return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>T</span>";
+			} 
 			return (valeur / 1000000)+ " <span class='valUnite'>T</span>";
 		}
 		if(unite == "vol"){
@@ -49,10 +55,16 @@ if (Meteor.isClient) {
 				return valeur + " <span class='valUnite'>mm</span>";
 			} 
 			if(valeur < 1000000){
-				if(Math.round(valeur / 1000) != (valeur / 1000)) return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
+				if(Math.round(valeur / 1000) != (valeur / 1000)){
+					if(isCarte) return (valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
+					return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
+				} 
 				return (valeur / 1000)+ " <span class='valUnite'>"+"</span>";
 			}
-			if(Math.round(valeur / 1000000) != (valeur / 1000000)) return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>km"+"</span>";
+			if(Math.round(valeur / 1000000) != (valeur / 1000000)){
+				if(isCarte) return (valeur / 1000000)+ " <span class='valUnite'>km"+"</span>";
+				return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>km"+"</span>";
+			} 
 			return (valeur / 1000000)+ " <span class='valUnite'>"+"</span>";
 		}
 		switch(unite){
@@ -64,10 +76,16 @@ if (Meteor.isClient) {
 			return valeur + " <span class='valUnite'>"+unite+"</span>";
 		} 
 		if(valeur < 1000000){
-			if(Math.round(valeur / 1000) != (valeur / 1000)) return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
+			if(Math.round(valeur / 1000) != (valeur / 1000)){
+				if(isCarte) return (valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
+				return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
+			} 
 			return (valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
 		}
-		if(Math.round(valeur / 1000000) != (valeur / 1000000)) return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
+		if(Math.round(valeur / 1000000) != (valeur / 1000000)){
+			if(isCarte) return (valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
+			return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
+		} 
 		return (valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
 	});
 	/*
@@ -115,11 +133,13 @@ if (Meteor.isClient) {
 	Template.Partie.onCreated(function(){
 		this.templateDictionary = new ReactiveDict();
 		this.templateDictionary.set('currentPartie', this.data.partieId);
+		//this.templateDictionary.set('nomPartie', Parties.findOne({_id: this.data.partieId},{nom: 1}));
 		this.templateDictionary.set('currentScenario', this.data.scenarioId);
 		this.templateDictionary.set('currentTemplate', 'partieTest');
 		this.templateDictionary.set('currentScenarioObj', Scenarios.findOne({_id: Template.instance().templateDictionary.get('currentScenario')}));
 		this.templateDictionary.set('currentCategorie',"");
-		initTimer(this.data.partieId);		
+		initTimer(this.data.partieId);	
+		Template.instance().templateDictionary.set('currentTemplate', 'ViewScenario');
 	});
 	Template.Parties.onCreated(function(){
 		saveTimer();
@@ -181,16 +201,6 @@ if (Meteor.isClient) {
 		
 	});
 	Template.Partie.events({
-		'click #nomPartieView': function(event){
-			$('#nomPartieView').hide();
-			$('#nomPartieForm').show();
-			$('#nomPartieTxt').focus();
-		},
-		'click #nomPartieBouton': function(event){
-			Meteor.call("updateNomPartie", Template.instance().templateDictionary.get('currentPartie'), $('#nomPartieTxt').val());
-			$('#nomPartieForm').hide();
-			$('#nomPartieView').show();
-		},
 		'click #partieScenario': function(event){
 			Template.instance().templateDictionary.set('currentTemplate', 'ViewScenario');
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
@@ -337,8 +347,8 @@ if (Meteor.isClient) {
 		cartes: function(){
 			return Cartes.find({tags: "lanceur", cubesat: Template.instance().data.scenario.initialisation.cubesat});
 		},
-		hasLanceur: function(){
-			if(_.find(Template.parentData(0).partie.deck.cartes, function(obj){ return (_.indexOf(obj.tags, "lanceur") > -1); })) return true;
+		hasLanceurLourd: function(){
+			if(_.find(Template.parentData(0).partie.deck.cartes, function(obj){ return (_.indexOf(obj.tags, "lanceurLourd") > -1); })) return true;
 			return false;
 		}
 	});
@@ -364,6 +374,22 @@ if (Meteor.isClient) {
 		isDeck: function(){
 			if(_.findWhere(Template.parentData(1).partie.deck.cartes, {_carteId: this._id})) return "isDeck";
 			return "";  
+		},
+		isLanceur: function(){
+			if (_.indexOf(this.tags, "lanceur") > -1) return 'L';
+			return '';
+		},
+		isEnergieGenerateur: function(){
+			if (_.indexOf(this.tags, "energieGenerateur") > -1) return 'E';
+			return '';
+		},
+		stars: function(){
+			var n = getValeurDeRegle(Session.get("sPartieId"), this.valSci);
+
+			var arr = [];
+			for(var i=0; i < n; i++) arr.push("S");
+			console.log(arr);
+			return arr;
 		}
 	});
 	Template.PartieCategorie.onRendered(function(){

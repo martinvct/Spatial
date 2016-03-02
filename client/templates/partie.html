@@ -50,7 +50,8 @@
             {{#unless partie.cubesat}}<li><button id="partieOrbite" class="image" title="{{_ 'interface.bouton.orbite'}}" ></button></li>{{/unless}}
             <li><button id="partieLanceur" class="image" title="{{_ 'interface.bouton.lanceur'}}" ></button></li>
             {{#if hasLanceur }}
-            <li><button id="partieMagasin" class="image" title="{{_ 'interface.bouton.magasin'}}" ></button></li>
+            <li><button id="partieSegmentSol" class="image" title="{{_ 'interface.bouton.segmentSol'}}" ></button></li>
+            <li><button id="partieStructure" class="image" title="{{_ 'interface.bouton.structure'}}" ></button></li>
             <li><button id="partieCollaboration" class="image" title="{{_ 'interface.bouton.collaboration'}}" ></button></li>
             <li><button id="partieExpertise" class="image" title="{{_ 'interface.bouton.expertise'}}" ></button></li>
             <li><button id="partieLancementConfirmation" class="image" title="{{_ 'interface.bouton.lancement'}}" ></button></li>
@@ -87,19 +88,27 @@
     {{/each}}
 </template>
 <template name="PartieCategorie">
+    {{#if nStructure}}<h2><div class="logoStructure"></div>{{structure.intitule.fr}}({{nStructure}})</h2>{{/if}}
     <p class="categorieLegende">{{{ categorieLegende }}}</p>
     {{#each cartes}}{{> Carte }}{{/each}}
 </template>
+<template name="PartieStructure">
+    <p class="categorieLegende">{{{ categorieLegende }}}</p>
+    {{#each structures}}{{> Structure }}{{/each}}
+    {{#each cartes}}{{> Carte }}{{/each}}
+</template>
 <template name="PartieCategories">
+    <h2><div class="logoStructure"></div>{{structure.intitule.fr}}({{nStructure}})</h2>
     {{#each categories}}
-    {{#if nbrCartesTotal this}}
-    <div class="partieCategorie" data-categorie="{{this}}"><!--
-        --><div class="partieCategorieIcone {{this}}"></div><!--
-        --><div class="partieCategorieLabel"><span>{{concat "categories." this }}</span><span class="stat">({{nbrCartesSelect this}} / {{nbrCartesTotal this}})</span></div><!--
-    --></div>
-    {{/if}}
+        {{#if nbrCartesTotal this}}
+        <div class="partieCategorie" data-categorie="{{this}}"><!--
+            --><div class="partieCategorieIcone {{this}}"></div><!--
+            --><div class="partieCategorieLabel"><span>{{concat "categories." this }}</span><span class="stat">({{nbrCartesSelect this}} / {{nbrCartesTotal this}})</span></div><!--
+        --></div>
+        {{/if}}
     {{/each}}
 </template>
+
 <template name="Carte">
     <div id="{{carteId}}" class="carte {{isDeck}}" data-carteId="{{ carteId }}" ><!--
         --><div class="carteIntitule {{ categorie }}"><div class="carteStars">{{#each stars}}<div class="carteStar">&#9733;</div>{{/each}}</div><div class="intitule"><span>{{ intitule.fr }}</span></div><div class="carteId">{{ carteId }}</div><div class="carteCopyright">&copy; {{ copyright }}</div></div><!--
@@ -125,6 +134,29 @@
           --></div>{{/if}}<!--    
         --></div>
         {{#if tip.fr }}<div class="carteTips">{{ tip.fr }}</div>{{/if}}
+    </div>
+</template>
+<template name="Structure">
+    <div id="structure_{{n}}" class="structure isDeck" data-nStructure="{{n}}" ><!--
+        --><div class="carteIntitule {{ carte.categorie }} structureMagasin" data-nStructure="{{n}}"><div class="intitule"><span>{{ carte.intitule.fr }} ({{n}})</span></div><div class="carteId">{{ carte.carteId }}</div><div class="carteCopyright">&copy; {{ carte.copyright }}</div></div><!--
+        --><div class="structureIllustration"><img src="{{illustration carte.carteId carte.cubesat}}" /></div><!--
+        --><div class="carteDescription"></div><!--
+        --><div class="structureCategories">
+           {{#each categories}}<!--
+            --><div class="structureCategorie" data-categorie="{{this.categorie}}" data-nStructure="{{../n}}"><!--
+                --><div class="structureCategorieIcone {{this.categorie}}"></div><!--
+                --><div class="structureCategorieLabel"><span class="stat">{{this.nbrSelect}}</span></div><!--
+            --></div>
+            {{/each}} 
+           </div><!--
+        --><div class="carteConstantes {{ carte.categorie }}">
+               <div class="structureToolbar">
+                 <ul class="structureToolbar">
+                  <li><button class="structureMagasin"  data-nStructure="{{n}}" title="{{_ 'interface.bouton.magasin'}}" ></button></li>
+                  <li><button class="structureSupprimer"  data-nStructure="{{n}}" title="{{_ 'interface.bouton.structureSupprimer'}}" ></button></li>
+                 </ul>  
+               </div>
+           </div>
     </div>
 </template>
 <template name="PartieExpertiseConfirmation">
@@ -300,6 +332,25 @@
 </template>
 <template name="UserAutoComplete">
     ({{username}}) {{profile.firstname}} {{profile.lastname}}
+</template>
+<template name="StructureSuppression">
+<div class="modal fade modalCarte">
+    <div id="structureSuppressionConfirmation" class="structure isDeck"><!--
+        --><div class="carteIntitule {{ carte.categorie }} structureMagasin" data-nStructure="{{n}}"><div class="intitule"><span>{{ carte.intitule.fr }} ({{n}})</span></div><div class="carteId">{{ carte.carteId }}</div></div><!--
+        --><div class="structureIllustration"><img src="{{illustration carte.carteId carte.cubesat}}" /></div><!--
+        --><div class="carteDescription"></div><!--
+        --><div class="structureMessage">
+                <img src="/attention.png"/>
+                <span class="structureConfirmation">{{{_ "interface.confirmationSuppressionStructure"}}}</span>
+            </div>
+           <div class="structureToolbar">
+             <ul class="structureToolbar">
+              <li><button class="structureSuppressionNon"  data-nStructure="{{n}}">{{_ 'interface.bouton.non'}}</button></li>
+              <li><button class="structureSuppressionOui"  data-nStructure="{{n}}" data-carteId="{{carte._carteId}}">{{_ 'interface.bouton.oui'}}</button></li>
+             </ul>  
+           </div>
+    </div>
+</div>
 </template>
 
 

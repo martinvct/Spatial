@@ -202,22 +202,33 @@ if (Meteor.isClient) {
 	});
 	Template.Partie.events({
 		'click #partieScenario': function(event){
+			Session.set('currentStructure', 0);
 			Template.instance().templateDictionary.set('currentTemplate', 'ViewScenario');
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #partieLanceur': function(event){
+			Session.set('currentStructure', 0);
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieLanceur');
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #partieOrbite': function(event){
+			Session.set('currentStructure', 0);
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieOrbite');
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
-		'click #partieMagasin': function(event){
-			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategories');
+		'click #partieStructure': function(event){
+			Session.set('currentStructure', 0);
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieStructure');
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
+		'click #partieSegmentSol': function(event){
+			Session.set('currentStructure', 0);
+			Template.instance().templateDictionary.set('currentCategorie', "S");
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategorie');
+			Template.instance().templateDictionary.set('currentLocationHash', '');
+		},
 		'click #partieExpertise': function(event){
+			Session.set('currentStructure', 0);
 			var partie = Parties.findOne({_id: Template.instance().templateDictionary.get('currentPartie')});
 			if(partie.experts.length > 0){
 				Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseRapport');
@@ -227,10 +238,12 @@ if (Meteor.isClient) {
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #appelExpertConfirmation': function(event){
+			Session.set('currentStructure', 0);
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseConfirmation');
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #partieCollaboration': function(event){
+			Session.set('currentStructure', 0);
 			var partie = Parties.findOne({_id: Template.instance().templateDictionary.get('currentPartie')});
 			if(partie.chat.length > 0){
 				Template.instance().templateDictionary.set('currentTemplate', 'PartieCollaborationMessages');
@@ -241,11 +254,15 @@ if (Meteor.isClient) {
 		},
 		'click div.carte': function(event){
 			var carteId = $(event.currentTarget).attr("data-carteId");
-			if($(event.currentTarget).hasClass("isDeck")){
-				Meteor.call('removeCarteFromDeck', Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), this, Session.get("dateModif"));
+			if($(event.currentTarget).hasClass("isDeck")){ 
+				Meteor.call('removeCarteFromDeck', Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), this, Session.get('currentStructure'), Session.get("dateModif"));
 				//$(event.currentTarget).removeClass("isDeck");
 			} else {
-				Meteor.call("addCarteToDeck", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), this, Session.get("dateModif"));
+				console.log("AJOUT CARTE DANS " + Session.get('currentStructure'));
+				console.log("PartieId "+ Template.instance().data.partieId);
+				console.log("ScenId " + Template.instance().templateDictionary.get('currentScenarioObj'));
+				console.log(this);
+				Meteor.call("addCarteToDeck", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), this, Session.get('currentStructure'), Session.get("dateModif"));
 				//$(event.currentTarget).addClass("isDeck");
 			}
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
@@ -254,6 +271,19 @@ if (Meteor.isClient) {
 			Template.instance().templateDictionary.set('currentCategorie', this[0]);
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategorie');
 			Template.instance().templateDictionary.set('currentLocationHash', '');
+		},
+		'click .structureCategorie': function(event){
+			Template.instance().templateDictionary.set('currentCategorie', $(event.currentTarget).attr('data-categorie'));
+			Session.set('currentStructure', parseInt($(event.currentTarget).attr('data-nStructure')));
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategorie');
+			Template.instance().templateDictionary.set('currentLocationHash', '');
+		},
+		'click .structureMagasin': function(event){
+			if($(event.currentTarget).parent().find("button.structureMagasin").length){
+				Session.set('currentStructure', parseInt($(event.currentTarget).attr('data-nStructure')));
+				Template.instance().templateDictionary.set('currentTemplate', 'PartieCategories');
+				Template.instance().templateDictionary.set('currentLocationHash', '');
+			}
 		},
 		'click #percentLanceur': function(event){
 			if($('#percentLanceurModal').css("width") == "100%"){
@@ -272,6 +302,7 @@ if (Meteor.isClient) {
 			Meteor.call("updatePercentLanceur", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Number($('#partiePctLanceur').val()), Session.get("dateModif"));
 		},
 		'click #appelExpert': function(event){
+			Sessionset('currentStructure', 0);
 			Meteor.call("callExpert", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Session.get("dateModif"));
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseRapport');
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
@@ -311,10 +342,12 @@ if (Meteor.isClient) {
 			Template.instance().templateDictionary.set('currentLocationHash', '');
 		},
 		'click #partieLancementConfirmation': function(event){
+			Session.set('currentStructure', 0);
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieLancementConfirmation');
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click #partieLancement': function(event){
+			Session.set('currentStructure', 0);
 			Meteor.call("lancementProjet", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Session.get("dateModif"));
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieScore');
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
@@ -341,7 +374,7 @@ if (Meteor.isClient) {
 		hasLanceur: function(){
 			if(_.find(Template.parentData(0).partie.deck.cartes, function(obj){ return (_.indexOf(obj.tags, "lanceur") > -1); })) return true;
 			return false;
-		}
+		} 
 	});
 	Template.PartieLanceur.helpers({
 		cartes: function(){
@@ -358,13 +391,32 @@ if (Meteor.isClient) {
 		}
 	});
 	Template.PartieCategories.helpers({
+		structure: function(){
+			if(Session.get('currentStructure') == 0) return;
+			var carteStructureId = (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == "Z") && (obj.nStructure == Session.get('currentStructure')) ); }))[0]._carteId;	
+			return Cartes.findOne({_id: carteStructureId});
+		},
+		nStructure: function(){
+			return Session.get("currentStructure");
+		},
 		categories: function(){
+			if(Session.get('currentStructure') == 0) return;
+			var carteStructureId = (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == "Z") && (obj.nStructure == Session.get('currentStructure')) ); }))[0]._carteId;	
+			var carteStructure = Cartes.findOne({_id: carteStructureId});
 			var cats = [];
-			for(var key in ListCategories){ if((key != "L") && (key != "O")) cats.push(key); }
+			if(carteStructure.composants){
+				if(carteStructure.atterrisseur){
+					cats.push("J");
+				} else {
+					for(var key in ListCategories){ if((key != "L") && (key != "O") && (key != "Z") && (key != "S") && (key != "J")) cats.push(key); }
+				}
+			} else {
+				cats.push("A");
+			}	
 			return cats;
 		},
 		nbrCartesSelect: function(categorie){
-			return (_.filter(Template.parentData(1).partie.deck.cartes, function(obj){ return obj.categorie == categorie; }).length);
+			return (_.filter(Template.parentData(1).partie.deck.cartes, function(obj){ return ((obj.categorie == categorie) && (obj.nStructure == Session.get('currentStructure'))); }).length);
 		},
 		nbrCartesTotal: function(categorie){
 			return Cartes.find({categorie: categorie, cubesat: Template.instance().data.scenario.initialisation.cubesat}).count();
@@ -372,7 +424,8 @@ if (Meteor.isClient) {
 	});
 	Template.Carte.helpers({
 		isDeck: function(){
-			if(_.findWhere(Template.parentData(1).partie.deck.cartes, {_carteId: this._id})) return "isDeck";
+			//console.log(_.findWhere(Template.parentData(1).partie.deck.cartes, {_carteId: this._id, nStructure: Session.get('currentStructure')}));
+			if(_.findWhere(Template.parentData(1).partie.deck.cartes, {_carteId: this._id, nStructure: Session.get('currentStructure')}) && (this.categorie != 'Z')) return "isDeck";
 			return "";  
 		},
 		isLanceur: function(){
@@ -388,10 +441,11 @@ if (Meteor.isClient) {
 
 			var arr = [];
 			for(var i=0; i < n; i++) arr.push("S");
-			console.log(arr);
+			//console.log(arr);
 			return arr;
 		}
 	});
+	
 	Template.PartieCategorie.onRendered(function(){
 		console.log(Template.instance().data.locationHash);
 		if(Template.instance().data.locationHash){
@@ -400,6 +454,14 @@ if (Meteor.isClient) {
 		} 
 	});
 	Template.PartieCategorie.helpers({
+		structure: function(){
+			if(Session.get('currentStructure') == 0) return;
+			var carteStructureId = (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == "Z") && (obj.nStructure == Session.get('currentStructure')) ); }))[0]._carteId;	
+			return Cartes.findOne({_id: carteStructureId});
+		},
+		nStructure: function(){
+			return Session.get("currentStructure");
+		},
 		cartes : function(){
 			return Cartes.find({categorie: Template.instance().data.categorie, cubesat: Template.instance().data.scenario.initialisation.cubesat});
 		},
@@ -408,6 +470,72 @@ if (Meteor.isClient) {
 		}
 
 	});
+	Template.PartieStructure.onRendered(function(){
+		//console.log(Template.instance().data.locationHash);
+		/*if(Template.instance().data.locationHash){
+			$(document).scrollTop( $('#'+Template.instance().data.locationHash).offset().top );  
+		} */
+	});
+	Template.PartieStructure.helpers({
+		structures : function(){
+			var structures = [];
+			//console.log(Template.instance().data);
+			
+			for(var i=0; i < Template.instance().data.partie.deck.structures.ids.length; i++){
+				//console.log("ICI "+i);
+				var deckCarte = _.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == "Z") && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); });
+				if(!deckCarte) continue;
+				//console.log("LA "+i);
+				//console.log(deckCarte);
+				var carteStructureId = deckCarte[0]._carteId;
+				//console.log(carteStructureId);
+				var carteStructure = Cartes.findOne({_id: carteStructureId});
+				//console.log(carteStructure);
+				var structure = {
+					n: deckCarte[0].nStructure,
+					carte: carteStructure,
+					categories: []
+				};
+				if(carteStructure.composants){
+					if(carteStructure.atterrisseur){
+						structure.categories.push({categorie: "J", nbrSelect: (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == "J") && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length)});
+					} else {
+						for(var key in ListCategories){ 
+							//console.log(key);
+							if((key != "L") && (key != "O") && (key != "Z") && (key != "S") && (key != "J")) {
+								//console.log( Template.instance().data.partie.deck.structures.ids[i]);
+								//console.log(Template.instance().data.partie.deck.cartes);
+								//console.log(_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == key) && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length);
+								structure.categories.push({categorie: key, nbrSelect: (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == key) && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length)});
+							} 
+						}
+					}
+				} else {
+					structure.categories.push({categorie: "A", nbrSelect: (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == "A") && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length)});
+				}
+				structures.push(structure);
+			}
+			//console.log(structures);
+			return structures; 
+		},
+		cartes : function(){
+			return Cartes.find({categorie: "Z", cubesat: Template.instance().data.scenario.initialisation.cubesat});
+		},
+		categorieLegende: function(){
+			return TAPi18n.__("categories_legendes.Z");
+		}
+
+	});
+	Template.Structure.events({
+		'click .structureSupprimer': function(event, template){
+			Session.set('currentStructure', parseInt($(event.currentTarget).attr('data-nStructure')));
+			//console.log(Template.parentData(1));
+			template.data.partieId = Template.parentData(1).partie._id;
+			template.data.scenario = Template.parentData(1).scenario;
+			Modal.show("StructureSuppression", template.data);
+		}
+	});
+
 	Template.PartieExpertiseConfirmation.helpers({
 		nbrExpertsAppeles: function(){
 			return Template.instance().data.partie.experts.length;
@@ -509,6 +637,18 @@ if (Meteor.isClient) {
 		},
 		niveauDetailsCartes: function(){
 			return (Template.instance().data.scenario.validation.niveauDetails == 2);
+		}
+	});
+	Template.StructureSuppression.events({
+		'click .structureSuppressionNon': function(event){
+			Modal.hide("StructureSuppression");
+			Session.set("currentStructure", 0);
+		},
+		'click .structureSuppressionOui': function(event){
+			Meteor.call('removeCarteFromDeck', Template.instance().data.partieId, Template.instance().data.scenario, Template.instance().data.carte, Session.get('currentStructure'), Session.get("dateModif"));
+			saveTimer( Template.instance().data.partieId);
+			Modal.hide("StructureSuppression");
+			Session.set("currentStructure", 0);
 		}
 	});
 }

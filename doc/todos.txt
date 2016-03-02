@@ -4,13 +4,27 @@
 
 
 ***  Questions Yael Naze ****
-[] I1- I9 pour mission observation spatiales (tagués instrumentEspace), autres pour planètes (tagués instrumentPlanete) : est-ce contraignant ? règles sur cartes ou globales nécessaires ?
-[] En commentaires sur cartes Instruments : (1) sol => { altimètre : NON, atterrissage : NON }   (2) atmosphère => { bseoijn parachute et bouclier } . Que signifie le (1) ?
-[] C5 Antenne pour relais, nécessite ou incompatibilité ? { non C3 pour atterrisseur, il existe Z1,Z2,ouZ3 mais pas Z4 + carte J}.  ( necessite; (Z4 ou Z5 ou C3)) ? Sous entendu que Z4 [Module de croisière] et Z5 [plateforme atterrisseur] contiennent déjà une antenne intégrée ??) => règle globale pour tout Z1,Z2,Z3 (et pas Z4,Z5) : il faut ((C1 [antenne haut gain]  ou C2 [antenne bas gain]) ET C3 [gestion des communications])
+[*] I1- I9 pour mission observation spatiales (tagués instrumentEspace), autres pour planètes (tagués instrumentPlanete) : est-ce contraignant ? règles sur cartes ou globales nécessaires ?
+[*] C5 Antenne pour relais, nécessite ou incompatibilité ? { non C3 pour atterrisseur, il existe Z1,Z2,ouZ3 mais pas Z4 + carte J}.  ( necessite; (Z4 ou Z5 ou C3)) ? Sous entendu que Z4 [Module de croisière] et Z5 [plateforme atterrisseur] contiennent déjà une antenne intégrée ??) => règle globale pour tout Z1,Z2,Z3 (et pas Z4,Z5) : il faut ((C1 [antenne haut gain]  ou C2 [antenne bas gain]) ET C3 [gestion des communications])
 
 
 
 Structure et combinaison ?
+
+Z4 + Z1/2/3 = interdit
+Z4 seule = interdit
+Z4+Z5 -> ok (1 attitude)
+Z1/2/3+Z5 ->ok (1 attitude)
+n*Z1/2/3 ->ok (n attitude)
+
+
+si Z1,2,3 : n * (communicationsAntenne et communicationGestion et )
+si Z5 :
+	Soit Z1,2,3 et C5
+	Soit Z4 et (communicationsAntenne et communicationGestion)
+
+Attention poid limite par structure !! 500kg pour Z1, 2t pour Z2, 
+
 
 Pour n occurence de Z  (Z1, Z2, Z3) : 
 	-	Présence de n éléments tagués « thermiquePassif » (i.e. : T1)
@@ -21,4 +35,7 @@ Pour n occurence de Z  (Z1, Z2, Z3) :
 	-	Présence de n éléments tagués « energieGenerateur » (i.e. : E1, E2, E3, E4, E5)
 	-	Présence de n éléments tagués « energieGestion » (i.e. : E7)
 	-	Présence de n éléments tagués « attitudeGestion » (i.e. : A7)
+
+
 Pour n occurence de Z (Z4)
+-	Présence de n éléments tagués « thermiquePassif » (i.e. : T1)

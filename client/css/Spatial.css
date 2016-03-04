@@ -305,7 +305,7 @@ table.utilisateurs td.lien { cursor: pointer; }
     #partieExpertise { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/exprt1024.png') no-repeat; }
     #partieCollaboration { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/collab1024.png') no-repeat; }
     #partieStructure { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/Z1024.png') no-repeat; }
-    #partieSegmentSol { display: inline-block; width: 46px; height: 46px; background: url('/icones_M/S1024.png') no-repeat; }
+    #partieSegmentSol { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/S1024.png') no-repeat; }
     #partieOrbite { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/O1024.png') no-repeat; }
     #partieLanceur { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/L1024.png') no-repeat; }
     #partieScenario { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/obj1024.png') no-repeat; }

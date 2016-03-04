@@ -381,6 +381,51 @@ if (Meteor.isClient) {
 			return Cartes.find({tags: "lanceur", cubesat: Template.instance().data.scenario.initialisation.cubesat});
 		},
 		hasLanceurLourd: function(){
+
+			var result = interprete('CE2 + CZ1', 0, true);
+			if(result.erreurPos > 0){
+				console.log(result.erreurPos+" : "+result.erreur);
+			}
+			else console.log(result.mongo);
+
+			var result = interprete('S3 + (J4/J5)', 0, true);
+			if(result.erreurPos > 0){
+				console.log(result.erreurPos+" : "+result.erreur);
+			}
+			else console.log(result.mongo);
+
+			result = interprete('{"objectif": "espace"} / {"planete.atterrisseur": false }', 0, true);
+			if(result.erreurPos > 0){
+				console.log(result.erreurPos+" : "+result.erreur);
+			}
+			else console.log(result.mongo);
+
+			result = interprete('{"planete.rayonnement": {"$lt": 0.5} }', 0, true);
+			if(result.erreurPos > 0){
+				console.log(result.erreurPos+" : "+result.erreur);
+			}
+			else console.log(result.mongo);
+
+			result = interprete('"propulsionMoteur" + S2 + "attitudeCapteur" + (Z1/Z4)', 0, true);
+			if(result.erreurPos > 0){
+				console.log(result.erreurPos+" : "+result.erreur);
+			}
+			else console.log(result.mongo);
+
+			result = interprete('Z5 + {"planete.atmosphere": true}', 0, true);
+			if(result.erreurPos > 0){
+				console.log(result.erreurPos+" : "+result.erreur);
+			}
+			else console.log(result.mongo);
+
+			//'{"deck.cartes": {"$elemMatch": {"$and": [{"carteId": "CE2", "active": true}, {"carteId": "CZ1", "active": true}]}}}' CE2 + CZ1
+			//'{"deck.cartes": {"$elemMatch": {"$or": [{"carteId": "O3", "active": true}, {"carteId": "O4", "active": true}, {"carteId": "O5", "active": true}, {"carteId": "O6", "active": true}]}}}' O3/O4/O5/O6
+			//'{"deck.cartes": {"$elemMatch": {"$and": [{"carteId": "S3", "active": true}, {"$or": [{"carteId": "J4", "active": true}, {"carteId": "J5", "active": true}]}]}}}' S3 + (J4/J5)
+			//'{"$or":[{"objectif": "espace"},{"planete.atterrisseur": false }]}' {"objectif": "espace"} / {"planete.atterrisseur": false }
+			//'{"deck.cartes": {"$elemMatch": {"tags": "energieBatterie", "active": true}}}' "energieBatterie"
+			//'{"planete.rayonnement": {"$lt": 0.5} }'
+			//{"deck.cartes": {"$elemMatch": {"$and": [{"tags": "propulsionMoteur", "active": true}, {"carteId": "S2", "active": true}, {"tags": "attitudeCapteur", "active": true}, {"$or": [{"carteId": "Z1", "active": true}, {"carteId": "Z4", "active": true}]}]}}}'
+			//{"$and": [{"deck.cartes": {"$elemMatch": {"$and": [{"carteId": "Z5", "active": true}]}}}, {"planete.atmosphere": true}]}
 			if(_.find(Template.parentData(0).partie.deck.cartes, function(obj){ return (_.indexOf(obj.tags, "lanceurLourd") > -1); })) return true;
 			return false;
 		}

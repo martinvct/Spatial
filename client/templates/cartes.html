@@ -1,0 +1,220 @@
+<template name="ConfigCartes">
+  <div class="toolbarForm">
+    <ul>
+      <li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+    </ul>
+  </div>
+  <h2>{{_ "interface.satellite"}}</h2>
+  {{#each categories}}
+      {{#if nbrCartesTotal this false}}
+      <div class="carteCategorie" data-categorie="{{this}}" data-cubesat="0"><!--
+          --><div class="carteCategorieIcone {{this}}"></div><!--
+          --><div class="carteCategorieLabel"><span>{{concat "categories." this }}</span><span class="stat">({{nbrCartesTotal this false}})</span></div><!--
+      --></div>
+      {{/if}}
+  {{/each}}
+  <h2>{{_ "interface.cubesat"}}</h2>
+  {{#each categoriesCubesat}}
+      {{#if nbrCartesTotal this true}}
+      <div class="carteCategorie" data-categorie="{{this}}" data-cubesat="1"><!--
+          --><div class="carteCategorieIcone {{this}}"></div><!--
+          --><div class="carteCategorieLabel"><span>{{concat "categories." this }}</span><span class="stat">({{nbrCartesTotal this true}})</span></div><!--
+      --></div>
+      {{/if}}
+  {{/each}}
+</template>
+
+<template name="ConfigCartesCategorie">
+  <div class="toolbarForm">
+        <ul>
+            <li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+        </ul>
+    </div>
+
+  {{#each cartes}}
+    {{> CarteData }}
+  {{/each}}
+</template>
+
+<template name="CarteData">
+  <div class="carteData">
+    <div class="cartePreview">
+      {{> Carte }}
+    </div>
+    <div class="carteTxt">
+      {{> CarteTxt }}
+    </div>
+  </div>
+</template>
+<template name="CarteTxt">
+<br/>
+&nbsp;&nbsp;_id:&nbsp;"{{_id}}",<br/>
+&nbsp;&nbsp;carteId:&nbsp;"{{carteId}}",<br/>
+&nbsp;&nbsp;regles: {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;necessite:&nbsp;'{{reglesTXT.necessite}}',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;incompatible:&nbsp;'{{reglesTXT.incompatible}}'<br/>
+&nbsp;&nbsp;},<br/>
+&nbsp;&nbsp;tags:&nbsp;[&nbsp;{{getTags}}&nbsp;],<br/> 
+&nbsp;&nbsp;valEur:&nbsp;{{valEur}},<br/>
+&nbsp;&nbsp;valNrg:&nbsp;{{valNrg}},<br/>
+&nbsp;&nbsp;valPds:&nbsp;{{valPds}},<br/>
+&nbsp;&nbsp;valVol:&nbsp;{{valVol}},<br/>
+&nbsp;&nbsp;valSci:&nbsp;{{valSci}},<br/>
+&nbsp;&nbsp;fiabilite:&nbsp;{{fiabilite}},<br/>
+{{#if isStructure}}&nbsp;&nbsp;atterrisseur:&nbsp;{{#if atterrisseur}}true{{else}}false{{/if}},<br/>
+&nbsp;&nbsp;composants:&nbsp;{{#if composants}}true{{else}}false{{/if}},<br/>
+&nbsp;&nbsp;maxPds:&nbsp;{{maxPds}},<br/>{{/if}}
+&nbsp;&nbsp;active:&nbsp;{{#if active}}true{{else}}false{{/if}},<br/>
+&nbsp;&nbsp;cubesat:&nbsp;{{#if cubesat}}true{{else}}false{{/if}},<br/>
+&nbsp;&nbsp;ordre:&nbsp;{{ordre}}
+</template>
+
+<template name="Carte">
+    <div id="{{carteId}}" class="carte {{isDeck}}" data-carteId="{{ carteId }}" ><!--
+        --><div class="carteIntitule {{ categorie }}"><div class="carteStars">{{#each stars}}<div class="carteStar">&#9733;</div>{{/each}}</div><div class="intitule"><span>{{ intitule.fr }}</span></div><div class="carteId">{{ categorie }}{{ ordre }}</div><div class="carteCopyright">&copy; {{ copyright }}</div></div><!--
+        --><div class="carteIllustration"><img src="{{illustration carteId cubesat}}" /></div><!--
+        --><div class="carteDescription">{{ description.fr }}</div><!--
+        --><div class="carteConstantes {{ categorie }}">
+          {{#if valEur}}<div class="carteConstante"><!--
+            --><div class="carteConstanteBudget"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valEur) 'eur' true}}}</span></div><!--
+            --><div class="carteConstanteFin"></div><!--
+          --></div>{{/if}}{{#if valPds}}<div class="carteConstante"><!--
+            --><div class="carteConstanteMasse{{isLanceur}}"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valPds)  'pds' true}}}</span></div><!--
+            --><div class="carteConstanteFin"></div><!--
+          --></div>{{/if}}{{#if valVol}}<div class="carteConstante"><!--
+            --><div class="carteConstanteVolume"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valVol)  'vol' true}}}</span></div><!--
+            --><div class="carteConstanteFin"></div><!--
+          --></div>{{/if}}{{#if valNrg}}<div class="carteConstante"><!--
+            --><div class="carteConstanteEnergie{{isEnergieGenerateur}}"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle valNrg)  'nrg' true}}}</span></div><!--
+            --><div class="carteConstanteFin"></div><!--
+          --></div>{{/if}}<!--    
+        --></div>
+        {{#if tip.fr }}<div class="carteTips">{{ tip.fr }}</div>{{/if}}
+    </div>
+</template>
+
+<template name="EditCarte">
+  <form method="post">
+    <input type="hidden" name="_id" id="_id" value="{{ carte._id }}" />
+    <input type="hidden" name="categorie" id="categorie" value="{{carte.categorie}}" />
+    <input type="hidden" name="cubesat" id="cubesat" value="{{carte.cubesat}}" />
+
+    <h2>{{#if carte}} {{_ "interface.editionCarte" intitule=carte.intitule.fr}} {{else}} {{_ "interface.nouvelleCarte" }} {{/if}}</h2>
+
+    <h3>{{_ "interface.carte.infos" }}</h3>
+    <div class="carteParametre">
+      <label for="intitule" class="required">{{_ "interface.carte.intitule" }}</label>
+      <input type="text" class="longText" id="intitule" name="intitule" value="{{ carte.intitule.fr }}" placeholder="{{_ 'interface.carte.intitule' }}"/>
+    </div>
+    <div class="carteParametre">
+      <label for="description">{{_ "interface.carte.description" }}</label>
+      <textarea id="description" name="description" placeholder="{{_ 'interface.carte.description' }}" rows="5" cols="100">{{ carte.description.fr }}</textarea>
+    </div>
+    <div class="carteParametre">
+      <label for="tip">{{_ "interface.carte.tip" }}</label>
+      <textarea id="tip" name="tips" placeholder="{{_ 'interface.carte.tip' }}" rows="5" cols="100">{{ carte.tip.fr }}</textarea>
+    </div>
+    <div class="carteParametre">
+      <label for="copyright">{{_ "interface.carte.copyright" }}</label>
+      <input type="text" id="copyright" name="copyright" value="{{ carte.copyright }}" placeholder="{{_ 'interface.carte.copyright' }}" />
+    </div>
+
+    <h3>{{_ "interface.carte.regles" }}</h3>
+    <div class="carteParametre">
+      <label for="necessite" class="required">{{_ "interface.carte.necessite" }}</label>
+      <textarea id="necessite" name="necessite" placeholder="{{_ 'interface.carte.necessite' }}" rows="5" cols="100">{{ carte.reglesTXT.necessite }}</textarea>
+    </div>
+    <div class="carteParametre">
+      <label for="incompatible" class="required">{{_ "interface.carte.incompatible" }}</label>
+      <textarea id="incompatible" name="incompatible" placeholder="{{_ 'interface.carte.incompatible' }}" rows="5" cols="100">{{ carte.reglesTXt.incompatible }}</textarea>
+    </div>
+    <div class="carteParametre">
+      <label for="tags">{{_ "interface.carte.tags" }}</label> <input type="hidden" id="tags" name="tags" value="{{carte.tags}}" />
+      <div class="carteTags">
+        {{#each carte.tags}}
+        <div class="carteTag" id="{{this}}">{{this}}<div class="remCarteTag"> X </div></div>
+        {{/each}}
+        <!--<input type="text" class="mediumText" id="newCarteTag" name="newCarteTag" value="" placeholder="{{_ 'interface.carte.newTag'}}"/>-->
+        {{> inputAutocomplete settings=settings id="tag" placeholder="..." }}<button id="addTag" class="okBouton">{{_ "interface.bouton.ok" }}</button>
+      </div>
+    </div>
+
+
+    {{#if isStructure }}
+    <h3>{{_ "interface.carte.structure" }}</h3>
+    <div class="carteParametre">
+      <label for="composants">{{_ "interface.carte.composants"}}</label>
+      <input type="checkbox" id="composants" name="composants" value="1" {{isChecked carte.composants}} />
+      <span class="parametreLegende">{{_ "interface.legende.composants" }}</span>
+    </div>
+    <div class="carteParametre">
+      <label for="atterrisseur">{{_ "interface.carte.atterrisseur"}}</label>
+      <input type="checkbox" id="atterrisseur" name="atterrisseur" value="1" {{isChecked carte.atterrisseur}} />
+      <span class="parametreLegende">{{_ "interface.legende.atterrisseur" }}</span>
+    </div>
+    <div class="carteParametre">
+      <label for="maxPds">{{_ "interface.carte.maxPds" }}</label>
+      <input type="text" id="maxPds" name="maxPds" value="{{ carte.maxPds }}" placeholder="{{_ 'interface.carte.maxPds' }}" />
+      <span class="parametreLegende">{{_ "interface.legende.enGrammes" }}</span>
+    </div>
+    {{/if}}
+
+    <h3>{{_ "interface.carte.valeurs" }}</h3>
+    <div class="carteParametre">
+      <label for="fiabilite">{{_ "interface.carte.fiabilite" }}</label>
+      <input type="text" id="fiabilite" name="fiabilite" value="{{ carte.fiabilite }}" placeholder="{{_ 'interface.carte.fiabilite' }}" />
+      <span class="parametreLegende">{{_ "interface.legende.fiabilite" }}</span>
+    </div>
+    <div class="carteParametre">
+      <label for="valEur">{{_ "interface.carte.valEur" }}</label>
+      <input type="text" id="valEur" name="valEur" value="{{ carte.valEur }}" placeholder="{{_ 'interface.carte.valEur' }}" />
+      <span class="parametreLegende">{{_ "interface.legende.enEuros" }}</span>
+    </div>
+    <div class="carteParametre">
+      <label for="valNrg">{{_ "interface.carte.valNrg" }}</label>
+      <input type="text" id="valNrg" name="valNrg" value="{{ carte.valNrg }}" placeholder="{{_ 'interface.carte.valNrg' }}" />
+      <span class="parametreLegende">{{_ "interface.legende.enWatts" }}</span>
+    </div>
+    <div class="carteParametre">
+      <label for="valPds">{{_ "interface.carte.valPds" }}</label>
+      <input type="text" id="valPds" name="valPds" value="{{ carte.valPds }}" placeholder="{{_ 'interface.carte.valPds' }}" />
+      <span class="parametreLegende">{{_ "interface.legende.enGrammes" }}</span>
+    </div>
+    <div class="carteParametre">
+      <label for="valVol">{{_ "interface.carte.valVol" }}</label>
+      <input type="text" id="valVol" name="valVol" value="{{ carte.valVol }}" placeholder="{{_ 'interface.carte.valVol' }}" />
+      <span class="parametreLegende">{{_ "interface.legende.enMillimetres" }}</span>
+    </div>
+    <div class="carteParametre">
+      <label for="valSci">{{_ "interface.carte.valSci" }}</label>
+      <input type="text" id="valSci" name="valSci" value="{{ carte.valSci }}" placeholder="{{_ 'interface.carte.valSci' }}" />
+    </div>
+
+    <h3>{{_ "interface.carte.statut" }}</h3>
+    <div class="carteParametre">
+      <input type="radio" id="active" name="active" value="1" {{isChecked carte.active}} />
+      <label for="actif">{{_ "interface.carte.actif" }}</label>
+      <input type="radio" id="inactive" name="active" value="0" {{isNChecked carte.active}} />
+      <label for="actif">{{_ "interface.carte.inactif" }}</label>
+    </div>
+    <div class="carteParametre">
+      <label for="ordre">{{_ "interface.carte.ordre" }}</label>
+      <input type="text" id="ordre" name="ordre" value="{{ carte.ordre }}" placeholder="{{_ 'interface.carte.ordre' }}" />
+      <span class="parametreLegende">{{_ "interface.legende.ordre" }}</span>
+    </div>
+  </form>
+  <div class="toolbarForm">
+    <ul>
+      <li><button id="saveScenario">{{_ "interface.bouton.sauver" }}</button></li>
+      <li><button id="delScenario">{{_ "interface.bouton.supprimer" }}</button></li>
+      <li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+    </ul>
+  </div>
+</template>
+<template name="TagAutoComplete">
+    {{tag}}
+</template>

@@ -8,6 +8,9 @@ if (Meteor.isClient) {
 		'click #listeScenarios': function(event){
 			Router.go('ConfigScenarios');
 		},
+		'click #listeCartes': function(event){
+			Router.go('ConfigCartes');
+		},
 		'click #listeUtilisateurs': function(event){
 			Router.go('ConfigUtilisateurs');
 		},

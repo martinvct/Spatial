@@ -1,47 +1,53 @@
 [] modifier users.js et userAccount.js : placer les méthodes en serveur et renvoyer le resultat d'affichage pour le client (pas de d'alerte directement)
 [] possibilité d'uploader une photo d'avatar ou sélection d'avatars par défaut
 [] affichage des évènements !
+[] page d'affichage des cartes
+[] page d'édition de cartes
+[] modifier contrainte scenario : ajouter une checkbox qui autorise la modification d'un scénario malgré les précédentes parties
 
 
 ***  Questions Yael Naze ****
-[*] I1- I9 pour mission observation spatiales (tagués instrumentEspace), autres pour planètes (tagués instrumentPlanete) : est-ce contraignant ? règles sur cartes ou globales nécessaires ?
-[*] C5 Antenne pour relais, nécessite ou incompatibilité ? { non C3 pour atterrisseur, il existe Z1,Z2,ouZ3 mais pas Z4 + carte J}.  ( necessite; (Z4 ou Z5 ou C3)) ? Sous entendu que Z4 [Module de croisière] et Z5 [plateforme atterrisseur] contiennent déjà une antenne intégrée ??) => règle globale pour tout Z1,Z2,Z3 (et pas Z4,Z5) : il faut ((C1 [antenne haut gain]  ou C2 [antenne bas gain]) ET C3 [gestion des communications])
+
+[] Scenario CubeSat3 : lancement3U, structure3U, microprocesseur, memoire, gestion elect, panneau 3U, batterie, telecom rapide, antenne 2, micropropulsion, instrument3
+			- il manque Détecteur limbe, senseur solaire ou récepteur gps , non ?
+
+
+			
+
+{"deck.cartes": {"$elemMatch": {"$and": [{"tags": "thermiquePassif", "active": true, "nStructure": 1}, {"tags": "energieGenerateur", "active": true, "nStructure": 1}, {"tags": "energieGestion", "active": true, "nStructure": 1}, {"tags": "commandesCalculateur", "active": true, "nStructure": 1}, {"tags": "commandesMemoire", "active": true, "nStructure": 1}, {"tags": "attitudeMoteur", "active": true, "nStructure": 1}, {"tags": "attitudeGestion", "active": true, "nStructure": 1}, {"tags": "communicationsAntenne", "active": true, "nStructure": 1}, {"tags": "communicationsGestion", "active": true, "nStructure": 1}, {"tags": "propulsion", "active": true, "nStructure": 1}]}}}
+
+{ "_id" : "7b2rw4HTzorMo7cCo", "deck" : { "cartes" : [ 
+{ "_carteId" : "oHrrKjiBHgjBPvLEY", "active" : true, "carteId" : "L1", "tags" : [ "lanceur" ], "categorie" : "L", "fiabilite" : 0.85, "nStructure" : 0 }, 
+{ "_carteId" : "rGGeZaj43FPcZLnCE", "active" : true, "carteId" : "S1", "tags" : [ "segmentSol" ], "categorie" : "S", "fiabilite" : 1, "nStructure" : 0 }, 
+{ "_carteId" : "qgHyg474YQBmbFzeT", "active" : true, "carteId" : "O1", "tags" : [ "orbite", "orbiteBasse" ], "categorie" : "O", "fiabilite" : 1, "nStructure" : 0 },
+
+{ "_carteId" : "DyLg4tEdwdRtvapbW", "active" : true, "carteId" : "Z1", "tags" : [ "structure" ], "categorie" : "Z", "fiabilite" : 1, "nStructure" : 2 }, 
+{ "_carteId" : "wBK7xhARTxY5xBo3c", "active" : true, "carteId" : "A6", "tags" : [ "attitude", "attitudeMoteur", "propulsion" ], "categorie" : "A", "fiabilite" : 1, "nStructure" : 2 }, 
+{ "_carteId" : "oELLENbJm4EpTYSyJ", "active" : true, "carteId" : "A7", "tags" : [ "attitude", "attitudeGestion" ], "categorie" : "A", "fiabilite" : 1, "nStructure" : 2 }, 
+{ "_carteId" : "LhbPDXuPHAEma25dj", "active" : true, "carteId" : "C2", "tags" : [ "communications", "communicationsAntenne" ], "categorie" : "C", "fiabilite" : 1, "nStructure" : 2 }, 
+{ "_carteId" : "g5Y26PMbwSt2affeK", "active" : true, "carteId" : "C3", "tags" : [ "communications", "communicationsGestion" ], "categorie" : "C", "fiabilite" : 1, "nStructure" : 2 }, 
+{ "_carteId" : "EBtFYf6esMBNavhEg", "active" : true, "carteId" : "E1", "tags" : [ "energie", "energieGenerateur", "energieSolaire" ], "categorie" : "E", "fiabilite" : 1, "nStructure" : 2 }, 
+{ "_carteId" : "HYbsrh7X5tJwvxJRo", "active" : true, "carteId" : "E6", "tags" : [ "energie", "energieBatterie" ], "categorie" : "E", "fiabilite" : 1, "nStructure" : 2 }, 
+{ "_carteId" : "XbDKuyS5jcPd9H7rX", "active" : true, "carteId" : "E7", "tags" : [ "energie", "energieGestion" ], "categorie" : "E", "fiabilite" : 1, "nStructure" : 2 }, 
+{ "_carteId" : "p2NABZpZE6RnBPMcH", "active" : true, "carteId" : "I1", "tags" : [ "instrument", "instrumentTelescope", "instrumentEspace" ], "categorie" : "I", "fiabilite" : 1, "nStructure" : 2 }, 
+{ "_carteId" : "GYvDuwzSp7Q7DndQH", "active" : true, "carteId" : "M1", "tags" : [ "commandes", "commandesMemoire" ], "categorie" : "M", "fiabilite" : 1, "nStructure" : 2 }, 
+{ "_carteId" : "36CjTZBcQEWvSSpRj", "active" : true, "carteId" : "M4", "tags" : [ "commandes", "commandesCalculateur" ], "categorie" : "M", "fiabilite" : 1, "nStructure" : 2 }, 
+{ "_carteId" : "ybRXgA7WbDsjSAZkq", "active" : true, "carteId" : "T1", "tags" : [ "thermique", "thermiquePassif" ], "categorie" : "T", "fiabilite" : 1, "nStructure" : 2 } 
+
+] } }
 
 
 
-Structure et combinaison ?
-
-Z4 + Z1/2/3 = interdit
-Z4 seule = interdit
-Z4+Z5 -> ok (1 attitude)
-Z1/2/3+Z5 ->ok (1 attitude)
-n*Z1/2/3 ->ok (n attitude)
+{"deck.cartes": {"$elemMatch": {"$and": [{"tags": "thermiquePassif", "active": true, "nStructure": 1}]}}}	
 
 
-si Z1,2,3 : n * (communicationsAntenne et communicationGestion et )
-si Z5 :
-	Soit Z1,2,3 et C5
-	Soit Z4 et (communicationsAntenne et communicationGestion)
+db.parties.aggregate([{$match: {_id: "7b2rw4HTzorMo7cCo"}}, {$match: {"deck.cartes": {"$elemMatch": {"$and": [{"tags": "thermiquePassif", "active": true, "nStructure": 1}]}}}}, {$unwind: "$deck.cartes"}, {$unwind: "$deck.cartes.tags"}, {$match: {"deck.cartes.active": true}}, {$group: {"_id":"$_id", "nbr":{$sum: 1}}} ]);
 
-Attention poid limite par structure !! 500kg pour Z1, 2t pour Z2, 
+db.parties.aggregate([{$match: {_id: "7b2rw4HTzorMo7cCo"}}, {$match: {"deck.cartes": {"$and":[{"$elemMatch": {"tags": "energieBatterie", "active": true}},{"$elemMatch": {"tags": "energieGestion", "active": true}}]}}}, {$unwind: "$deck.cartes"}, {$unwind: "$deck.cartes.tags"}, {$match: {"deck.cartes.active": true}}, {$group: {"_id":"$_id", "nbr":{$sum: 1}}} ]);
 
+db.parties.aggregate([{$match: {_id: "7b2rw4HTzorMo7cCo"}}, {$match: {"deck.cartes": {"$elemMatch": {"tags": "energieBatterie", "active": true}}}}, {$match: {"deck.cartes": {"$elemMatch": {"tags": "energieGestion", "active": true}}}}, {$unwind: "$deck.cartes"}, {$unwind: "$deck.cartes.tags"}, {$match: {"deck.cartes.active": true}}, {$group: {"_id":"$_id", "nbr":{$sum: 1}}} ]);
 
-Pour n occurence de Z  (Z1, Z2, Z3) : 
-	-	Présence de n éléments tagués « thermiquePassif » (i.e. : T1)
-	-	Présence de n éléments tagués « communicationsAntenne » (i.e. : C1, C2)
-	-	Présence de n éléments tagués « communicationsGestion » (i.e. : C3)
-	-	Présence de n éléments tagués « commandesMemoire » (i.e. : M1, M2, M3)
-	-	Présence de n éléments tagués « commandesCalculateur » (i.e. : M4, M5, M6)
-	-	Présence de n éléments tagués « energieGenerateur » (i.e. : E1, E2, E3, E4, E5)
-	-	Présence de n éléments tagués « energieGestion » (i.e. : E7)
-	-	Présence de n éléments tagués « attitudeGestion » (i.e. : A7)
+db.parties.aggregate([{$match: {_id: "7b2rw4HTzorMo7cCo"}}, {$match: {"$and":[ {"deck.cartes": {"$elemMatch": {"tags": "energieBatterie", "active": true}}}, {"deck.cartes": {"$elemMatch": {"tags": "energieGestion", "active": true}}}]}}, {$unwind: "$deck.cartes"}, {$unwind: "$deck.cartes.tags"}, {$match: {"deck.cartes.active": true}}, {$group: {"_id":"$_id", "nbr":{$sum: 1}}} ]);
 
 
-Pour n occurence de Z (Z4)
--	Présence de n éléments tagués « thermiquePassif » (i.e. : T1)
-
-
-
-
-
-
+db.parties.update({_id: "7b2rw4HTzorMo7cCo"},{$set:{"deck.structures.masses":[0]}});

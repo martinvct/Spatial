@@ -29,6 +29,7 @@ h3 { font-family: "nasalization"; margin: 1em 0em 1em 1.5em; color: #fff200; fon
 button { font-family: "nasalization"; cursor: pointer; }
 button.lien { border: none; background: none;  text-decoration: underline; color: white; }
 button.bouton { border: 0.1em solid white; width: 7em; margin: 0.2em; padding: 0.2em 0; text-align: center; background: none; color: white; }
+button.okBouton { border: 0.1em solid white; width: 50px; margin: 4px; padding: 1px 0 3px; text-align: center; background: none; color: white; }
 button.petitBouton { border: 0.1em solid white; margin: 0.2em; text-align: center; background: none; color: white; font-size: x-small; width: 105px; }
 nav.navMain { font-family: "nasalization"; vertical-align: top; }
 #navMainHR { width: 100%; height: 7px; background-image: url('ligne.png'); }
@@ -45,12 +46,12 @@ ul.menuMain { list-style: none;  padding: 0; margin: 0; }
 ul.menuMain li { display: block; list-style-type:none; }
 ul.menuMain > li > button { border: 0.2em solid white; border-radius: 5px; width: 11em; margin: 0.5em; padding: 0.5em 0; text-align: center; background: none; color: white; font-family: "nasalization"; font-size: large; }
 
-#rightNavButtons { display: inline-block; float: right; }
-#buttonAvatar { display: inline-block; float: right; }
+#rightNavButtons { display: inline-block; float: right; min-width: 110px; }
+#buttonAvatar { display: inline-block; position: relative; left: 80px; top: -15px; }
 button.buttonAvatar { padding: 0; margin: 0; background: none; border: none; }
 #avatarMinified { display: block; padding: 0; margin: 0; }
 
-#buttonNotifications { display: inline-block; float: right; }
+#buttonNotifications { display: inline-block; position: relative; left: 80px; margin-left: 6px; }
 button.buttonNotifications { padding: 0; margin: 0; background: none; border: none; }
 #notificationMinified { display: block; padding: 0; margin: 0; }
 div.nNotifications { display: inline-block; background: red; font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: small; color: white; padding: 2px 4px 0 4px; position: relative; top: -30px; right: -15px; border-radius: 3px; }
@@ -69,14 +70,16 @@ div.utilisateur { display: block; border-bottom: 0.2em dotted white; margin-bott
 div.utilisateurAvatar { display: inline-block; }
 div.utilisateurInfo { display: inline-block; color: white; }
 
-div.scenarioParametre, div.utilisateurParametre { margin: 0 0 0.2em 2em; padding-left: 0.5em; }
-div.scenarioParametre label, div.utilisateurParametre label { display: inline-block; width: 8em; vertical-align: top; }
-div.scenarioParametre label.required::after, div.utilisateurParametre label.required::after { content: "*"; color: red; font-size: large; margin-left: 0.2em; }
-div.scenarioParametre input[type="text"], div.utilisateurParametre input[type="text"] { width: 11em; }
-div.scenarioParametre select, div.utilisateurParametre select { width: 11.45em; }
-div.scenarioParametre input[type="text"].longText, div.utilisateurParametre input[type="text"].longText { width: 22em; }
-div.scenarioParametre textarea, div.utilisateurParametre textarea { width: 22.5em; }
-div.scenarioParametre.error, div.utilisateurParametre.error { border: 0.05em solid red; }
+div.scenarioParametre, div.utilisateurParametre, div.carteParametre { margin: 0 0 0.2em 2em; padding-left: 0.5em; }
+div.scenarioParametre label, div.utilisateurParametre label, div.carteParametre label { display: inline-block; width: 8em; vertical-align: top; }
+div.scenarioParametre label.required::after, div.utilisateurParametre label.required::after, div.carteParametre label.required::after { content: "*"; color: red; font-size: large; margin-left: 0.2em; }
+div.scenarioParametre input[type="text"], div.utilisateurParametre input[type="text"], div.carteParametre input[type="text"] { width: 11em; }
+div.scenarioParametre select, div.utilisateurParametre select, div.carteParametre select { width: 11.45em; }
+div.scenarioParametre input[type="text"].longText, div.utilisateurParametre input[type="text"].longText, div.carteParametre input[type="text"].longText { width: 22em; }
+div.scenarioParametre input[type="text"].mediumText, div.utilisateurParametre input[type="text"].mediumText, div.carteParametre input[type="text"].mediumText { width: 18em; }
+div.scenarioParametre textarea, div.utilisateurParametre textarea, div.carteParametre textarea { width: 22.5em; }
+div.scenarioParametre.error, div.utilisateurParametre.error, div.carteParametre.error { border: 0.05em solid red; }
+div.carteParametre div.carteTags { display: inline-block; }
 
 div.configScenarios div.scenario, div.listScenarios div.scenario { display: block; margin: 1em 0; padding: 0.3em; border-bottom: 0.01em dashed white; }
 div.configScenarios div.scenario div.descScenario, div.configScenarios div.scenario div.tagsScenario, div.configScenarios div.scenario div.statsScenario { font-size: small; }
@@ -93,7 +96,7 @@ nav.navPartieMenu { margin-top: 1em; }
 span.partieConstante { font-family: "Digital-7"; font-size: 16px; margin: 0 6px 0 3px; position: relative; top: 4px; }
 span.valUnite { font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: 10px; padding-top: 2px; }
 span.valUniteMm { font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: 12px; padding-top: 2px; background: url('/valUniteMm.png') no-repeat;  }
-#nomPartie { position: relative; top: -12px;  }
+#nomPartie { display: block; position: relative; top: -9px; padding-right: 6px; width: 100%; }
 #nomPartieForm { margin: 30px 0 0 0; }
 #nomPartieTxt { border: none; background: rgba(255,255,255,0.3); font-family: "nasalization"; font-size: 26px; color: white; margin: 0 12px 3px; padding-left: 5px; }
 #nomPartieBouton { height: 39px; position: relative; left: -17px; top: -4px; margin: 0 0 0 10px; background: none; border: 2px solid white; border-radius: 0 5px 5px 0; }
@@ -163,8 +166,8 @@ div.carteTips { background-color: white; border-radius: 5px; color: #333; paddin
 div.carte.isDeck, div.structure.isDeck { border: 2px solid white; box-shadow: 0px 0px 15px #fff; }
 div.carteStars { float: right; height: 16px; margin: 39px 5px 0 0; }
 div.carteStar { display: inline-block; font-size:14px; width: 14px; height: 14px; }
-div.partieCategorie { cursor: pointer; }
-div.partieCategorieLabel {  font-family: "nasalization"; }
+div.partieCategorie, div.cartecategorie { cursor: pointer; }
+div.partieCategorieLabel, div.carteCategorieLabel {  font-family: "nasalization"; }
 button.carteLien, button.categorieLien { display: inline-block; border: none; cursor: pointer; background: none; font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: medium; color: white; }
 
 div.structure { background-color: black; }
@@ -186,7 +189,7 @@ div.structureCategorieLabel { display: inline-block; width: 25px; height: 32px; 
 div.structureToolbar { margin: -5px 0 0 0; }
 ul.structureToolbar button.structureMagasin { background: black url('/Cartes/mag25.png') no-repeat; width: 25px; height: 25px; border: none; margin-right: 50px; border-radius: 5px; }
 ul.structureToolbar button.structureSupprimer { background: black url('/Cartes/close25.png') no-repeat; width: 25px; height: 25px; border: none; border-radius: 5px; }
-div.logoStructure { background: url('/icones_S/Z320_logo.png') no-repeat; width: 40px; height: 40px; border: none; float: left; margin: -8px 0 0 5px; }
+div.logoStructure { background: url('/icones_S/Z320_logo.png') no-repeat; width: 47px; height: 47px; border: none; float: left; margin: -10px 10px 0 5px; }
 div.structureCategories { padding-left: 10px; margin: 0 4px; height: 168px;}
 ul.structureToolbar { padding-left: 57px; }
 ul.structureToolbar button { border: 0.1em solid white; margin: 6px; text-align: center; background-color: black; color: white; font-size: 12px; width: 50px; border-radius: 2px; }
@@ -229,6 +232,14 @@ table.utilisateurs tbody tr:nth-child(odd) { background-color: rgba(255, 255, 25
 table.utilisateurs tbody tr:nth-child(even) {  }
 table.utilisateurs td,th { padding: 0 3px 0 3px; margin: 0; }
 table.utilisateurs td.lien { cursor: pointer; }
+
+
+div.carteData { display: inline-block; vertical-align: top; margin-top: 10px; }
+div.cartePreview { display: inline-block; width: 246px; min-height: 344px; float: left; }
+div.cartePreview div.carte { margin: 0; }
+div.carteTxt { display: inline-block; width: 246px; min-height: 344px; }
+
+div.remCarteTag { display: inline-block; border: 0.1em solid white; text-align: center; background: none; color: red;  border-radius: 2px; padding: 1px 4px 0 3px; cursor: pointer; margin-left: 3px; }
 
 /* S: 320*480; M: 1024*768; L: 1920*1080; */
 /* tester en remplaçant dans @media width par device-width  */
@@ -279,20 +290,22 @@ table.utilisateurs td.lien { cursor: pointer; }
     button.L-rd9 { display: inline-block; width: 37px; height: 36px; background: url('/icones_S/L-rd09.png') no-repeat; }
     button.L-rd10 { display: inline-block; width: 37px; height: 36px; background: url('/icones_S/L-rd10.png') no-repeat; }
     span.partieConstante { display: none; }
-    div.partieCategorie { display: block; width: 100%; }
-    div.partieCategorieIcone { display: inline-block; width: 44px; height: 44px; font-size:0; vertical-align: top; }
-    div.partieCategorieIcone.A { background: url('/icones_S/A0.png'); }
-    div.partieCategorieIcone.C { background: url('/icones_S/C0.png'); }
-    div.partieCategorieIcone.E { background: url('/icones_S/E0.png'); }
-    div.partieCategorieIcone.I { background: url('/icones_S/I0.png'); }
-    div.partieCategorieIcone.J { background: url('/icones_S/J0.png'); }
-    div.partieCategorieIcone.M { background: url('/icones_S/M0.png'); }
-    div.partieCategorieIcone.P { background: url('/icones_S/P0.png'); }
-    div.partieCategorieIcone.S { background: url('/icones_S/S0.png'); }
-    div.partieCategorieIcone.T { background: url('/icones_S/T0.png'); }
-    div.partieCategorieIcone.Z { background: url('/icones_S/Z0.png'); }
-    div.partieCategorieLabel span { height: 44px; line-height: 44px; font-size: 14px;}
-    div.partieCategorieLabel span.stat { font-size: 11px; }
+    div.partieCategorie, div.carteCategorie { display: block; width: 100%; }
+    div.partieCategorieIcone, div.carteCategorieIcone { display: inline-block; width: 44px; height: 44px; font-size:0; vertical-align: top; }
+    div.partieCategorieIcone.A, div.carteCategorieIcone.A { background: url('/icones_S/A0.png'); }
+    div.partieCategorieIcone.C, div.carteCategorieIcone.C { background: url('/icones_S/C0.png'); }
+    div.partieCategorieIcone.E, div.carteCategorieIcone.E { background: url('/icones_S/E0.png'); }
+    div.partieCategorieIcone.I, div.carteCategorieIcone.I { background: url('/icones_S/I0.png'); }
+    div.partieCategorieIcone.J, div.carteCategorieIcone.J { background: url('/icones_S/J0.png'); }
+    div.partieCategorieIcone.L, div.carteCategorieIcone.L { background: url('/icones_S/L0.png'); }
+    div.partieCategorieIcone.M, div.carteCategorieIcone.M { background: url('/icones_S/M0.png'); }
+    div.partieCategorieIcone.O, div.carteCategorieIcone.O { background: url('/icones_S/O0.png'); }
+    div.partieCategorieIcone.P, div.carteCategorieIcone.P { background: url('/icones_S/P0.png'); }
+    div.partieCategorieIcone.S, div.carteCategorieIcone.S { background: url('/icones_S/S0.png'); }
+    div.partieCategorieIcone.T, div.carteCategorieIcone.T { background: url('/icones_S/T0.png'); }
+    div.partieCategorieIcone.Z, div.carteCategorieIcone.Z { background: url('/icones_S/Z0.png'); }
+    div.partieCategorieLabel span, div.carteCategorieLabel span { height: 44px; line-height: 44px; font-size: 14px;}
+    div.partieCategorieLabel span.stat, div.carteCategorieLabel span.stat { font-size: 11px; }
     #percentLanceur { display: inline; }
     textarea.newMessage { width:300px; }
     td.notMobile { display: none; }
@@ -371,21 +384,23 @@ table.utilisateurs td.lien { cursor: pointer; }
     button.L-rd9 { display: inline-block; width: 37px; height: 36px; background: url('/icones_S/L-rd09.png') no-repeat; }
     button.L-rd10 { display: inline-block; width: 37px; height: 36px; background: url('/icones_S/L-rd10.png') no-repeat; }
     div.carte, div.structure { display: inline-block; margin: 10px; }
-    div.partieCategorie { display: inline-block; width: 20em;  height: 47px; margin-bottom: 1em; } 
-    div.partieCategorieIcone { display: inline-block; width: 47px; height: 47px; font-size:0; vertical-align: top; }
-    div.partieCategorieIcone.A { background: url('/icones_M/A0.png'); }
-    div.partieCategorieIcone.C { background: url('/icones_M/C0.png'); }
-    div.partieCategorieIcone.E { background: url('/icones_M/E0.png'); }
-    div.partieCategorieIcone.I { background: url('/icones_M/I0.png'); }
-    div.partieCategorieIcone.J { background: url('/icones_M/J0.png'); }
-    div.partieCategorieIcone.M { background: url('/icones_M/M0.png'); }
-    div.partieCategorieIcone.P { background: url('/icones_M/P0.png'); }
-    div.partieCategorieIcone.S { background: url('/icones_M/S0.png'); }
-    div.partieCategorieIcone.T { background: url('/icones_M/T0.png'); }
-    div.partieCategorieIcone.Z { background: url('/icones_M/Z0.png'); }
-    div.partieCategorieLabel { display: inline-block; width: calc(20em - 47px); height: 47px; line-height: 47px;  }
-    div.partieCategorieLabel span { display: inline-block; vertical-align: middle; line-height: normal; font-size: 14px; padding-left: 0.5em; }
-    div.partieCategorieLabel span.stat { font-size: 11px; }
+    div.partieCategorie, div.carteCategorie { display: inline-block; width: 20em;  height: 47px; margin-bottom: 1em; } 
+    div.partieCategorieIcone, div.carteCategorieIcone { display: inline-block; width: 47px; height: 47px; font-size:0; vertical-align: top; }
+    div.partieCategorieIcone.A, div.carteCategorieIcone.A { background: url('/icones_M/A0.png'); }
+    div.partieCategorieIcone.C, div.carteCategorieIcone.C { background: url('/icones_M/C0.png'); }
+    div.partieCategorieIcone.E, div.carteCategorieIcone.E { background: url('/icones_M/E0.png'); }
+    div.partieCategorieIcone.I, div.carteCategorieIcone.I { background: url('/icones_M/I0.png'); }
+    div.partieCategorieIcone.J, div.carteCategorieIcone.J { background: url('/icones_M/J0.png'); }
+    div.partieCategorieIcone.L, div.carteCategorieIcone.L { background: url('/icones_M/L0.png'); }
+    div.partieCategorieIcone.M, div.carteCategorieIcone.M { background: url('/icones_M/M0.png'); }
+    div.partieCategorieIcone.O, div.carteCategorieIcone.O { background: url('/icones_M/O0.png'); }
+    div.partieCategorieIcone.P, div.carteCategorieIcone.P { background: url('/icones_M/P0.png'); }
+    div.partieCategorieIcone.S, div.carteCategorieIcone.S { background: url('/icones_M/S0.png'); }
+    div.partieCategorieIcone.T, div.carteCategorieIcone.T { background: url('/icones_M/T0.png'); }
+    div.partieCategorieIcone.Z, div.carteCategorieIcone.Z { background: url('/icones_M/Z0.png'); }
+    div.partieCategorieLabel, div.carteCategorieLabel { display: inline-block; width: calc(20em - 47px); height: 47px; line-height: 47px;  }
+    div.partieCategorieLabel span, div.carteCategorieLabel span { display: inline-block; vertical-align: middle; line-height: normal; font-size: 14px; padding-left: 0.5em; }
+    div.partieCategorieLabel span.stat, div.carteCategorieLabel span.stat { font-size: 11px; }
     textarea.newMessage { width:400px; }
 
 

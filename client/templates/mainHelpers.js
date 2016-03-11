@@ -18,7 +18,8 @@ if (Meteor.isClient) {
 			return Meteor.user().profile.nNotifications;
 		},
 		currentPartie: function(){
-			return (Template.instance().data.partieId.length > 0);
+
+			return ((Template.instance().data) && (Template.instance().data.partieId));
 		},
 		nomPartie: function(){
 			return Parties.findOne({_id: Template.instance().data.partieId},{nom: 1});

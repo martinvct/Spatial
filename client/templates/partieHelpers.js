@@ -33,6 +33,7 @@ if (Meteor.isClient) {
 		return getValeurDeRegle(Session.get("sPartieId"), valeurStr);
 	});
 	Template.registerHelper('formatValeurRegle', function(valeur, unite, isCarte){
+		valeur = Math.round(valeur*100)/100;
 		if(unite == "pds"){
 			if(valeur < 1000){
 				return valeur + " <span class='valUnite'>g"+"</span>";
@@ -88,48 +89,7 @@ if (Meteor.isClient) {
 		} 
 		return (valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
 	});
-	/*
-
-	Template.registerHelper('formatValeurRegle', function(valeur, unite){
-		if(unite == "pds"){
-			if(valeur < 10000){
-				return valeur + " <span class='valUnite'>gr"+"</span>";
-			} 
-			if(valeur < 10000000){
-				if(Math.round(valeur / 1000) != (valeur / 1000)) return "~"+(valeur / 1000)+ " <span class='valUnite'>kg"+"</span>";
-				return (valeur / 1000)+ " <span class='valUnite'>kg"+"</span>";
-			}
-			if(Math.round(valeur / 100000000) != (valeur / 1000000)) return "~"+(valeur / 1000000)+ " <span class='valUnite'>T"+"</span>";
-			return (valeur / 1000000)+ " <span class='valUnite'>T"+"</span>";
-		}
-		if(unite == "vol"){
-			if(valeur < 10000){
-				return valeur + " <span class='valUnite'>mm";
-			} 
-			if(valeur < 10000000){
-				if(Math.round(valeur / 1000) != (valeur / 1000)) return "~"+(valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
-				return (valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
-			}
-			if(Math.round(valeur / 100000000) != (valeur / 1000000)) return "~"+(valeur / 1000000)+ " <span class='valUnite'>km"+"</span>";
-			return (valeur / 1000000)+ " <span class='valUnite'>km"+"</span>";
-		}
-		switch(unite){
-			case "eur": unite = "€"; break;
-			case "nrg": unite = "W"; break;
-			case "sci": unite = ""; break;
-		}
-		if(valeur < 10000){
-			return valeur + " <span class='valUnite'>"+unite+"</span>";
-		} 
-		if(valeur < 10000000){
-			if(Math.round(valeur / 1000) != (valeur / 1000)) return "~"+(valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
-			return (valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
-		}
-		if(Math.round(valeur / 1000000) != (valeur / 1000000)) return "~"+(valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
-		return (valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
-	});
-	*/
-
+	
 	Template.Partie.onCreated(function(){
 		this.templateDictionary = new ReactiveDict();
 		this.templateDictionary.set('currentPartie', this.data.partieId);
@@ -302,7 +262,7 @@ if (Meteor.isClient) {
 			Meteor.call("updatePercentLanceur", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Number($('#partiePctLanceur').val()), Session.get("dateModif"));
 		},
 		'click #appelExpert': function(event){
-			Sessionset('currentStructure', 0);
+			Session.set('currentStructure', 0);
 			Meteor.call("callExpert", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Session.get("dateModif"));
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieExpertiseRapport');
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
@@ -378,10 +338,10 @@ if (Meteor.isClient) {
 	});
 	Template.PartieLanceur.helpers({
 		cartes: function(){
-			return Cartes.find({tags: "lanceur", cubesat: Template.instance().data.scenario.initialisation.cubesat});
+			return Cartes.find({tags: "lanceur", cubesat: Template.instance().data.scenario.initialisation.cubesat}, {sort: {ordre: 1}});
 		},
 		hasLanceurLourd: function(){
-
+			/*
 			var result = interprete('CE2 + CZ1', 0, true);
 			if(result.erreurPos > 0){
 				console.log(result.erreurPos+" : "+result.erreur);
@@ -416,7 +376,18 @@ if (Meteor.isClient) {
 			if(result.erreurPos > 0){
 				console.log(result.erreurPos+" : "+result.erreur);
 			}
-			else console.log(result.mongo);
+			else console.log(result.mongo);*/
+
+			
+			//var result = interprete('(((C5§ / ("communicationsAntenne"§ + "communicationsGestion"§)) + (Z1/Z2/Z3/Z4)) / ("communicationsAntenne"§ + "communicationsGestion"§ + Z4)) + S3 + (J4§ /J5§)', 0, true);
+			//var result = interprete('{"objectif": "espace"}/{"planete.distance": 0}/(Z4 + (O1/O2/O3/O4))');
+			var reg = new RegExp(/(§nS)/,"g");
+			var result = interprete('Z5§');
+
+			if(result.erreurPos > 0){
+				console.log(result.erreurPos+" : "+result.erreur);
+			}
+			else console.log(result.mongo.replace(reg, "2"));
 
 			//'{"deck.cartes": {"$elemMatch": {"$and": [{"carteId": "CE2", "active": true}, {"carteId": "CZ1", "active": true}]}}}' CE2 + CZ1
 			//'{"deck.cartes": {"$elemMatch": {"$or": [{"carteId": "O3", "active": true}, {"carteId": "O4", "active": true}, {"carteId": "O5", "active": true}, {"carteId": "O6", "active": true}]}}}' O3/O4/O5/O6
@@ -426,13 +397,16 @@ if (Meteor.isClient) {
 			//'{"planete.rayonnement": {"$lt": 0.5} }'
 			//{"deck.cartes": {"$elemMatch": {"$and": [{"tags": "propulsionMoteur", "active": true}, {"carteId": "S2", "active": true}, {"tags": "attitudeCapteur", "active": true}, {"$or": [{"carteId": "Z1", "active": true}, {"carteId": "Z4", "active": true}]}]}}}'
 			//{"$and": [{"deck.cartes": {"$elemMatch": {"$and": [{"carteId": "Z5", "active": true}]}}}, {"planete.atmosphere": true}]}
+
+			
+
 			if(_.find(Template.parentData(0).partie.deck.cartes, function(obj){ return (_.indexOf(obj.tags, "lanceurLourd") > -1); })) return true;
 			return false;
 		}
 	});
 	Template.PartieOrbite.helpers({
 		cartes: function(){
-			return Cartes.find({tags: "orbite", cubesat: Template.instance().data.scenario.initialisation.cubesat});
+			return Cartes.find({tags: "orbite", cubesat: Template.instance().data.scenario.initialisation.cubesat}, {sort: {ordre: 1}});
 		}
 	});
 	Template.PartieCategories.helpers({
@@ -451,12 +425,13 @@ if (Meteor.isClient) {
 			var cats = [];
 			if(carteStructure.composants){
 				if(carteStructure.atterrisseur){
-					cats.push("J");
+					for(var key in ListCategories){ if((key != "L") && (key != "O") && (key != "Z") && (key != "S") && (key != "A") && (key != "P")) cats.push(key); }
 				} else {
-					for(var key in ListCategories){ if((key != "L") && (key != "O") && (key != "Z") && (key != "S") && (key != "J")) cats.push(key); }
+					for(var key in ListCategories){ if((key != "L") && (key != "O") && (key != "Z") && (key != "S") && (key != "J") && ((!Template.instance().data.partie.cubesat) || ((key != "T") && (key != "P")))) cats.push(key); }
 				}
 			} else {
 				cats.push("A");
+				cats.push("P");
 			}	
 			return cats;
 		},
@@ -464,32 +439,16 @@ if (Meteor.isClient) {
 			return (_.filter(Template.parentData(1).partie.deck.cartes, function(obj){ return ((obj.categorie == categorie) && (obj.nStructure == Session.get('currentStructure'))); }).length);
 		},
 		nbrCartesTotal: function(categorie){
+			if((!Template.instance().data.scenario.initialisation.cubesat) && (Template.instance().data.categorie == "I")){
+				if(Template.instance().data.scenario.initialisation.objectif == "espace"){
+					return Cartes.find({categorie: categorie, cubesat: Template.instance().data.scenario.initialisation.cubesat, tags: "instrumentEspace"}).count();
+				}
+				return Cartes.find({categorie: categorie, cubesat: Template.instance().data.scenario.initialisation.cubesat, tags: "instrumentPlanete"}).count();
+			}
 			return Cartes.find({categorie: categorie, cubesat: Template.instance().data.scenario.initialisation.cubesat}).count();
 		}
 	});
-	Template.Carte.helpers({
-		isDeck: function(){
-			//console.log(_.findWhere(Template.parentData(1).partie.deck.cartes, {_carteId: this._id, nStructure: Session.get('currentStructure')}));
-			if(_.findWhere(Template.parentData(1).partie.deck.cartes, {_carteId: this._id, nStructure: Session.get('currentStructure')}) && (this.categorie != 'Z')) return "isDeck";
-			return "";  
-		},
-		isLanceur: function(){
-			if (_.indexOf(this.tags, "lanceur") > -1) return 'L';
-			return '';
-		},
-		isEnergieGenerateur: function(){
-			if (_.indexOf(this.tags, "energieGenerateur") > -1) return 'E';
-			return '';
-		},
-		stars: function(){
-			var n = getValeurDeRegle(Session.get("sPartieId"), this.valSci);
-
-			var arr = [];
-			for(var i=0; i < n; i++) arr.push("S");
-			//console.log(arr);
-			return arr;
-		}
-	});
+	
 	
 	Template.PartieCategorie.onRendered(function(){
 		console.log(Template.instance().data.locationHash);
@@ -508,7 +467,13 @@ if (Meteor.isClient) {
 			return Session.get("currentStructure");
 		},
 		cartes : function(){
-			return Cartes.find({categorie: Template.instance().data.categorie, cubesat: Template.instance().data.scenario.initialisation.cubesat});
+			if((!Template.instance().data.partie.cubesat) && (Template.instance().data.categorie == "I")){
+				if(Template.instance().data.scenario.initialisation.objectif == "espace"){
+					return Cartes.find({categorie: Template.instance().data.categorie, cubesat: Template.instance().data.scenario.initialisation.cubesat, tags: "instrumentEspace"}, {sort: {ordre: 1}});
+				}
+				return Cartes.find({categorie: Template.instance().data.categorie, cubesat: Template.instance().data.scenario.initialisation.cubesat, tags: "instrumentPlanete"}, {sort: {ordre: 1}});
+			}
+			return Cartes.find({categorie: Template.instance().data.categorie, cubesat: Template.instance().data.scenario.initialisation.cubesat}, {sort: {ordre: 1}});
 		},
 		categorieLegende: function(){
 			return TAPi18n.__("categories_legendes."+Template.instance().data.categorie);
@@ -543,11 +508,15 @@ if (Meteor.isClient) {
 				};
 				if(carteStructure.composants){
 					if(carteStructure.atterrisseur){
-						structure.categories.push({categorie: "J", nbrSelect: (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == "J") && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length)});
+						for(var key in ListCategories){ 
+							if((key != "L") && (key != "O") && (key != "Z") && (key != "S") && (key != "A") && (key != "P")) {
+								structure.categories.push({categorie: key, nbrSelect: (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == key) && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length)});
+							} 
+						}
 					} else {
 						for(var key in ListCategories){ 
 							//console.log(key);
-							if((key != "L") && (key != "O") && (key != "Z") && (key != "S") && (key != "J")) {
+							if((key != "L") && (key != "O") && (key != "Z") && (key != "S") && (key != "J") && ((!Template.instance().data.partie.cubesat) || ((key != "T") && (key != "P")))) {
 								//console.log( Template.instance().data.partie.deck.structures.ids[i]);
 								//console.log(Template.instance().data.partie.deck.cartes);
 								//console.log(_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == key) && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length);
@@ -557,6 +526,7 @@ if (Meteor.isClient) {
 					}
 				} else {
 					structure.categories.push({categorie: "A", nbrSelect: (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == "A") && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length)});
+					structure.categories.push({categorie: "P", nbrSelect: (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == "P") && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length)});
 				}
 				structures.push(structure);
 			}
@@ -564,7 +534,7 @@ if (Meteor.isClient) {
 			return structures; 
 		},
 		cartes : function(){
-			return Cartes.find({categorie: "Z", cubesat: Template.instance().data.scenario.initialisation.cubesat});
+			return Cartes.find({categorie: "Z", cubesat: Template.instance().data.scenario.initialisation.cubesat}, {sort: {ordre: 1}});
 		},
 		categorieLegende: function(){
 			return TAPi18n.__("categories_legendes.Z");
@@ -595,7 +565,7 @@ if (Meteor.isClient) {
 				var lastRapport = _.max(Template.instance().data.partie.experts, function(rapport){ return rapport.dateAppel; });
 				if(lastRapport){
 					var e = _.find(Template.instance().data.partie.experts, function(rapport){ return rapport.dateAppel == lastRapport.dateAppel; });
-					console.log(e.rapport);
+					//console.log(e.rapport);
 					return e.rapport;
 				}
 			}	

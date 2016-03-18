@@ -2,15 +2,6 @@ if (Meteor.isClient) {
 	Template.registerHelper('convertir', function(valeur, unite){
 		return convertir(valeur, unite);
 	});
-	Template.registerHelper('illustration', function(carteId, cubesat){
-		var illustration = "/Cartes/illustrations/";
-		if(cubesat) illustration += "cubesat-";
-		illustration += carteId + ".png";
-		return illustration;
-	});
-	Template.registerHelper('formatDate', function(valeur, format){
-		return moment(valeur).format(format);
-	});
 	Template.registerHelper('getIconeConstante', function(nom, valeurMax, valeur){
 		if(nom == "star-rd"){
 			if(valeur == 0) return nom+"0";
@@ -32,64 +23,6 @@ if (Meteor.isClient) {
 	Template.registerHelper('getValeurDeRegle', function(valeurStr){
 		return getValeurDeRegle(Session.get("sPartieId"), valeurStr);
 	});
-	Template.registerHelper('formatValeurRegle', function(valeur, unite, isCarte){
-		valeur = Math.round(valeur*100)/100;
-		if(unite == "pds"){
-			if(valeur < 1000){
-				return valeur + " <span class='valUnite'>g"+"</span>";
-			} 
-			if(valeur < 1000000){
-				if(Math.round(valeur / 1000) != (valeur / 1000)) {
-					if(isCarte) return (valeur / 1000)+ " <span class='valUnite'>kg</span>";
-					return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>kg</span>";
-				}
-				return (valeur / 1000)+ " <span class='valUnite'>kg</span>";
-			}
-			if(Math.round(valeur / 1000000) != (valeur / 1000000)){
-				if(isCarte) return (valeur / 1000000)+ " <span class='valUnite'>T</span>";
-				return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>T</span>";
-			} 
-			return (valeur / 1000000)+ " <span class='valUnite'>T</span>";
-		}
-		if(unite == "vol"){
-			if(valeur < 1000){
-				return valeur + " <span class='valUnite'>mm</span>";
-			} 
-			if(valeur < 1000000){
-				if(Math.round(valeur / 1000) != (valeur / 1000)){
-					if(isCarte) return (valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
-					return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
-				} 
-				return (valeur / 1000)+ " <span class='valUnite'>"+"</span>";
-			}
-			if(Math.round(valeur / 1000000) != (valeur / 1000000)){
-				if(isCarte) return (valeur / 1000000)+ " <span class='valUnite'>km"+"</span>";
-				return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>km"+"</span>";
-			} 
-			return (valeur / 1000000)+ " <span class='valUnite'>"+"</span>";
-		}
-		switch(unite){
-			case "eur": unite = ""; break;
-			case "nrg": unite = "W"; break;
-			case "sci": unite = ""; break;
-		}
-		if(valeur < 1000){
-			return valeur + " <span class='valUnite'>"+unite+"</span>";
-		} 
-		if(valeur < 1000000){
-			if(Math.round(valeur / 1000) != (valeur / 1000)){
-				if(isCarte) return (valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
-				return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
-			} 
-			return (valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
-		}
-		if(Math.round(valeur / 1000000) != (valeur / 1000000)){
-			if(isCarte) return (valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
-			return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
-		} 
-		return (valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
-	});
-	
 	Template.Partie.onCreated(function(){
 		this.templateDictionary = new ReactiveDict();
 		this.templateDictionary.set('currentPartie', this.data.partieId);

@@ -4,7 +4,7 @@ getUserLanguage = function () {
 };
 
 Meteor.startup(function () {
-
+    
 
   /*Session.set("showLoadingIndicator", true);
 

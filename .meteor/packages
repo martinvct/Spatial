@@ -35,3 +35,6 @@ email
 
 
 typ:accounts-ldap
+cfs:standard-packages
+cfs:gridfs
+cfs:graphicsmagick

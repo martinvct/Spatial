@@ -9,7 +9,7 @@
       {{#if nbrCartesTotal this false}}
       <div class="carteCategorie" data-categorie="{{this}}" data-cubesat="0"><!--
           --><div class="carteCategorieIcone {{this}}"></div><!--
-          --><div class="carteCategorieLabel"><span>{{concat "categories." this }}</span><span class="stat">({{nbrCartesTotal this false}})</span></div><!--
+          --><div class="carteCategorieLabel"><span>{{concat "categories." this }}</span><span class="stat">&nbsp;&nbsp;({{nbrCartesTotal this false}})</span></div><!--
       --></div>
       {{/if}}
   {{/each}}
@@ -18,7 +18,7 @@
       {{#if nbrCartesTotal this true}}
       <div class="carteCategorie" data-categorie="{{this}}" data-cubesat="1"><!--
           --><div class="carteCategorieIcone {{this}}"></div><!--
-          --><div class="carteCategorieLabel"><span>{{concat "categories." this }}</span><span class="stat">({{nbrCartesTotal this true}})</span></div><!--
+          --><div class="carteCategorieLabel"><span>{{concat "categories." this }}</span><span class="stat">&nbsp;&nbsp;({{nbrCartesTotal this true}})</span></div><!--
       --></div>
       {{/if}}
   {{/each}}
@@ -28,6 +28,7 @@
   <div class="toolbarForm">
         <ul>
             <li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+            <li><button id="addCarte">{{_ "interface.bouton.addCarte"}}</button></li>
         </ul>
     </div>
 
@@ -71,9 +72,9 @@
 
 <template name="Carte">
     <div id="{{carteId}}" class="carte {{isDeck}}" data-carteId="{{ carteId }}" ><!--
-        --><div class="carteIntitule {{ categorie }}"><div class="carteStars">{{#each stars}}<div class="carteStar">&#9733;</div>{{/each}}</div><div class="intitule"><span>{{ intitule.fr }}</span></div><div class="carteId">{{ categorie }}{{ ordre }}</div><div class="carteCopyright">&copy; {{ copyright }}</div></div><!--
-        --><div class="carteIllustration"><img src="{{illustration carteId cubesat}}" /></div><!--
-        --><div class="carteDescription">{{ description.fr }}</div><!--
+        --><div class="carteIntitule {{ categorie }}"><div class="carteStars">{{#each stars}}<div class="carteStar">&#9733;</div>{{/each}}</div><div class="intitule"><span>{{i18nMongo intitule }}</span></div><div class="carteId">{{ categorie }}{{ ordre }}</div><div class="carteCopyright">&copy; {{ copyright }}</div></div><!--
+        --><div class="carteIllustration"><img src="{{getIllustration this}}" /></div><!--
+        --><div class="carteDescription">{{i18nMongo description }}</div><!--
         --><div class="carteConstantes {{ categorie }}">
           {{#if valEur}}<div class="carteConstante"><!--
             --><div class="carteConstanteBudget"></div><!--
@@ -93,34 +94,47 @@
             --><div class="carteConstanteFin"></div><!--
           --></div>{{/if}}<!--    
         --></div>
-        {{#if tip.fr }}<div class="carteTips">{{ tip.fr }}</div>{{/if}}
+        {{#if hasTip }}<div class="carteTips">{{i18nMongo tip }}</div>{{/if}}
     </div>
 </template>
 
 <template name="EditCarte">
+  <div class="toolbarForm">
+    <ul>
+      <li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+    </ul>
+  </div>
   <form method="post">
     <input type="hidden" name="_id" id="_id" value="{{ carte._id }}" />
-    <input type="hidden" name="categorie" id="categorie" value="{{carte.categorie}}" />
-    <input type="hidden" name="cubesat" id="cubesat" value="{{carte.cubesat}}" />
+    <input type="hidden" name="categorie" id="categorie" value="{{#if carte}}{{carte.categorie}}{{else}}{{categorie}}{{/if}}" />
+    <input type="hidden" name="cubesat" id="cubesat" value="{{#if carte}}{{carte.cubesat}}{{else}}{{cubesat}}{{/if}}" />
+    <input type="hidden" name="carteId" id="carteId" value="{{carte.carteId}}" />
 
-    <h2>{{#if carte}} {{_ "interface.editionCarte" intitule=carte.intitule.fr}} {{else}} {{_ "interface.nouvelleCarte" }} {{/if}}</h2>
+    <h2>{{#if carte}} {{_ "interface.editionCarte" }} {{i18nMongo carte.intitule }} {{else}} {{_ "interface.nouvelleCarte" }} {{concat "categories." categorie }}  {{#if cubesat}}({{_ "interface.cubesat"}}){{/if}} {{/if}}</h2>
 
     <h3>{{_ "interface.carte.infos" }}</h3>
     <div class="carteParametre">
       <label for="intitule" class="required">{{_ "interface.carte.intitule" }}</label>
-      <input type="text" class="longText" id="intitule" name="intitule" value="{{ carte.intitule.fr }}" placeholder="{{_ 'interface.carte.intitule' }}"/>
+      <input type="text" class="longText" id="intitule" name="intitule" value="{{#if carte}}{{i18nMongo carte.intitule }}{{/if}}" placeholder="{{_ 'interface.carte.intitule' }}"/>
     </div>
     <div class="carteParametre">
       <label for="description">{{_ "interface.carte.description" }}</label>
-      <textarea id="description" name="description" placeholder="{{_ 'interface.carte.description' }}" rows="5" cols="100">{{ carte.description.fr }}</textarea>
+      <textarea id="description" name="description" placeholder="{{_ 'interface.carte.description' }}" rows="5" cols="100">{{#if carte}}{{i18nMongo carte.description }}{{/if}}</textarea>
     </div>
     <div class="carteParametre">
       <label for="tip">{{_ "interface.carte.tip" }}</label>
-      <textarea id="tip" name="tips" placeholder="{{_ 'interface.carte.tip' }}" rows="5" cols="100">{{ carte.tip.fr }}</textarea>
+      <textarea id="tip" name="tips" placeholder="{{_ 'interface.carte.tip' }}" rows="5" cols="100">{{#if carte}}{{i18nMongo carte.tip }}{{/if}}</textarea>
     </div>
     <div class="carteParametre">
       <label for="copyright">{{_ "interface.carte.copyright" }}</label>
       <input type="text" id="copyright" name="copyright" value="{{ carte.copyright }}" placeholder="{{_ 'interface.carte.copyright' }}" />
+    </div>
+    <div class="carteParametre">
+      <label for="illustration">{{_ "interface.carte.illustration" }}</label>
+      <img src="{{getIllustration carte }}" />
+      <input type="file" id="illustration" name="illustration" data-carteId="{{ carte._id }}"/>
+      <input type="hidden" id="newIllustration" name="newIllustration" value="{{ carte.illustration }}"/>
+
     </div>
 
     <h3>{{_ "interface.carte.regles" }}</h3>
@@ -135,11 +149,13 @@
     <div class="carteParametre">
       <label for="tags">{{_ "interface.carte.tags" }}</label> <input type="hidden" id="tags" name="tags" value="{{carte.tags}}" />
       <div class="carteTags">
+        <div class="listeTags">
         {{#each carte.tags}}
-        <div class="carteTag" id="{{this}}">{{this}}<div class="remCarteTag"> X </div></div>
+          <div class="carteTag" id="{{this}}">{{this}}<div class="remCarteTag"> X </div></div>
         {{/each}}
+        </div>
         <!--<input type="text" class="mediumText" id="newCarteTag" name="newCarteTag" value="" placeholder="{{_ 'interface.carte.newTag'}}"/>-->
-        {{> inputAutocomplete settings=settings id="tag" placeholder="..." }}<button id="addTag" class="okBouton">{{_ "interface.bouton.ok" }}</button>
+        {{> inputAutocomplete settings=settings id="tag" placeholder="..." }}<button type="button" id="addTag" class="okBouton">{{_ "interface.bouton.ok" }}</button>
       </div>
     </div>
 
@@ -206,11 +222,19 @@
       <input type="text" id="ordre" name="ordre" value="{{ carte.ordre }}" placeholder="{{_ 'interface.carte.ordre' }}" />
       <span class="parametreLegende">{{_ "interface.legende.ordre" }}</span>
     </div>
+    {{#if carte}}
+    <h3>{{_ "interface.securite" }}</h3>
+    <div class="carteParametre">
+      <label for="securite">{{_ "interface.securite"}}</label>
+      <input type="checkbox" id="securite" name="securite" value="1" />
+      <span class="parametreLegende">{{_ "interface.legende.carteEdition" }}</span>
+    </div>
+    {{/if}}
   </form>
   <div class="toolbarForm">
     <ul>
-      <li><button id="saveScenario">{{_ "interface.bouton.sauver" }}</button></li>
-      <li><button id="delScenario">{{_ "interface.bouton.supprimer" }}</button></li>
+      <li><button id="saveCarte">{{_ "interface.bouton.sauver" }}</button></li>
+      <li><button id="delCarte">{{_ "interface.bouton.supprimer" }}</button></li>
       <li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
     </ul>
   </div>
@@ -218,3 +242,22 @@
 <template name="TagAutoComplete">
     {{tag}}
 </template>
+<template name="CarteSuppression">
+<div class="modal fade modalCarte">
+    {{> Carte this.carte}}
+    <div id="carteSuppressionConfirmation">
+      <div class="carteMessage">
+            <img src="/attention.png"/>
+            <span class="carteConfirmation">{{{_ "interface.confirmationSuppressionCarte"}}}</span>
+        </div>
+        <div class="carteToolbar">
+           <ul class="carteToolbar">
+            <li><button class="carteSuppressionNon" data-securite="{{this.securite}}" data-carteId="{{this.carte._carteId}}">{{_ 'interface.bouton.non'}}</button></li>
+            <li><button class="carteSuppressionOui" data-securite="{{this.securite}}" data-carteId="{{this.carte._carteId}}">{{_ 'interface.bouton.oui'}}</button></li>
+           </ul>  
+        </div>
+    </div>
+</div>
+</template>
+
+

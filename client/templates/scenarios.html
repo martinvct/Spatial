@@ -15,8 +15,8 @@
 	<div class="scenario">
 		<div class="illustrationScenario"></div>
 		<div class="infosScenario">
-			<div class="titreScenario"><button class="lien" data-scenarioId="{{ _id }}" >{{intitule}}</button></div>
-			<div class="descScenario">{{{description}}}</div>
+			<div class="titreScenario"><button class="lien" data-scenarioId="{{ _id }}" >{{i18nMongo intitule}}</button></div>
+			<div class="descScenario">{{{i18nMongo description}}}</div>
 			<div class="tagsScenario">
 				<span class="tagScenario">{{_ "interface.budget" }}: {{convertir initialisation.budget "EUR"}}€</span>
 				{{#if initialisation.cubesat }}
@@ -37,16 +37,16 @@
 <template name="EditScenario">
 	<form method="post">
 		<input type="hidden" name="_id" id="_id" value="{{ scenario._id }}" />
-		<h2>{{#if scenario}} {{_ "interface.editionScenario" intitule=scenario.intitule}} {{else}} {{_ "interface.nouveauScenario" }} {{/if}}</h2>
+		<h2>{{#if scenario}} {{_ "interface.editionScenario"}} {{i18nMongo scenario.intitule}} {{else}} {{_ "interface.nouveauScenario" }} {{/if}}</h2>
 
 		<h3>{{_ "interface.scenario.infos" }}</h3>
 		<div class="scenarioParametre">
 			<label for="intitule" class="required">{{_ "interface.scenario.intitule" }}</label>
-			<input type="text" class="longText" id="intitule" name="intitule" value="{{ scenario.intitule }}" placeholder="{{_ 'interface.scenario.intitule' }}"/>
+			<input type="text" class="longText" id="intitule" name="intitule" value="{{i18nMongo scenario.intitule }}" placeholder="{{_ 'interface.scenario.intitule' }}"/>
 		</div>
 		<div class="scenarioParametre">
 			<label for="description">{{_ "interface.scenario.description" }}</label>
-			<textarea id="description" name="description" placeholder="{{_ 'interface.scenario.description' }}" rows="5" cols="100">{{ scenario.description }}</textarea>
+			<textarea id="description" name="description" placeholder="{{_ 'interface.scenario.description' }}" rows="5" cols="100">{{i18nMongo scenario.description }}</textarea>
 		</div>
 		<div class="scenarioParametre">
 			<input type="radio" id="active" name="active" value="1" {{isChecked scenario.active}} />
@@ -200,8 +200,8 @@
 	<div class="scenario">
 		<div class="illustrationScenario"></div>
 		<div class="infosScenario">
-			<div class="titreScenario"><button class="lien" data-scenarioId="{{ _id }}" >{{intitule}}</button></div>
-			<div class="descScenario">{{{description}}}</div>
+			<div class="titreScenario"><button class="lien" data-scenarioId="{{ _id }}" >{{i18nMongo intitule}}</button></div>
+			<div class="descScenario">{{{i18nMongo description}}}</div>
 			<div class="tagsScenario">
 				<span class="tagScenario">{{_ "interface.budget" }}: {{convertir initialisation.budget "EUR"}}€</span>
 				{{#if initialisation.cubesat }}
@@ -224,12 +224,12 @@
         	<input type="text" id="nomPartieTxt" value="{{ partie.nom }}"/>
             <button id="nomPartieBouton">{{_ "interface.bouton.renommer" }}</button>    
     	</div>
-		<h2>{{_ "interface.viewScenario" intitule=scenario.intitule}} {{partieId}}</h2>
+		<h2>{{_ "interface.viewScenario" }} {{i18nMongo scenario.intitule}} {{partieId}}</h2>
 
 		<h3>{{_ "interface.scenario.infos" }}</h3>
 		<div class="scenarioParametre">
 			<label for="description">{{_ "interface.scenario.description" }}</label>
-			<span>{{{ scenario.description }}}</span>
+			<span>{{{i18nMongo scenario.description }}}</span>
 		</div>
 		
 		<h3>{{_ "interface.scenario.initialisation" }}</h3>

@@ -41,6 +41,8 @@
 	},
 	"interface": {
 		"bouton": {
+			"addCarte": "Nouvelle carte",
+			"addEvenement": "Nouvel évènement",
 			"addScenario": "Nouveau Scénario",
 			"addUtilisateur": "Ajouter utilisateur",
 			"aide": "Aide",
@@ -58,6 +60,7 @@
 			"lancement": "Lancement",
 			"lanceur": "Lanceur",
 			"listeCartes": "Cartes",
+			"listeEvenements": "Evènements",
 			"listeRapports": "Rapports",
 			"listeScenarios": "Scenarios",
 			"listeUtilisateurs": "Utilisateurs",
@@ -89,6 +92,7 @@
 			"cubesat": "CubeSat",
 			"description": "Description",
 			"fiabilite": "Fiabilité",
+			"illustration": "Illustration",
 			"inactif": "Désactivée",
 			"incompatible": "Incompatible avec",
 			"infos": "Informations",
@@ -125,9 +129,18 @@
 		"confirmationSuppressionStructure":"La suppression d'une structure et de ses composants est irréversible.<br /> Etes-vous sûr de vouloir retirer cette structure ?",
 		"cubesat": "CubeSat",
 		"dateModif": "Mise à jour",
-		"editionScenario": "Edition du scénario __intitule__",
-		"editionCarte": "Edition de la carte __intitule__",
+		"editionScenario": "Edition du scénario ",
+		"editionCarte": "Edition de la carte ",
+		"editionEvenement": "Edition de l'évènement",
 		"editionUtilisateur": "Edition de l'utilisateur __username__",
+		"evenement":{
+			"cartes": "les cartes",
+			"cibles": "Désactive",
+			"isLancement": "Après lancement",
+			"isNotLancement": "Durant la partie",
+			"temps": "Temps"
+		},
+		"evenements" : "Evènements",
 		"expertise":{
 			"appelExpert" : "Appel à un expert",
 			"appelExpertDescription": "L'expert fournit un rapport plus ou moins détaillé de la validité de votre mission.",
@@ -139,6 +152,7 @@
 		"lastLogin": "Dernière connexion",
 		"legende" : {
 			"atterrisseur": "(Est considérée comme une plateforme atterrisseur)",
+			"carteEdition": "(Forcer la modification de la carte même si elle est déjà utilisée)",
 			"composants": "(Peut contenir tous les composants)",
 			"enEuros": "(en €)",
 			"enGrammes": "(en grammes)",
@@ -160,6 +174,7 @@
 		},
 		"nouveauScenario": "Création d'un nouveau scénario",
 		"nouveauUtilisateur": "Création d'un utilisateur",
+		"nouvelEvenement": "Création d'un évènement",
 		"nouvelleCarte": "Création d'une nouvelle carte",
 		"motDePasse": "Mot de passe",
 		"objectif": "Objectif",
@@ -247,6 +262,7 @@
 		"scores" : {
 			"aucunScore": "Pour l'instant, aucune partie n'a abouti à un score."
 		},
+		"securite" : "Sécurité",
 		"test" : "Vous avez appuyé sur le bouton __n__ fois",
 		"tpsTotal" : "Temps",
 		"U": "U",
@@ -272,13 +288,13 @@
 		"budget_insuffisant": "Budget insuffisant",
 		"carte_inactive": "Carte inexistante",
 		"carte_incompatible": "Carte incompatible avec le scénario choisi",
-		"carte_utilisee": "Vous ne pouvez pas supprimer une carte qui a été utilisée",
+		"carte_utilisee": "Vous ne pouvez pas supprimer ou modifier une carte qui a été utilisée",
 		"champs_requis_vide": "Certains champs requis sont vides",
 		"database_request": "La requête %s a échouée",
 		"email": "Courriel invalide",
 		"evenement_inactif": "Evènement inexistant",
 		"evenement_incompatible": "Evènement incompatible avec le scénario choisi",
-		"evenement_utilise": "Vous ne pouvez pas supprimer un évènement qui a été utilisé",
+		"evenement_utilise": "Vous ne pouvez pas modifier ou supprimer un évènement qui a été utilisé",
 		"login_echoue": "Login ou mot de passe incorrect",
 		"partie_close": "Vous ne pouvez modifier une partie terminée ou supprimée",
 		"partie_commencee": "Vous ne pouvez modifier le scénario d'une partie entamée",
@@ -294,6 +310,7 @@
 		"scenario_utilise": "Scénario utilisé",
 		"structure_retiree": "Structure retirée",
 		"syntaxe_carte_regles": "Erreur de syntaxe des règles d'une carte %s",
+		"upload_only_png": "Vous ne pouvez télécharger que des fichiers *.png",
 		"username_existe": "Un autre utilisateur possède déjà cet identifiant"
 	},
 	"success": {
@@ -312,6 +329,8 @@
 	},
 	"message": {
 		"carte_enregistree": "La carte %s est enregistrée",
+		"carte_regle_incompatible": "Erreur de syntaxe de la règle d'incompatibilité: %s",
+		"carte_regle_necessite": "Erreur de syntaxe de la règle de nécessité: %s",
 		"evenement_enregistre": "L'évènement %s est enregistré",
 		"partie_supprimee": "La partie ' __partie__ ' est supprimée.",
 		"scenario_enregistre": "Le scénario est enregistré: %s"

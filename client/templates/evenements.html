@@ -1,0 +1,207 @@
+<template name="ConfigEvenements">
+  <div class="toolbarForm">
+    <ul>
+      <li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+    </ul>
+  </div>
+  <h2>{{_ "interface.satellite"}}</h2>
+ 
+      <div class="evenementType" data-cubesat="0"><!--
+          --><div class="evenementTypeLabel"><span>{{_ "interface.evenements" }}</span><span class="stat">({{nbrEvenementsTotal false}})</span></div><!--
+      --></div>
+     
+  <h2>{{_ "interface.cubesat"}}</h2>
+    <div class="evenementType" data-cubesat="1"><!--
+          --><div class="evenementTypeLabel"><span>{{_ "interface.evenements" }}</span><span class="stat">({{nbrEvenementsTotal true}})</span></div><!--
+      --></div>
+</template>
+<template name="ConfigEvenementsType">
+    <div class="toolbarForm">
+        <ul>
+            <li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+            <li><button id="addEvenement">{{_ "interface.bouton.addEvenement"}}</button></li>
+        </ul>
+    </div>
+    {{#each evenements}}
+        {{> EvenementData }}
+    {{/each}}
+  
+</template>
+<template name="EvenementData">
+  <div class="evenementData">
+    <div class="evenementPreview">
+      {{> Evenement }}
+    </div>
+    <div class="evenementTxt">
+      {{> EvenementTxt }}
+    </div>
+  </div>
+</template>
+<template name="EvenementTxt">
+<br/>
+&nbsp;&nbsp;_id:&nbsp;"{{_id}}",<br/>
+&nbsp;&nbsp;eventId:&nbsp;"{{eventId}}",<br/>
+&nbsp;&nbsp;lancement:&nbsp;{{#if isLancement}}true{{else}}false{{/if}},<br/>
+&nbsp;&nbsp;deltaEur:&nbsp;{{deltaEur}},<br/>
+&nbsp;&nbsp;deltaNrg:&nbsp;{{deltaNrg}},<br/>
+&nbsp;&nbsp;deltaPds:&nbsp;{{deltaPds}},<br/>
+&nbsp;&nbsp;deltaVol:&nbsp;{{deltaVol}},<br/>
+&nbsp;&nbsp;deltaSci:&nbsp;{{deltaSci}},<br/>
+&nbsp;&nbsp;cibles: {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;cartes:&nbsp;'{{targetCarteIds}}',<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;tag:&nbsp;'{{targetCarteTags}}'<br/>
+&nbsp;&nbsp;},<br/>
+&nbsp;&nbsp;active:&nbsp;{{#if active}}true{{else}}false{{/if}},<br/>
+&nbsp;&nbsp;cubesat:&nbsp;{{#if cubesat}}true{{else}}false{{/if}}
+</template>
+<template name="Evenement">
+    <div id="{{eventId}}" class="evenement" data-eventId="{{ eventId }}" ><!--
+        --><div class="evenementIntitule EV {{ isLancementTag }}"><div class="evenementStars">{{#each stars}}<div class="evenementStar">&#9733;</div>{{/each}}{{#each badstars}}<div class="evenementStar">&#9734;</div>{{/each}}</div><div class="intitule"><span>{{i18nMongo intitule }}</span></div><div class="eventId">{{evenementNumero eventId }}</div><div class="evenementCopyright">&copy; {{ copyright }}</div></div><!--
+        --><div class="evenementIllustration"><img src="{{getIllustration this}}" /></div><!--
+        --><div class="evenementDescription">{{i18nMongo description }}</div><!--
+        --><div class="evenementConstantes EV {{ isLancementTag }}">
+          {{#if deltaEur}}<div class="evenementConstante"><!--
+            --><div class="evenementConstanteBudget"></div><!--
+            --><div class="evenementConstanteValeur"><span>{{signeValeurRegle (getValeurDeRegle deltaEur)}}{{{formatValeurRegle (getValeurDeRegle deltaEur) 'eur' true}}}</span></div><!--
+            --><div class="evenementConstanteFin"></div><!--
+          --></div>{{/if}}{{#if deltaPds}}<div class="evenementConstante"><!--
+            --><div class="evenementConstanteMasse"></div><!--
+            --><div class="evenementConstanteValeur"><span>{{signeValeurRegle (getValeurDeRegle deltaPds)}}{{{formatValeurRegle (getValeurDeRegle deltaPds)  'pds' true}}}</span></div><!--
+            --><div class="evenementConstanteFin"></div><!--
+          --></div>{{/if}}{{#if deltaVol}}<div class="evenementConstante"><!--
+            --><div class="evenementConstanteVolume"></div><!--
+            --><div class="evenementConstanteValeur"><span>{{signeValeurRegle (getValeurDeRegle deltaVol)}}{{{formatValeurRegle (getValeurDeRegle deltaVol)  'vol' true}}}</span></div><!--
+            --><div class="evenementConstanteFin"></div><!--
+          --></div>{{/if}}{{#if deltaNrg}}<div class="evenementConstante"><!--
+            --><div class="evenementConstanteEnergie"></div><!--
+            --><div class="evenementConstanteValeur"><span>{{signeValeurRegle (getValeurDeRegle deltaNrg)}}{{{formatValeurRegle (getValeurDeRegle deltaNrg)  'nrg' true}}}</span></div><!--
+            --><div class="evenementConstanteFin"></div><!--
+          --></div>{{/if}}<!--    
+        --></div>
+        {{#if deltaTps }}<div class="evenementTps">{{_ "interface.evenement.temps" }} {{{formatValeurTemps (getValeurDeRegle deltaTps) 'tps' true}}} </div>{{/if}}
+    </div>
+</template>
+<template name="EditEvenement">
+  <div class="toolbarForm">
+    <ul>
+      <li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+    </ul>
+  </div>
+  <form method="post">
+    <input type="hidden" name="_id" id="_id" value="{{ evenement._id }}" />
+    <input type="hidden" name="cubesat" id="cubesat" value="{{#if evenement}}{{evenement.cubesat}}{{else}}{{cubesat}}{{/if}}" />
+    <input type="hidden" name="eventId" id="eventId" value="{{evenement.eventId}}" />
+
+    <h2>{{#if evenement}} {{_ "interface.editionEvenement" }} {{i18nMongo evenement.intitule }} {{else}} {{_ "interface.nouvelEvenement" }} {{#if cubesat}}({{_ "interface.cubesat"}}){{/if}} {{/if}}</h2>
+
+    <h3>{{_ "interface.carte.infos" }}</h3>
+    <div class="carteParametre">
+      <label for="intitule" class="required">{{_ "interface.carte.intitule" }}</label>
+      <input type="text" class="longText" id="intitule" name="intitule" value="{{#if evenement}}{{i18nMongo evenement.intitule }}{{/if}}" placeholder="{{_ 'interface.carte.intitule' }}"/>
+    </div>
+    <div class="carteParametre">
+      <label for="description">{{_ "interface.carte.description" }}</label>
+      <textarea id="description" name="description" placeholder="{{_ 'interface.carte.description' }}" rows="5" cols="100">{{#if evenement}}{{i18nMongo evenement.description }}{{/if}}</textarea>
+    </div>
+    <div class="carteParametre">
+      <label for="copyright">{{_ "interface.carte.copyright" }}</label>
+      <input type="text" id="copyright" name="copyright" value="{{ evenement.copyright }}" placeholder="{{_ 'interface.carte.copyright' }}" />
+    </div>
+    <div class="carteParametre">
+      <label for="illustration">{{_ "interface.carte.illustration" }}</label>
+      <img src="{{getIllustration evenement }}" />
+      <input type="file" id="illustration" name="illustration" data-carteId="{{ evenement._id }}"/>
+      <input type="hidden" id="newIllustration" name="newIllustration" value="{{ evenement.illustration }}"/>
+    </div>
+    <div class="carteParametre">
+      <input type="radio" id="isLancement" name="isLancement" value="1" {{isChecked evenement.isLancement}} />
+      <label for="isLancement">{{_ "interface.evenement.isLancement" }}</label>
+      <input type="radio" id="isNotLancement" name="isLancement" value="0" {{isNChecked evenement.isLancement}} />
+      <label for="isLancement">{{_ "interface.evenement.isNotLancement" }}</label>
+    </div>
+
+    <h3>{{_ "interface.evenement.cibles" }}</h3>
+    <div class="carteParametre">
+      <label for="carteIds" class="required">{{_ "interface.evenement.cartes" }}</label>
+      <textarea id="carteIds" name="carteIds" placeholder="{{_ 'interface.evenement.cartes' }}" rows="5" cols="100">{{ evenement.targetCarteIds }}</textarea>
+    </div>
+    <div class="carteParametre">
+      <label for="tags">{{_ "interface.carte.tags" }}</label> <input type="hidden" id="tags" name="tags" value="{{evenement.targetCarteTags}}" />
+      <div class="carteTags">
+        <div class="listeTags">
+        {{#each evenement.targetCarteTags}}
+          <div class="carteTag" id="{{this}}">{{this}}<div class="remCarteTag"> X </div></div>
+        {{/each}}
+        </div>
+        <!--<input type="text" class="mediumText" id="newCarteTag" name="newCarteTag" value="" placeholder="{{_ 'interface.carte.newTag'}}"/>-->
+        {{> inputAutocomplete settings=settings id="tag" placeholder="..." }}<button type="button" id="addTag" class="okBouton">{{_ "interface.bouton.ok" }}</button>
+      </div>
+    </div>
+
+    <h3>{{_ "interface.carte.valeurs" }}</h3>
+    <div class="carteParametre">
+      <label for="deltaEur">{{_ "interface.carte.valEur" }}</label>
+      <input type="text" id="deltaEur" name="deltaEur" value="{{ evenement.deltaEur }}" placeholder="{{_ 'interface.carte.valEur' }}" />
+      <span class="parametreLegende">{{_ "interface.legende.enEuros" }}</span>
+    </div>
+    <div class="carteParametre">
+      <label for="deltaNrg">{{_ "interface.carte.valNrg" }}</label>
+      <input type="text" id="deltaNrg" name="deltaNrg" value="{{ evenement.deltaNrg }}" placeholder="{{_ 'interface.carte.valNrg' }}" />
+      <span class="parametreLegende">{{_ "interface.legende.enWatts" }}</span>
+    </div>
+    <div class="carteParametre">
+      <label for="deltaPds">{{_ "interface.carte.valPds" }}</label>
+      <input type="text" id="deltaPds" name="valPds" value="{{ evenement.deltaPds }}" placeholder="{{_ 'interface.carte.valPds' }}" />
+      <span class="parametreLegende">{{_ "interface.legende.enGrammes" }}</span>
+    </div>
+    <div class="carteParametre">
+      <label for="deltaVol">{{_ "interface.carte.valVol" }}</label>
+      <input type="text" id="deltaVol" name="deltaVol" value="{{ evenement.deltaVol }}" placeholder="{{_ 'interface.carte.valVol' }}" />
+      <span class="parametreLegende">{{_ "interface.legende.enMillimetres" }}</span>
+    </div>
+    <div class="carteParametre">
+      <label for="deltaSci">{{_ "interface.carte.valSci" }}</label>
+      <input type="text" id="deltaSci" name="deltaSci" value="{{ evenement.deltaSci }}" placeholder="{{_ 'interface.carte.valSci' }}" />
+    </div>
+
+    <h3>{{_ "interface.carte.statut" }}</h3>
+    <div class="carteParametre">
+      <input type="radio" id="active" name="active" value="1" {{isChecked evenement.active}} />
+      <label for="actif">{{_ "interface.carte.actif" }}</label>
+      <input type="radio" id="inactive" name="active" value="0" {{isNChecked evenement.active}} />
+      <label for="actif">{{_ "interface.carte.inactif" }}</label>
+    </div>
+    {{#if carte}}
+    <h3>{{_ "interface.securite" }}</h3>
+    <div class="carteParametre">
+      <label for="securite">{{_ "interface.securite"}}</label>
+      <input type="checkbox" id="securite" name="securite" value="1" />
+      <span class="parametreLegende">{{_ "interface.legende.carteEdition" }}</span>
+    </div>
+    {{/if}}
+  </form>
+  <div class="toolbarForm">
+    <ul>
+      <li><button id="saveEvenement">{{_ "interface.bouton.sauver" }}</button></li>
+      <li><button id="delEvenement">{{_ "interface.bouton.supprimer" }}</button></li>
+      <li><button id="retour">{{_ "interface.bouton.retour" }}</button></li>
+    </ul>
+  </div>
+</template>
+<template name="EvenementSuppression">
+<div class="modal fade modalCarte">
+    {{> Evenement this.evenement}}
+    <div id="carteSuppressionConfirmation">
+      <div class="carteMessage">
+            <img src="/attention.png"/>
+            <span class="carteConfirmation">{{{_ "interface.confirmationSuppressionCarte"}}}</span>
+        </div>
+        <div class="carteToolbar">
+           <ul class="carteToolbar">
+            <li><button class="carteSuppressionNon" data-securite="{{this.securite}}" data-eventId="{{this.evenement._eventId}}">{{_ 'interface.bouton.non'}}</button></li>
+            <li><button class="carteSuppressionOui" data-securite="{{this.securite}}" data-eventId="{{this.evenement._eventId}}">{{_ 'interface.bouton.oui'}}</button></li>
+           </ul>  
+        </div>
+    </div>
+</div>
+</template>

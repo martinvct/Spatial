@@ -11,6 +11,9 @@ if (Meteor.isClient) {
 		'click #listeCartes': function(event){
 			Router.go('ConfigCartes');
 		},
+		'click #listeEvenements': function(event){
+			Router.go('ConfigEvenements');
+		},
 		'click #listeUtilisateurs': function(event){
 			Router.go('ConfigUtilisateurs');
 		},

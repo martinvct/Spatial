@@ -1,15 +1,23 @@
 Meteor.startup(function(){
 
- /* Accounts.config({
+  /* Accounts.config({
     forbidClientAccountCreation: true
   });*/
   process.env.MAIL_URL = 'smtp://smtp.ulg.ac.be';
   process.env.MAIL_EXP = 'vincent.martin@ulg.ac.be';
-  
+ // process.env.PATH     = 'C:\\Program Files (x86)\\GraphicsMagick-1.3.23-Q16';
+ /* var sep = /^win/.test(process.platform) ? ';' : ':';
+  console.log(process.env['PATH'].split(/:|;/));
+  console.log(process.env['PATH'].split(sep));*/
   // If this is the first user going into the database, make them an admin
   if (Meteor.users.find().count() === 0) {
   	Accounts.createUser({username: "admin", password: "M@st3r", admin: true, profile: { username: "admin", firstname: "Jean", lastname:"Martin", email: "vincent.martin@ulg.ac.be", admin: true }});
   }
+
+  if(!gm.isAvailable) {
+    console.log("PAS de GM");
+  }
+  Meteor.call("testGM");
 });
 
 Accounts.onCreateUser(function(options, user){

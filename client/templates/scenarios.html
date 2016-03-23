@@ -256,14 +256,15 @@
 			{{/if}}
 		</div>
 		<div class="scenarioParametre">
+			<div class="scenarioPlanetes">
 			{{#each planetes}}
 				{{#if hasPartieId}}<input type="radio" name="planetes" id="planete_{{ planeteId }}" value="{{ planeteId }}" {{isPlaneteChecked planeteId scenario.initialisation.planetes}} />{{/if}}
 				<label for="planete_{{ planeteId }}">{{nomPlanete planeteId }}</label>
 			{{/each}}
-
+			</div>
 		</div>
 		<div class="toolbarForm">
-			<ul>
+			<ul class="scenarioPlanetes">
 				{{#if hasPartieId}}{{#if planetes}}
 					<li><button id="savePlanetePartie">{{_ "interface.bouton.sauver" }}</button></li>
 				{{/if}}{{/if}}

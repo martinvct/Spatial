@@ -234,16 +234,20 @@ if (Meteor.isClient) {
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategorie');
 			Template.instance().templateDictionary.set('currentLocationHash', '');
 		},
-		'click #partieLancementConfirmation': function(event){
-			Session.set('currentStructure', 0);
-			Template.instance().templateDictionary.set('currentTemplate', 'PartieLancementConfirmation');
-			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
-		},
 		'click #partieLancement': function(event){
 			Session.set('currentStructure', 0);
-			Meteor.call("lancementProjet", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Session.get("dateModif"));
-			Template.instance().templateDictionary.set('currentTemplate', 'PartieScore');
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieLancement');
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
+		},
+		'click #partieLancementConf': function(event, template){
+			Session.set('currentStructure', 0);
+			//Template.instance().templateDictionary.set('currentTemplate', 'PartieLancementConfirmation');
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
+				//console.log(Template.parentData(1));
+			template.data.partieId = Template.instance().templateDictionary.get('currentPartie');
+			template.data.scenario = Template.instance().templateDictionary.get('currentScenarioObj');
+			//console.log('partieLancementConf');
+			Modal.show("PartieLancementConf", template.data);
 		}
 	});
 	Template.PartieHeader.helpers({
@@ -571,6 +575,67 @@ if (Meteor.isClient) {
 				messageItems.push({typeItem: "message", message: Template.instance().data.partie.chat[m].message, date: Template.instance().data.partie.chat[m].dateTime, pair:{ username: usrObject.profile.username, firstname: usrObject.profile.firstname, lastname: usrObject.profile.lastname, avatar: usrObject.profile.avatar}});
 			}
 			return (_.sortBy(messageItems, "date")).reverse();
+		}
+	});
+	Template.PartieLancement.helpers({
+		cartesglobales: function(){
+			var cIds = _.pluck(_.filter(Template.instance().data.partie.deck.cartes, function(carte){ return carte.nStructure == 0; }), "_carteId");
+			//console.log(cIds);
+			var result = {
+				cartes: Cartes.find({_id: {$in: cIds}}, {sort: {categorie:1, ordre: 1}}).fetch(),
+				last: ""
+			} 
+			if(result.cartes.length > 0) result.last = result.cartes[result.cartes.length -1].carteId;
+			//console.log(result.last);
+			return result;
+		},
+		evenements: function(){
+			var eIds = Template.instance().data.partie.eventIds;
+			console.log(eIds);
+			return Evenements.find({_id: {$in: eIds}}, {sort: {categorie:1, ordre: 1}});
+		},
+		structures: function(){
+			var structures = [];
+			//console.log(Template.instance().data);
+			
+			for(var i=0; i < Template.instance().data.partie.deck.structures.ids.length; i++){
+				//console.log("ICI "+i);
+				var deckCarte = _.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == "Z") && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); });
+				if(!deckCarte) continue;
+				//console.log("LA "+i);
+				//console.log(deckCarte);
+				var carteStructureId = deckCarte[0]._carteId;
+				//console.log(carteStructureId);
+				var carteStructure = Cartes.findOne({_id: carteStructureId});
+				//console.log(carteStructure);
+				var structure = {
+					n: deckCarte[0].nStructure,
+					carte: carteStructure,
+					cartes: [],
+					last: ""
+				};
+				var cIds = _.pluck(_.filter(Template.instance().data.partie.deck.cartes, function(obj){return ((obj.categorie != "Z") && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) );}), "_carteId");
+				structure.cartes = Cartes.find({_id: {$in: cIds}}, {sort: {categorie:1, ordre: 1}}).fetch();
+				if(structure.cartes.length > 0) structure.last = structure.cartes[structure.cartes.length - 1].carteId;
+				console.log(structure.last);
+				structures.push(structure);
+			}
+			//console.log(structures);
+			return structures; 
+
+		}
+	});
+	Template.PartieLancementConf.events({
+		'click #partieLancementConfirmation': function(event){
+			//Session.set('currentStructure', 0);
+			//Meteor.call("lancementProjet", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Session.get("dateModif"));
+			
+
+			Meteor.call("lancementProjet", Template.instance().data.partieId, Template.instance().data.scenario, Session.get("dateModif"));
+			//Template.instance().templateDictionary.set('currentTemplate', 'PartieScore');
+			//saveTimer(Template.instance().templateDictionary.get('currentPartie'));
+			console.log(Template.instance().data.partieId);
+			Modal.hide("PartieLancementConf");
 		}
 	});
 	Template.PartieScore.helpers({

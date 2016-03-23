@@ -29,7 +29,7 @@
 </template>
 <template name="EvenementData">
   <div class="evenementData">
-    <div class="evenementPreview">
+    <div class="evenementView">
       {{> Evenement }}
     </div>
     <div class="evenementTxt">
@@ -56,6 +56,33 @@
 </template>
 <template name="Evenement">
     <div id="{{eventId}}" class="evenement" data-eventId="{{ eventId }}" ><!--
+        --><div class="evenementIntitule EV {{ isLancementTag }}"><div class="evenementStars">{{#each stars}}<div class="evenementStar">&#9733;</div>{{/each}}{{#each badstars}}<div class="evenementStar">&#9734;</div>{{/each}}</div><div class="intitule"><span>{{i18nMongo intitule }}</span></div><div class="eventId">{{evenementNumero eventId }}</div><div class="evenementCopyright">&copy; {{ copyright }}</div></div><!--
+        --><div class="evenementIllustration"><img src="{{getIllustration this}}" /></div><!--
+        --><div class="evenementDescription">{{i18nMongo description }}</div><!--
+        --><div class="evenementConstantes EV {{ isLancementTag }}">
+          {{#if deltaEur}}<div class="evenementConstante"><!--
+            --><div class="evenementConstanteBudget"></div><!--
+            --><div class="evenementConstanteValeur"><span>{{signeValeurRegle (getValeurDeRegle deltaEur)}}{{{formatValeurRegle (getValeurDeRegle deltaEur) 'eur' true}}}</span></div><!--
+            --><div class="evenementConstanteFin"></div><!--
+          --></div>{{/if}}{{#if deltaPds}}<div class="evenementConstante"><!--
+            --><div class="evenementConstanteMasse"></div><!--
+            --><div class="evenementConstanteValeur"><span>{{signeValeurRegle (getValeurDeRegle deltaPds)}}{{{formatValeurRegle (getValeurDeRegle deltaPds)  'pds' true}}}</span></div><!--
+            --><div class="evenementConstanteFin"></div><!--
+          --></div>{{/if}}{{#if deltaVol}}<div class="evenementConstante"><!--
+            --><div class="evenementConstanteVolume"></div><!--
+            --><div class="evenementConstanteValeur"><span>{{signeValeurRegle (getValeurDeRegle deltaVol)}}{{{formatValeurRegle (getValeurDeRegle deltaVol)  'vol' true}}}</span></div><!--
+            --><div class="evenementConstanteFin"></div><!--
+          --></div>{{/if}}{{#if deltaNrg}}<div class="evenementConstante"><!--
+            --><div class="evenementConstanteEnergie"></div><!--
+            --><div class="evenementConstanteValeur"><span>{{signeValeurRegle (getValeurDeRegle deltaNrg)}}{{{formatValeurRegle (getValeurDeRegle deltaNrg)  'nrg' true}}}</span></div><!--
+            --><div class="evenementConstanteFin"></div><!--
+          --></div>{{/if}}<!--    
+        --></div>
+        {{#if deltaTps }}<div class="evenementTps">{{_ "interface.evenement.temps" }} {{{formatValeurTemps (getValeurDeRegle deltaTps) 'tps' true}}} </div>{{/if}}
+    </div>
+</template>
+<template name="EvenementPreview">
+    <div id="{{eventId}}" class="evenementPreview" data-eventId="{{ eventId }}" ><!--
         --><div class="evenementIntitule EV {{ isLancementTag }}"><div class="evenementStars">{{#each stars}}<div class="evenementStar">&#9733;</div>{{/each}}{{#each badstars}}<div class="evenementStar">&#9734;</div>{{/each}}</div><div class="intitule"><span>{{i18nMongo intitule }}</span></div><div class="eventId">{{evenementNumero eventId }}</div><div class="evenementCopyright">&copy; {{ copyright }}</div></div><!--
         --><div class="evenementIllustration"><img src="{{getIllustration this}}" /></div><!--
         --><div class="evenementDescription">{{i18nMongo description }}</div><!--

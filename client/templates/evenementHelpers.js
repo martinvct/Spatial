@@ -52,6 +52,25 @@ if(Meteor.isClient){
 			return (this.isLancement ? "L" : "");
 		}
 	});
+	Template.EvenementPreview.helpers({
+		stars: function(){
+			var n = getValeurDeRegle(Session.get("sPartieId"), this.deltaSci);
+			var arr = [];
+			for(var i=0; i < n; i++) arr.push("S");
+			//console.log(arr);
+			return arr;
+		},
+		badstars: function(){
+			var n = getValeurDeRegle(Session.get("sPartieId"), this.deltaSci);
+			var arr = [];
+			for(var i=0; i > n; i--) arr.push("S");
+			//console.log(arr);
+			return arr;
+		},
+		isLancementTag: function(){
+			return (this.isLancement ? "L" : "");
+		}
+	});
 	Template.EditEvenement.onRendered(function() {
 		if($('#isLancement').val('') == "1"){
 			$('#carteIds').parent().prev().show();

@@ -1,8 +1,8 @@
 if (Meteor.isClient) {
 	Template.registerHelper('getIllustration', function(carte){
 		if(carte){
-			if(!carte.illustration){
-				if(carte.eventId.length > 0){
+			if(!carte.hasOwnProperty("illustration") || (carte.illustration == "")) {
+				if((carte.hasOwnProperty("eventId")) && (carte.eventId.length > 0)){
 					illustration = "/Cartes/illustrations/defaut.png";
 				} else {
 					illustration = "/Cartes/illustrations/";
@@ -16,6 +16,7 @@ if (Meteor.isClient) {
 		else illustration = "/Cartes/illustrations/defaut.png";	
 		//console.log("illustration");
 		//console.log(illustration);	
+		//console.log(carte);
 		return illustration;
 	});
 	Template.ConfigCartes.helpers({
@@ -84,6 +85,47 @@ if (Meteor.isClient) {
 		},
 		hasTip: function(){
 			return (this.tip[TAPi18n.getLanguage()].length > 0);
+		}
+	});
+	Template.CartePreview.helpers({
+		stars: function(){
+			var n = getValeurDeRegle(Session.get("sPartieId"), this.carte.valSci);
+
+			var arr = [];
+			for(var i=0; i < n; i++) arr.push("S");
+			//console.log(arr);
+			return arr;
+		},
+		hasTip: function(){
+			return (this.carte.tip[TAPi18n.getLanguage()].length > 0);
+		},
+		isLast: function(carteId, lastCarteId){
+			if(carteId == lastCarteId) return "isLast";
+			return "";
+		}
+	});
+	Template.CartePreview.events({
+		'click .cartePreview': function(event){
+			if(!$(event.currentTarget).hasClass("isLast")) {
+				//console.log($(event.currentTarget).attr("id"));
+
+				$(event.currentTarget).find("div.carteIllustration").toggle();
+				$(event.currentTarget).find("div.carteDescription").toggle();
+				$(event.currentTarget).find("div.carteConstantes").toggle();
+				$(event.currentTarget).find("div.carteTips").toggle();
+			}
+		}
+	});
+	Template.StructurePreview.events({
+		'click .structurePreview': function(event){
+			if(!$(event.currentTarget).hasClass("isLast")) {
+				//console.log($(event.currentTarget).attr("id"));
+
+				$(event.currentTarget).find("div.carteIllustration").toggle();
+				$(event.currentTarget).find("div.carteDescription").toggle();
+				$(event.currentTarget).find("div.carteConstantes").toggle();
+				$(event.currentTarget).find("div.carteTips").toggle();
+			}
 		}
 	});
 	Template.CarteTxt.helpers({

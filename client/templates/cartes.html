@@ -39,7 +39,7 @@
 
 <template name="CarteData">
   <div class="carteData">
-    <div class="cartePreview">
+    <div class="carteView">
       {{> Carte }}
     </div>
     <div class="carteTxt">
@@ -95,6 +95,33 @@
           --></div>{{/if}}<!--    
         --></div>
         {{#if hasTip }}<div class="carteTips">{{i18nMongo tip }}</div>{{/if}}
+    </div>
+</template>
+<template name="CartePreview">
+    <div id="{{carte.carteId}}" class="cartePreview {{isLast carte.carteId lastCarteId}}" data-carteId="{{ carte.carteId }}" ><!--
+        --><div class="carteIntitule {{ carte.categorie }}"><div class="carteStars">{{#each stars}}<div class="carteStar">&#9733;</div>{{/each}}</div><div class="intitule"><span>{{i18nMongo carte.intitule }}</span></div><div class="carteId">{{ carte.categorie }}{{ carte.ordre }}</div><div class="carteCopyright">&copy; {{ carte.copyright }}</div></div><!--
+        --><div class="carteIllustration"><img src="{{getIllustration carte}}" /></div><!--
+        --><div class="carteDescription">{{i18nMongo carte.description }}</div><!--
+        --><div class="carteConstantes {{ carte.categorie }}">
+          {{#if carte.valEur}}<div class="carteConstante"><!--
+            --><div class="carteConstanteBudget"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle carte.valEur) 'eur' true}}}</span></div><!--
+            --><div class="carteConstanteFin"></div><!--
+          --></div>{{/if}}{{#if carte.valPds}}<div class="carteConstante"><!--
+            --><div class="carteConstanteMasse{{isLanceur}}"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle carte.valPds)  'pds' true}}}</span></div><!--
+            --><div class="carteConstanteFin"></div><!--
+          --></div>{{/if}}{{#if carte.valVol}}<div class="carteConstante"><!--
+            --><div class="carteConstanteVolume"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle carte.valVol)  'vol' true}}}</span></div><!--
+            --><div class="carteConstanteFin"></div><!--
+          --></div>{{/if}}{{#if carte.valNrg}}<div class="carteConstante"><!--
+            --><div class="carteConstanteEnergie{{isEnergieGenerateur}}"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle carte.valNrg)  'nrg' true}}}</span></div><!--
+            --><div class="carteConstanteFin"></div><!--
+          --></div>{{/if}}<!--    
+        --></div>
+        {{#if hasTip }}<div class="carteTips">{{i18nMongo carte.tip }}</div>{{/if}}
     </div>
 </template>
 

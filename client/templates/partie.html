@@ -19,7 +19,7 @@
             <div class="tagsPartie">
                 <span class="tagPartie">{{_ "interface.budget" }}: {{{formatValeurRegle deck.budget "eur" false}}}</span>
                 {{#if cubesat }}
-                    <span class="tagPartie">{{_ "interface.cubesat" }}: ({{_ "interface.poidsMax"}}: {{{formatValeurRegle scenario.initialisation.cubesatLimites.poidsMax "pds" false}}}, {{_ "interface.volumeMax"}}: {{{formatValeurRegle scenario.initialisation.cubesatLimites.volumeMax "vol" false}}})</span>
+                    <span class="tagPartie">{{_ "interface.nU"}}: {{scenario.initialisation.cubesatOptions.nU}}</span>
                 {{else}}
                     <span class="tagPartie">{{_ "interface.objectif" }}: {{tr "interface.objectifs." objectif}} {{#if planete}}, {{_ "interface.planetes"}}: {{nomPlanete planete.planeteId}} {{/if}}</span>
                 {{/if}}
@@ -28,7 +28,7 @@
         <div class="statsPartie">
             <ul>
                 <li><span class="label">{{_ "interface.dateModif" }}</span>: <span class="info">{{formatDate dateModif "DD/MM/YYYY"}}</span></li>
-                <li><span class="label">{{_ "interface.tpsTotal" }}</span>: <span class="info">{{ tempsTotal }}</span></li>
+                <li><span class="label">{{_ "interface.tpsTotal" }}</span>: <span class="info">{{{formatValeurTemps tempsTotal "tps" false}}}</span></li>
                 {{#if finie }}
                 <li><span class="label">{{_ "interface.finie" }}</span>: <span class="info">{{ score }}</span></li>
                 {{/if}}
@@ -54,7 +54,7 @@
             <li><button id="partieStructure" class="image" title="{{_ 'interface.bouton.structure'}}" ></button></li>
             <li><button id="partieCollaboration" class="image" title="{{_ 'interface.bouton.collaboration'}}" ></button></li>
             <li><button id="partieExpertise" class="image" title="{{_ 'interface.bouton.expertise'}}" ></button></li>
-            <li><button id="partieLancementConfirmation" class="image" title="{{_ 'interface.bouton.lancement'}}" ></button></li>
+            <li><button id="partieLancement" class="image" title="{{_ 'interface.bouton.lancement'}}" ></button></li>
             {{/if}}
             {{/if}}
         </ul>
@@ -100,7 +100,7 @@
 <template name="Structure">
     <div id="structure_{{n}}" class="structure isDeck" data-nStructure="{{n}}" ><!--
         --><div class="carteIntitule {{ carte.categorie }} structureMagasin" data-nStructure="{{n}}"><div class="intitule"><span>{{ carte.intitule.fr }} ({{n}})</span></div><div class="carteId">{{ carte.carteId }}</div><div class="carteCopyright">&copy; {{ carte.copyright }}</div></div><!--
-        --><div class="structureIllustration"><img src="{{illustration carte.carteId carte.cubesat}}" /></div><!--
+        --><div class="structureIllustration"><img src="{{getIllustration carte}}" /></div><!--
         --><div class="carteDescription"></div><!--
         --><div class="structureCategories">
            {{#each categories}}<!--
@@ -118,6 +118,33 @@
                  </ul>  
                </div>
            </div>
+    </div>
+</template>
+<template name="StructurePreview">
+    <div id="structure_{{n}}" class="structurePreview" data-nStructure="{{n}}" ><!--
+        --><div class="carteIntitule {{ carte.categorie }} structureMagasin" data-nStructure="{{n}}"><div class="intitule"><span>{{ carte.intitule.fr }} ({{n}})</span></div><div class="carteId">{{ carte.carteId }}</div><div class="carteCopyright">&copy; {{ carte.copyright }}</div></div><!--
+        --><div class="carteIllustration"><img src="{{getIllustration carte}}" /></div><!--
+        --><div class="carteDescription">{{i18nMongo carte.description }}</div><!--
+        --><div class="carteConstantes {{ carte.categorie }}">
+          {{#if carte.valEur}}<div class="carteConstante"><!--
+            --><div class="carteConstanteBudget"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle carte.valEur) 'eur' true}}}</span></div><!--
+            --><div class="carteConstanteFin"></div><!--
+          --></div>{{/if}}{{#if carte.valPds}}<div class="carteConstante"><!--
+            --><div class="carteConstanteMasse{{isLanceur}}"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle carte.valPds)  'pds' true}}}</span></div><!--
+            --><div class="carteConstanteFin"></div><!--
+          --></div>{{/if}}{{#if carte.valVol}}<div class="carteConstante"><!--
+            --><div class="carteConstanteVolume"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle carte.valVol)  'vol' true}}}</span></div><!--
+            --><div class="carteConstanteFin"></div><!--
+          --></div>{{/if}}{{#if carte.valNrg}}<div class="carteConstante"><!--
+            --><div class="carteConstanteEnergie{{isEnergieGenerateur}}"></div><!--
+            --><div class="carteConstanteValeur"><span>{{{formatValeurRegle (getValeurDeRegle carte.valNrg)  'nrg' true}}}</span></div><!--
+            --><div class="carteConstanteFin"></div><!--
+          --></div>{{/if}}<!--    
+        --></div>
+        {{#if hasTip }}<div class="carteTips">{{i18nMongo carte.tip }}</div>{{/if}}
     </div>
 </template>
 <template name="PartieCategories">
@@ -240,10 +267,41 @@
         </div>
      </div>
 </template>
-<template name="PartieLancementConfirmation">
-    {{{_ "interface.confirmationLancement"}}}
-    <br />
-    <button id="partieLancement" class="bouton">{{_ 'interface.bouton.lancement'}}</button>
+<template name="PartieLancement">
+   
+    <div class="toolbarForm">
+        <ul>
+            <li><button class="icone" id="partieLancementConf"><img src="/icones_S/submitGO.png" />&nbsp;{{_ "interface.bouton.lancement" }}</button></li>
+        </ul>
+    </div>
+
+    <div class="deckPreview">
+
+        {{#each cartesglobales.cartes}} {{> CartePreview carte=this lastCarteId=cartesglobales.last}} {{/each}}
+    </div>
+    <div class="deckPreview">
+        {{#each evenements}} {{> EvenementPreview}} {{/each}}
+    </div>
+    {{#each structures}}
+    <div class="deckPreview">
+            {{> StructurePreview this}}
+            {{#each this.cartes }}
+                {{> CartePreview carte=this lastCarteId=../last}}
+            {{/each}}
+    </div>
+    {{/each}}
+
+</template>
+<template name="PartieLancementConf">
+    <div class="modal fade modalCarte">
+         {{{_ "interface.confirmationLancement"}}}
+         <br />
+         <div class="toolbarForm">
+            <ul>
+                <li><button class="icone" id="partieLancementConfirmation"><img src="/icones_S/submitGO.png" />&nbsp;{{_ "interface.bouton.lancement" }}</button></li>
+            </ul>
+        </div>
+    </div>
 </template>
 <template name="PartieScore">
     <ul class="rapport">
@@ -308,7 +366,7 @@
 <div class="modal fade modalCarte">
     <div id="structureSuppressionConfirmation" class="structure isDeck"><!--
         --><div class="carteIntitule {{ carte.categorie }} structureMagasin" data-nStructure="{{n}}"><div class="intitule"><span>{{ carte.intitule.fr }} ({{n}})</span></div><div class="carteId">{{ carte.carteId }}</div></div><!--
-        --><div class="structureIllustration"><img src="{{illustration carte.carteId carte.cubesat}}" /></div><!--
+        --><div class="structureIllustration"><img src="{{getIllustration carte}}" /></div><!--
         --><div class="carteDescription"></div><!--
         --><div class="structureMessage">
                 <img src="/attention.png"/>

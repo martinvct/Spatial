@@ -134,8 +134,8 @@ if (Meteor.isClient) {
 	});
 	Template.Login.events({
 	    'click button.loginWithLDAP': function (event, template) {
-	        //console.log("Tentative de login...");
-	       // console.log("username: "+ template.find('#login').value);
+	       //console.log("Tentative de login...");
+	       //console.log("username: "+ template.find('#login').value);
 	       //console.log("password: "+ template.find('#password').value);
 	        
 	        try {

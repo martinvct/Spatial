@@ -66,6 +66,20 @@ div.menuProfileInfo { display: inline-block; vertical-align: top; }
 div.menuProfileLien { display: inline-block; vertical-align: top; float: right; }
 button.menuProfileLogout { display: inline-block; }
 
+div.toolbarForm > ul, nav.navPartieMenu > ul, nav.navPartieConstantes > ul, ul.structureToolbar { list-style: none;  margin-left: 0; padding-left: 0; }
+div.toolbarForm > ul > li, nav.navPartieMenu > ul > li, nav.navPartieConstantes > ul > li, ul.structuretoolbar > li {  display: inline; list-style-type:none; }
+div.toolbarForm > ul > li button { border: 0.2em solid white; border-radius: 5px; min-width: 7em; margin: 0.2em 0;  text-align: center; background: none; color: white; } /*padding: 0.2em 0;*/
+div.toolbarForm > ul > li button.icone { padding-right: 0.6em;  }
+nav.navPartieMenu button, nav.navPartieConstantes button { border: none; }
+nav.navPartieMenu { margin-top: 1em; }
+span.partieConstante { font-family: "Digital-7"; font-size: 16px; margin: 0 6px 0 3px; position: relative; top: 4px; }
+span.valUnite { font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: 10px; padding-top: 2px; }
+span.valUniteMm { font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: 12px; padding-top: 2px; background: url('/valUniteMm.png') no-repeat;  }
+#nomPartie { display: block; position: relative; top: -9px; padding-right: 6px; width: 100%; }
+#nomPartieForm { margin: 30px 0 0 0; }
+#nomPartieTxt { border: none; background: rgba(255,255,255,0.3); font-family: "nasalization"; font-size: 26px; color: white; margin: 0 12px 3px; padding-left: 5px; }
+#nomPartieBouton { height: 39px; position: relative; left: -17px; top: -4px; margin: 0 0 0 10px; background: none; border: 2px solid white; border-radius: 0 5px 5px 0; }
+
 div.utilisateur { display: block; border-bottom: 0.2em dotted white; margin-bottom: 1em;}
 div.utilisateurAvatar { display: inline-block; }
 div.utilisateurInfo { display: inline-block; color: white; }
@@ -81,6 +95,8 @@ div.scenarioParametre input[type="text"].mediumText, div.utilisateurParametre in
 div.scenarioParametre textarea, div.utilisateurParametre textarea, div.carteParametre textarea { width: 22.5em; }
 div.scenarioParametre.error, div.utilisateurParametre.error, div.carteParametre.error { border: 0.05em solid red; }
 div.carteParametre div.carteTags { display: inline-block; }
+div.scenarioPlanetes { margin-left: 8em; }
+div.toolbarForm > ul.scenarioPlanetes { margin-left: 10.5em; }
 
 div.configScenarios div.scenario, div.listScenarios div.scenario { display: block; margin: 1em 0; padding: 0.3em; border-bottom: 0.01em dashed white; }
 div.configScenarios div.scenario div.descScenario, div.configScenarios div.scenario div.tagsScenario, div.configScenarios div.scenario div.statsScenario { font-size: small; }
@@ -88,21 +104,13 @@ div.listScenarios div.scenario div.descScenario, div.listScenarios div.scenario 
 
 div.listParties div.partie div.descPartie, div.listParties div.partie div.tagsPartie, div.listParties div.partie div.statsPartie { font-size: small; }
 
-div.toolbarForm > ul, nav.navPartieMenu > ul, nav.navPartieConstantes > ul, ul.structureToolbar { list-style: none;  margin-left: 0; padding-left: 0; }
-div.toolbarForm > ul > li, nav.navPartieMenu > ul > li, nav.navPartieConstantes > ul > li, ul.structuretoolbar > li {  display: inline; list-style-type:none; }
-div.toolbarForm > ul > li button { border: 0.2em solid white; border-radius: 5px; min-width: 7em; margin: 0.2em 0;  text-align: center; background: none; color: white; } /*padding: 0.2em 0;*/
-div.toolbarForm > ul > li button.icone { padding-right: 0.6em;  }
-nav.navPartieMenu button, nav.navPartieConstantes button { border: none; }
-nav.navPartieMenu { margin-top: 1em; }
-span.partieConstante { font-family: "Digital-7"; font-size: 16px; margin: 0 6px 0 3px; position: relative; top: 4px; }
-span.valUnite { font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: 10px; padding-top: 2px; }
-span.valUniteMm { font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: 12px; padding-top: 2px; background: url('/valUniteMm.png') no-repeat;  }
-#nomPartie { display: block; position: relative; top: -9px; padding-right: 6px; width: 100%; }
-#nomPartieForm { margin: 30px 0 0 0; }
-#nomPartieTxt { border: none; background: rgba(255,255,255,0.3); font-family: "nasalization"; font-size: 26px; color: white; margin: 0 12px 3px; padding-left: 5px; }
-#nomPartieBouton { height: 39px; position: relative; left: -17px; top: -4px; margin: 0 0 0 10px; background: none; border: 2px solid white; border-radius: 0 5px 5px 0; }
+
+
+
 
 div.carte, div.structure, div.evenement { width: 246px; border: 2px solid #777; border-radius: 1em; min-height: 344px; background-color: rgba(0,0,0, 0.6); cursor: pointer; vertical-align: top; }
+div.cartePreview, div.structurePreview, div.evenementPreview { width: 246px; border: 2px solid #777; border-bottom: 0; border-radius: 1em 1em 0 0; min-height: 65px; background-color: rgba(0,0,0, 0.6); cursor: pointer; vertical-align: top; margin-top: -20px; padding-bottom: 20px; }
+div.cartePreview.isLast, div.structurePreview.isLast, div.evenementPreview.isLast { border-radius: 1em; min-height: 344px; padding-bottom: 0px; }
 div.carteIntitule, div.evenementIntitule { position: relative; top: 0; left: 0; width: 244px; height: 65px; border: none; padding: 0; margin: 0; margin-left: -1px;}
 div.carteIntitule.A { background: url('/Cartes/carteEnTeteA.png');  }
 div.carteIntitule.A div.carteId { color: #802098;  }
@@ -177,6 +185,12 @@ div.partieCategorie, div.cartecategorie, div.evenementType { cursor: pointer; }
 div.partieCategorieLabel, div.carteCategorieLabel, div.evenementTypeLabel {  font-family: "nasalization"; }
 button.carteLien, button.categorieLien { display: inline-block; border: none; cursor: pointer; background: none; font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: medium; color: white; }
 
+div.cartePreview div.carteIllustration, div.cartePreview div.carteDescription, div.cartePreview div.carteConstantes, div.cartePreview div.carteTips { display: none;  }
+div.structurePreview div.carteIllustration, div.structurePreview div.carteDescription, div.structurePreview div.carteConstantes, div.structurePreview div.carteTips { display: none;  }
+div.evenementPreview div.evenementIllustration, div.evenementPreview div.evenementDescription, div.evenementPreview div.evenementConstantes, div.evenementPreview div.evenementTips { display: none;  }
+div.cartePreview.isLast div.carteIllustration, div.cartePreview.isLast div.carteDescription, div.cartePreview.isLast div.carteConstantes, div.cartePreview.isLast div.carteTips { display: block;  }
+div.evenementPreview.isLast div.evenementIllustration, div.evenementPreview.isLast div.evenementDescription, div.evenementPreview.isLast div.evenementConstantes, div.evenementPreview.isLast div.evenementTips { display: block;  }
+
 div.structure { background-color: black; }
 div.structureIllustration { display: relative; top: 0px; left: 0px; width: 234px; margin: 2px 4px; height: 50px; overflow: hidden; }
 div.structureIllustration img {  }
@@ -242,8 +256,8 @@ table.utilisateurs td.lien { cursor: pointer; }
 
 
 div.carteData, div.evenementData { display: inline-block; vertical-align: top; margin-top: 10px; }
-div.cartePreview, div.evenementPreview { display: inline-block; width: 246px; min-height: 344px; float: left; }
-div.cartePreview div.carte, div.evenementData div.evenement { margin: 0; }
+div.carteView, div.evenementView { display: inline-block; width: 246px; min-height: 344px; float: left; }
+div.carteView div.carte, div.evenementData div.evenement { margin: 0; }
 div.carteTxt, div.evenementTxt { display: inline-block; width: 246px; min-height: 344px; }
 
 div.remCarteTag { display: inline-block; border: 0.1em solid white; text-align: center; background: none; color: red;  border-radius: 2px; padding: 1px 4px 0 3px; cursor: pointer; margin-left: 3px; }
@@ -255,7 +269,7 @@ div.remCarteTag { display: inline-block; border: 0.1em solid white; text-align: 
     .container { min-height: 480px; }
 	#logoApplication { display: inline-block; width: 200px; height: 50px; background: url('/logoApplication_S.png') no-repeat; }
     div.statsScenario ul li, div.statsPartie ul li { display: inline; list-style-type:none;  }
-    #partieLancementConfirmation { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/submit.png') no-repeat; }
+    #partieLancement { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/submit.png') no-repeat; }
     #partieExpertise { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/exprt320.png') no-repeat; }
     #partieCollaboration { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/collab320.png') no-repeat; }
     #partieStructure { display: inline-block; width: 46px; height: 46px; background: url('/icones_S/Z320.png') no-repeat; }
@@ -316,12 +330,13 @@ div.remCarteTag { display: inline-block; border: 0.1em solid white; text-align: 
     #percentLanceur { display: inline; }
     textarea.newMessage { width:300px; }
     td.notMobile { display: none; }
+    div.deckPreview { display: block; }
 }
 @media only screen and (min-width: 480px){
     .container { min-height: 768px; }
     div.infosScenario, div.infosPartie { display: inline-block; width: calc(100% - 15em); }
     div.statsScenario, div.statsPartie { display: inline-block; width: 15em; }
-    #partieLancementConfirmation { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/submit.png') no-repeat; }
+    #partieLancement { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/submit.png') no-repeat; }
     #partieExpertise { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/exprt1024.png') no-repeat; }
     #partieCollaboration { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/collab1024.png') no-repeat; }
     #partieStructure { display: inline-block; width: 52px; height: 52px; background: url('/icones_M/Z1024.png') no-repeat; }
@@ -409,7 +424,7 @@ div.remCarteTag { display: inline-block; border: 0.1em solid white; text-align: 
     div.partieCategorieLabel span, div.carteCategorieLabel span { display: inline-block; vertical-align: middle; line-height: normal; font-size: 14px; padding-left: 0.5em; }
     div.partieCategorieLabel span.stat, div.carteCategorieLabel span.stat { font-size: 11px; }
     textarea.newMessage { width:400px; }
-
+    div.deckPreview { display: inline-block; width: 122px; vertical-align: top; margin-top: 20px; }
 
 }
 @media only screen and (min-width: 480px) and (max-width: 1024px){

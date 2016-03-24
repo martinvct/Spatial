@@ -1,10 +1,17 @@
 [] modifier users.js et userAccount.js : placer les méthodes en serveur et renvoyer le resultat d'affichage pour le client (pas de d'alerte directement)
 [] possibilité d'uploader une photo d'avatar ou sélection d'avatars par défaut
-[] affichage des évènements !
+[*] affichage des évènements !
 [*] page d'affichage des cartes
 [*] page d'édition de cartes
 [] modifier contrainte scenario : ajouter une checkbox qui autorise la modification d'un scénario malgré les précédentes parties
-[] internationaliser l'appli  : voir la page d'édition de cartes pour example... taper : TAPi18n.setLanguage('en'); dans la console du navigateur pour switcher la langue
+[*] internationaliser l'appli  : voir la page d'édition de cartes pour example... taper : TAPi18n.setLanguage('en'); dans la console du navigateur pour switcher la langue
+[] débug lancement partie : ok côté serveur mais exception côté client
+[] cron pour évènement (meteor.cron : https://atmospherejs.com/mrt/cron ?)
+[] test et debug éventuel sur déclenchement d'évènement lors d'expertise/collaboration
+[] suppression carte : suppression de cartes en cascades dans les anciennes parties
+
+*** CUP ***
+Pas oublier de créer l'import / mise à jour / désinscription de groupe des fichiers excel google de Bxl et Charleroi
 
 ***  Questions Yael Naze ****
 

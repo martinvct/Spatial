@@ -294,12 +294,15 @@
 </template>
 <template name="PartieLancementConf">
     <div class="modal fade modalCarte">
+        <div class="lancementConfirmation">
          {{{_ "interface.confirmationLancement"}}}
-         <br />
+         <br /><br />
          <div class="toolbarForm">
             <ul>
                 <li><button class="icone" id="partieLancementConfirmation"><img src="/icones_S/submitGO.png" />&nbsp;{{_ "interface.bouton.lancement" }}</button></li>
+                <li><button class="icone" id="partieLancementAnnulation"><img src="/icones_S/submit.png"/>&nbsp;{{_ "interface.bouton.annuler" }}</button></li>
             </ul>
+        </div>
         </div>
     </div>
 </template>

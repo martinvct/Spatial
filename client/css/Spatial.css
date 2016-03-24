@@ -262,6 +262,8 @@ div.carteTxt, div.evenementTxt { display: inline-block; width: 246px; min-height
 
 div.remCarteTag { display: inline-block; border: 0.1em solid white; text-align: center; background: none; color: red;  border-radius: 2px; padding: 1px 4px 0 3px; cursor: pointer; margin-left: 3px; }
 
+div.lancementConfirmation { background: black;  border: 0.1em solid white; padding: 10px; text-align: center; width: 320px; }
+
 /* S: 320*480; M: 1024*768; L: 1920*1080; */
 /* tester en remplaçant dans @media width par device-width  */
 @media only screen and (max-width: 480px) {

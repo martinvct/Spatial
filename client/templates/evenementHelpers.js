@@ -33,6 +33,11 @@ if(Meteor.isClient){
 			Router.go('EditEvenement', {eventId: $(event.currentTarget).attr('data-eventId')});
 		}
 	});
+	Template.EvenementModal.events({
+		'click .carteVisionOk': function(event){
+			Modal.hide("EvenementModal");
+		}
+	});
 	Template.Evenement.helpers({
 		stars: function(){
 			var n = getValeurDeRegle(Session.get("sPartieId"), this.deltaSci);

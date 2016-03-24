@@ -636,6 +636,9 @@ if (Meteor.isClient) {
 			//saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 			console.log(Template.instance().data.partieId);
 			Modal.hide("PartieLancementConf");
+		},
+		'click #partieLancementAnnulation': function(event){
+			Modal.hide("PartieLancementConf");
 		}
 	});
 	Template.PartieScore.helpers({

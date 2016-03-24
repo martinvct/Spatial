@@ -54,6 +54,20 @@
 &nbsp;&nbsp;active:&nbsp;{{#if active}}true{{else}}false{{/if}},<br/>
 &nbsp;&nbsp;cubesat:&nbsp;{{#if cubesat}}true{{else}}false{{/if}}
 </template>
+<template name="EvenementModal">
+  <div class="modal fade modalCarte">
+    <div class="evenements">
+    {{#each evenements}}
+      {{>Evenement}}
+    {{/each}}
+    </div>  
+    <div class="carteToolbar">
+      <ul class="carteToolbar">
+        <li><button class="carteVisionOk">{{_ 'interface.bouton.ok'}}</button></li>
+      </ul>  
+    </div>
+  </div>
+</template>
 <template name="Evenement">
     <div id="{{eventId}}" class="evenement" data-eventId="{{ eventId }}" ><!--
         --><div class="evenementIntitule EV {{ isLancementTag }}"><div class="evenementStars">{{#each stars}}<div class="evenementStar">&#9733;</div>{{/each}}{{#each badstars}}<div class="evenementStar">&#9734;</div>{{/each}}</div><div class="intitule"><span>{{i18nMongo intitule }}</span></div><div class="eventId">{{evenementNumero eventId }}</div><div class="evenementCopyright">&copy; {{ copyright }}</div></div><!--

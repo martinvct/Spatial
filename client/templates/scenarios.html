@@ -29,7 +29,7 @@
 		<div class="statsScenario">
 			<ul>
 				<li><span class="label">{{_ "interface.dateModif" }}</span>: <span class="info">{{formatDate dateModif "MM/DD/YYYY"}}</span></li>
-				<li><span class="label">{{_ "interface.nbrParties" }}</span>: <span class="info">{{nbrPartie scenarioId }}</span></li>
+				<li><span class="label">{{_ "interface.nbrParties" }}</span>: <span class="info">{{nbrPartie _id }}</span></li>
 			</ul>
 		</div>
 	</div>
@@ -62,13 +62,17 @@
 		<div class="scenarioParametre">
 			<label for="nU">{{_ "interface.scenario.nU" }}</label>
 			<select id="nU" name="nU">
-				<option value="1" {{isSelected scenario.initialisation.cubesatOptions.nU "1"}} >1{{_ "interface.U" }}</option>
-				<option value="3" {{isNSelected scenario.initialisation.cubesatOptions.nU "3"}} >3{{_ "interface.U" }}</option>
+				<option value="1" {{isSelected scenario.initialisation.cubesatOptions.nU 1}} >1{{_ "interface.U" }}</option>
+				<option value="3" {{isSelected scenario.initialisation.cubesatOptions.nU 3}} >3{{_ "interface.U" }}</option>
 			</select>
 		</div>
 		<div class="scenarioParametre">
 			<label for="budget">{{_ "interface.scenario.budget" }}</label>
 			<input type="text" id="budget" name="budget" value="{{ scenario.initialisation.budget }}" placeholder="{{_ 'interface.scenario.budgetInfo' }}" />
+		</div>
+		<div class="scenarioParametre">
+			<label for="budgetGestion">{{_ "interface.scenario.budgetGestion" }}</label>
+			<input type="text" id="budgetGestion" name="budgetGestion" value="{{ scenario.initialisation.budgetGestion }}" placeholder="{{_ 'interface.scenario.budgetInfo' }}" />
 		</div>
 		<div class="scenarioParametre">
 			<label for="objectif">{{_ "interface.scenario.objectif"}}</label>
@@ -79,7 +83,7 @@
 		</div>
 		<div class="scenarioParametre">
 			{{#each planetes}}
-				<input type="checkbox" name="planetes" id="planete_{{ planeteId }}" value="{{ planeteId }}" {{isPlaneteChecked planeteId scenario.initialisation.planetes}} />
+				<input type="checkbox" name="planetes" id="planete_{{ planeteId }}" value="{{ planeteId }}" {{isPlaneteChecked planeteId ../scenario.initialisation.planetes }} />
 				<label for="planete_{{ planeteId }}">{{nomPlanete planeteId }}</label>
 			{{/each}}
 		</div>
@@ -176,10 +180,23 @@
 			<input type="text" id="ptsParScience" name="ptsParScience" value="{{ scenario.score.ptsParScience }}" placeholder="{{_ 'interface.scenario.ptsParScienceInfo' }}" />
 		</div>
 		<div class="scenarioParametre">
+			<label for="seuilTps">{{_ "interface.scenario.seuilTps" }}</label>
+			<input type="text" id="seuilTps" name="seuilTps" value="{{ scenario.score.seuilTps }}" placeholder="{{_ 'interface.scenario.seuilTpsInfo' }}" />
+			<span class="parametreLegende">{{_ "interface.legende.enMinutes" }}</span>
+		</div>
+		<div class="scenarioParametre">
 			<label for="ptsParTps">{{_ "interface.scenario.ptsParTps" }}</label>
 			<input type="text" id="ptsParTps" name="ptsParTps" value="{{ scenario.score.ptsParTps }}" placeholder="{{_ 'interface.scenario.ptsParTpsInfo' }}" />
 			<span class="parametreLegende">{{_ "interface.legende.ptsParMinute" }}</span>
 		</div>
+		 {{#if scenario}}
+	    <h3>{{_ "interface.securite" }}</h3>
+	    <div class="scenarioParametre">
+	      <label for="securite">{{_ "interface.securite"}}</label>
+	      <input type="checkbox" id="securite" name="securite" value="1" />
+	      <span class="parametreLegende">{{_ "interface.legende.scenarioEdition" }}</span>
+	    </div>
+    	{{/if}}
 	</form>
 	<div class="toolbarForm">
 		<ul>
@@ -248,6 +265,10 @@
 			<span>{{ scenario.initialisation.budget }}</span>
 		</div>
 		<div class="scenarioParametre">
+			<label for="budgetGestion">{{_ "interface.scenario.budgetGestion" }}</label>
+			<span>{{ scenario.initialisation.budgetGestion }}</span>
+		</div>
+		<div class="scenarioParametre">
 			<label for="objectif">{{_ "interface.scenario.objectif"}}</label>
 			{{#if compare scenario.initialisation.objectif  "planete"}}
 				<span>{{_ "interface.scenario.objectifPlanete" }}</span>
@@ -265,7 +286,7 @@
 		</div>
 		<div class="toolbarForm">
 			<ul class="scenarioPlanetes">
-				{{#if hasPartieId}}{{#if planetes}}
+				{{#if hasPartieId}}{{#if plusieursPlanetes}}
 					<li><button id="savePlanetePartie">{{_ "interface.bouton.sauver" }}</button></li>
 				{{/if}}{{/if}}
 			</ul>
@@ -348,6 +369,10 @@
 		<div class="scenarioParametre">
 			<label for="ptsParScience">{{_ "interface.scenario.ptsParScience" }}</label>
 			<span>{{ scenario.score.ptsParScience }}</span>
+		</div>
+		<div class="scenarioParametre">
+			<label for="seuilTps">{{_ "interface.scenario.seuilTps" }}</label>
+			<span>{{ scenario.score.seuilTps }}</span>
 		</div>
 		<div class="scenarioParametre">
 			<label for="ptsParTps">{{_ "interface.scenario.ptsParTps" }}</label>

@@ -121,6 +121,9 @@ div.carteConstantes.C { background: #ec008c; }
 div.carteIntitule.E { background: url('/Cartes/carteEnTeteE.png');  }
 div.carteIntitule.E div.carteId { color: #f1592a;  }
 div.carteConstantes.E { background: #f1592a; }
+div.carteIntitule.G { background: url('/Cartes/carteEnTeteG.png');  }
+div.carteIntitule.G div.carteId { color: #e30613;  }
+div.carteConstantes.G { background: #e30613; }
 div.carteIntitule.I { background: url('/Cartes/carteEnTeteI.png');  }
 div.carteIntitule.I div.carteId { color: #676766;  }
 div.carteConstantes.I { background: #676766; }
@@ -179,8 +182,8 @@ div.carteConstanteValeur span, div.evenementConstanteValeur span { display: inli
 div.carteConstanteFin, div.evenementConstanteFin { display: inline-block; background: url('/Cartes/icoBPG-FIN.png'); width: 9px; height: 26px; }
 div.carteTips, div.evenementTemps { background-color: white; border-radius: 5px; color: #333; padding: 2px 10px; font-size: 11px; margin: 2px 4px; font-style: italic; text-align: center; }
 div.carte.isDeck, div.structure.isDeck { border: 2px solid white; box-shadow: 0px 0px 15px #fff; }
-div.carteStars, div.evenementStars { float: right; height: 16px; margin: 39px 5px 0 0; }
-div.carteStar, div.evenementStar { display: inline-block; font-size:14px; width: 14px; height: 14px; }
+div.carteStars, div.evenementStars { float: right; height: 18px; margin: 36px 5px 0 0; }
+div.carteStar, div.evenementStar { display: inline-block; font-size:18px; width: 18px; height: 18px; }
 div.partieCategorie, div.cartecategorie, div.evenementType { cursor: pointer; }
 div.partieCategorieLabel, div.carteCategorieLabel, div.evenementTypeLabel {  font-family: "nasalization"; }
 button.carteLien, button.categorieLien { display: inline-block; border: none; cursor: pointer; background: none; font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: medium; color: white; }
@@ -319,6 +322,7 @@ div.lancementConfirmation { background: black;  border: 0.1em solid white; paddi
     div.partieCategorieIcone.C, div.carteCategorieIcone.C { background: url('/icones_S/C0.png'); }
     div.partieCategorieIcone.E, div.carteCategorieIcone.E { background: url('/icones_S/E0.png'); }
     div.partieCategorieIcone.I, div.carteCategorieIcone.I { background: url('/icones_S/I0.png'); }
+    div.partieCategorieIcone.G, div.carteCategorieIcone.G { background: url('/icones_M/G0.png'); }
     div.partieCategorieIcone.J, div.carteCategorieIcone.J { background: url('/icones_S/J0.png'); }
     div.partieCategorieIcone.L, div.carteCategorieIcone.L { background: url('/icones_S/L0.png'); }
     div.partieCategorieIcone.M, div.carteCategorieIcone.M { background: url('/icones_S/M0.png'); }
@@ -413,6 +417,7 @@ div.lancementConfirmation { background: black;  border: 0.1em solid white; paddi
     div.partieCategorieIcone.A, div.carteCategorieIcone.A { background: url('/icones_M/A0.png'); }
     div.partieCategorieIcone.C, div.carteCategorieIcone.C { background: url('/icones_M/C0.png'); }
     div.partieCategorieIcone.E, div.carteCategorieIcone.E { background: url('/icones_M/E0.png'); }
+    div.partieCategorieIcone.G, div.carteCategorieIcone.G { background: url('/icones_M/G0.png'); }
     div.partieCategorieIcone.I, div.carteCategorieIcone.I { background: url('/icones_M/I0.png'); }
     div.partieCategorieIcone.J, div.carteCategorieIcone.J { background: url('/icones_M/J0.png'); }
     div.partieCategorieIcone.L, div.carteCategorieIcone.L { background: url('/icones_M/L0.png'); }
@@ -426,7 +431,7 @@ div.lancementConfirmation { background: black;  border: 0.1em solid white; paddi
     div.partieCategorieLabel span, div.carteCategorieLabel span { display: inline-block; vertical-align: middle; line-height: normal; font-size: 14px; padding-left: 0.5em; }
     div.partieCategorieLabel span.stat, div.carteCategorieLabel span.stat { font-size: 11px; }
     textarea.newMessage { width:400px; }
-    div.deckPreview { display: inline-block; width: 122px; vertical-align: top; margin-top: 20px; }
+    div.deckPreview { display: inline-block; width: 244px; vertical-align: top; margin-top: 20px; margin-right: 5px;}
 
 }
 @media only screen and (min-width: 480px) and (max-width: 1024px){

@@ -14,7 +14,9 @@ if(Meteor.isClient){
 	});
 	Template.ConfigScenario.helpers({
 		nbrPartie: function(scenarioId){
-			return 0; // TODO compter le nombre de parties de ce scénario
+			//console.log(scenarioId);
+			//console.log(Parties.find({}).count());
+			return Parties.find({scenarioId: scenarioId}).count(); 
 		},
 		nomPlanete: function(_planeteId){
 			//return TAPi18n.__("planetes." + (_.findWhere(Planetes, {planeteId: _planeteId})).nom);
@@ -55,6 +57,9 @@ if(Meteor.isClient){
 			}
 			return Planetes;
 		},
+		plusieursPlanetes: function(){
+			return (Template.instance().data.scenario.initialisation.planetes.length > 1);
+		},
 		hasPartieId: function(){
 			return (Session.get("sPartieId"));
 		}
@@ -84,8 +89,8 @@ if(Meteor.isClient){
 		isNSelected: function(valeur, ref){
 			if (valeur != ref)  return "selected"; 
 		},
-		isPlaneteChecked: function(_planeteId, planetes){
-			if((!planetes) || (planetes.indexOf(_planeteId) == -1)) return "";
+		isPlaneteChecked: function(_planeteId, initialisationPlanetes){
+			if(initialisationPlanetes.indexOf(_planeteId) == -1)	return "";
 			return "checked";
 		},
 		planetes: function(){
@@ -151,7 +156,20 @@ if(Meteor.isClient){
 				throwError("champs_numerique", TAPi18n.__("error.champs_numeric_incorrect"));
 				return;
 			}*/
+
+			var oldScenario;
+			
+			if(($('#_id').val().length > 0) && (!$('#securite').is(':checked'))) {
+				oldScenario = Scenarios.findOne({_id: $('#_id').val()});
+				if(Meteor.apply('checkScenarioUtilise', [$('#_id').val()], {returnStubValue: true})){
+					throwAlert("error","scenario_utilisee", TAPi18n.__("error.scenario_utilise"));
+					return;
+				}
+			}
+
 			var scenario = {
+				intitule: {},
+				description: {},
 				active: ($('#active').val() === "1"),
 				initialisation: {
 					cubesat: ($('#cubesat').is(':checked')),
@@ -159,6 +177,7 @@ if(Meteor.isClient){
 						nU: parseInt($('#nU').val())
 					},
 					budget: parseInt($('#budget').val()),
+					budgetGestion: parseInt($('#budgetGestion').val()),
 					objectif: $('#objectif').val(),
 					planetes: []
 				},
@@ -193,21 +212,22 @@ if(Meteor.isClient){
 				},
 				score:{
 					ptsParScience: parseInt($('#ptsParScience').val()),
+					seuilTps: parseInt($('#seuilTps').val()),
 					ptsParTps: parseInt($('#ptsParTps').val())
 				}
 			};
 			if(TAPi18n.getLanguage() == "fr"){
 				scenario.intitule.fr = $('#intitule').val();
-				scenario.intitule.en = (oldCarte ? oldCarte.intitule.en : $('#intitule').val());
+				scenario.intitule.en = (oldScenario ? oldScenario.intitule.en : $('#intitule').val());
 
 				scenario.description.fr = $('#description').val();
-				scenario.description.en = (oldCarte ? oldCarte.description.en : $('#description').val());
+				scenario.description.en = (oldScenario ? oldScenario.description.en : $('#description').val());
 			} else if (TAPi18n.getLanguage() == "en"){
 				scenario.intitule.en = $('#intitule').val();
-				scenario.intitule.fr = (oldCarte ? oldCarte.intitule.fr : $('#intitule').val());
+				scenario.intitule.fr = (oldScenario ? oldScenario.intitule.fr : $('#intitule').val());
 
 				scenario.description.en = $('#description').val();
-				scenario.description.fr = (oldCarte ? oldCarte.description.fr : $('#description').val());
+				scenario.description.fr = (oldScenario ? oldScenario.description.fr : $('#description').val());
 			}
 			$('input[name="planetes"]:checked').each(function(){ scenario.initialisation.planetes.push($(this).val()); });
 			if($('#_id').val()) scenario._id = $('#_id').val();

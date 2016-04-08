@@ -9,55 +9,49 @@
 [] cron pour évènement (meteor.cron : https://atmospherejs.com/mrt/cron ?)
 [] test et debug éventuel sur déclenchement d'évènement lors d'expertise/collaboration
 [] suppression carte : suppression de cartes en cascades dans les anciennes parties
+ 
 
+
+ -------------> http://blog.modulus.io/demeteorizer
 *** CUP ***
 Pas oublier de créer l'import / mise à jour / désinscription de groupe des fichiers excel google de Bxl et Charleroi
 
 ***  Questions Yael Naze ****
 
-[] Scenario CubeSat3 : lancement3U, structure3U, microprocesseur, memoire, gestion elect, panneau 3U, batterie, telecom rapide, antenne 2, micropropulsion, instrument3
-			- il manque Détecteur limbe, senseur solaire ou récepteur gps , non ?
+cubesat 1U
+
+Votre défi est d'imaginer un cubesat, un petit satellite étudiant de forme cubique (10cm de côté). Il devra contenir toutes les composantes d'un vrai satellite, sans oublier de lui donner une mission à accomplir (ce qui rapporte des points scientifiques). Attention, vous ne disposez que de 135 000 euros pour ce faire, le satellite ne peut dépasser 1,3kg, et si vous dépassez 45 min de travail, vous perdez des points.
+
+[chiffres de memoire, a verifier]
+
+cubesat 3U
+
+Votre mission est d'imaginer un satellite étudiant comprenant 3 unités, soit un volume de 10cm*10cm*30cm. Il devra contenir toutes les composantes d'un vrai satellite, sans oublier de lui donner une mission à accomplir (ce qui rapporte des points scientifiques). Attention, vous ne disposez que de 405 000 euros pour ce faire, le satellite ne peut dépasser 3,9kg, et si vous dépassez 45 min de travail, vous perdez des points.
+
+petite mission d'observation du ciel
+Désirant étudier le cosmos, vous construisez une petite mission d'observation. Elle comporte un télescope et peut observer dans le visible, l'infrarouge ou l'ultraviolet avec divers instruments. A vous de choisir son objectif (qui rapporte des points scientifiques) : faire des images de l'ensemble de la voûte céleste ou étudier des astres bien déterminés, le tout avec un ou plusieurs instruments. Attention, vous devez éviter les incompatibilités entre composants, vous ne disposez que de 150 millions d'euros, et si vous dépassez 45 min de travail, vous perdez des points - sans oublier que les aléas typiques des missions spatiales peuvent aussi se produire...
+
+moyenne mission d'observation du ciel
+idem sauf cout
+
+grande mission d'observation du ciel
+idem sauf cout
+
+petite mission planétaire
+Votre défi est de construire une petite mission d'observation de la Terre. Surveillance des océans, étude de l'atmosphère : à vous de choisir votre objectif et donc de gagner des points ! Attention, vous devez éviter les incompatibilités entre composants, vous ne disposez que de 100 millions d'euros, et si vous dépassez 45 min de travail, vous perdez des points - sans oublier que les aléas typiques des missions spatiales peuvent aussi se produire...
+
+moyenne mission planétaire
+A vous l'étude du Système solaire! Vous construisez une mission moyenne d'observation planétaire ou lunaire, qui peut étudier la Terre en détail ou s'en éloigner pour aller analyser sur place Mercure, Vénus, Mars, un astéroïde, Jupiter, ou Saturne. Satellite d'observation en orbite autour de l'objet choisi, atterrisseur, ou combinaison des deux: à vous de choisir  votre objectif et donc de gagner des points ! Attention, vous devez éviter les incompatibilités entre composants, vous ne disposez que de 400 millions d'euros pour ce faire, et si vous dépassez 1h  de travail, vous perdez des points. Les aléas typiques des missions spatiales peuvent aussi se produire...
+
+[cibles : j'ai rien oublie?]
+
+grande mission planétaire
+idem sauf cou
+
 
 
 			
 
-{"deck.cartes": {"$elemMatch": {"$and": [{"tags": "thermiquePassif", "active": true, "nStructure": 1}, {"tags": "energieGenerateur", "active": true, "nStructure": 1}, {"tags": "energieGestion", "active": true, "nStructure": 1}, {"tags": "commandesCalculateur", "active": true, "nStructure": 1}, {"tags": "commandesMemoire", "active": true, "nStructure": 1}, {"tags": "attitudeMoteur", "active": true, "nStructure": 1}, {"tags": "attitudeGestion", "active": true, "nStructure": 1}, {"tags": "communicationsAntenne", "active": true, "nStructure": 1}, {"tags": "communicationsGestion", "active": true, "nStructure": 1}, {"tags": "propulsion", "active": true, "nStructure": 1}]}}}
-
-{ "_id" : "7b2rw4HTzorMo7cCo", "deck" : { "cartes" : [ 
-{ "_carteId" : "oHrrKjiBHgjBPvLEY", "active" : true, "carteId" : "L1", "tags" : [ "lanceur" ], "categorie" : "L", "fiabilite" : 0.85, "nStructure" : 0 }, 
-{ "_carteId" : "rGGeZaj43FPcZLnCE", "active" : true, "carteId" : "S1", "tags" : [ "segmentSol" ], "categorie" : "S", "fiabilite" : 1, "nStructure" : 0 }, 
-{ "_carteId" : "qgHyg474YQBmbFzeT", "active" : true, "carteId" : "O1", "tags" : [ "orbite", "orbiteBasse" ], "categorie" : "O", "fiabilite" : 1, "nStructure" : 0 },
-
-{ "_carteId" : "DyLg4tEdwdRtvapbW", "active" : true, "carteId" : "Z1", "tags" : [ "structure" ], "categorie" : "Z", "fiabilite" : 1, "nStructure" : 2 }, 
-{ "_carteId" : "wBK7xhARTxY5xBo3c", "active" : true, "carteId" : "A6", "tags" : [ "attitude", "attitudeMoteur", "propulsion" ], "categorie" : "A", "fiabilite" : 1, "nStructure" : 2 }, 
-{ "_carteId" : "oELLENbJm4EpTYSyJ", "active" : true, "carteId" : "A7", "tags" : [ "attitude", "attitudeGestion" ], "categorie" : "A", "fiabilite" : 1, "nStructure" : 2 }, 
-{ "_carteId" : "LhbPDXuPHAEma25dj", "active" : true, "carteId" : "C2", "tags" : [ "communications", "communicationsAntenne" ], "categorie" : "C", "fiabilite" : 1, "nStructure" : 2 }, 
-{ "_carteId" : "g5Y26PMbwSt2affeK", "active" : true, "carteId" : "C3", "tags" : [ "communications", "communicationsGestion" ], "categorie" : "C", "fiabilite" : 1, "nStructure" : 2 }, 
-{ "_carteId" : "EBtFYf6esMBNavhEg", "active" : true, "carteId" : "E1", "tags" : [ "energie", "energieGenerateur", "energieSolaire" ], "categorie" : "E", "fiabilite" : 1, "nStructure" : 2 }, 
-{ "_carteId" : "HYbsrh7X5tJwvxJRo", "active" : true, "carteId" : "E6", "tags" : [ "energie", "energieBatterie" ], "categorie" : "E", "fiabilite" : 1, "nStructure" : 2 }, 
-{ "_carteId" : "XbDKuyS5jcPd9H7rX", "active" : true, "carteId" : "E7", "tags" : [ "energie", "energieGestion" ], "categorie" : "E", "fiabilite" : 1, "nStructure" : 2 }, 
-{ "_carteId" : "p2NABZpZE6RnBPMcH", "active" : true, "carteId" : "I1", "tags" : [ "instrument", "instrumentTelescope", "instrumentEspace" ], "categorie" : "I", "fiabilite" : 1, "nStructure" : 2 }, 
-{ "_carteId" : "GYvDuwzSp7Q7DndQH", "active" : true, "carteId" : "M1", "tags" : [ "commandes", "commandesMemoire" ], "categorie" : "M", "fiabilite" : 1, "nStructure" : 2 }, 
-{ "_carteId" : "36CjTZBcQEWvSSpRj", "active" : true, "carteId" : "M4", "tags" : [ "commandes", "commandesCalculateur" ], "categorie" : "M", "fiabilite" : 1, "nStructure" : 2 }, 
-{ "_carteId" : "ybRXgA7WbDsjSAZkq", "active" : true, "carteId" : "T1", "tags" : [ "thermique", "thermiquePassif" ], "categorie" : "T", "fiabilite" : 1, "nStructure" : 2 } 
-
-] } }
-
-
-
-{"deck.cartes": {"$elemMatch": {"$and": [{"tags": "thermiquePassif", "active": true, "nStructure": 1}]}}}	
-
-
-db.parties.aggregate([{$match: {_id: "7b2rw4HTzorMo7cCo"}}, {$match: {"deck.cartes": {"$elemMatch": {"$and": [{"tags": "thermiquePassif", "active": true, "nStructure": 1}]}}}}, {$unwind: "$deck.cartes"}, {$unwind: "$deck.cartes.tags"}, {$match: {"deck.cartes.active": true}}, {$group: {"_id":"$_id", "nbr":{$sum: 1}}} ]);
-
-db.parties.aggregate([{$match: {_id: "7b2rw4HTzorMo7cCo"}}, {$match: {"deck.cartes": {"$and":[{"$elemMatch": {"tags": "energieBatterie", "active": true}},{"$elemMatch": {"tags": "energieGestion", "active": true}}]}}}, {$unwind: "$deck.cartes"}, {$unwind: "$deck.cartes.tags"}, {$match: {"deck.cartes.active": true}}, {$group: {"_id":"$_id", "nbr":{$sum: 1}}} ]);
-
-db.parties.aggregate([{$match: {_id: "7b2rw4HTzorMo7cCo"}}, {$match: {"deck.cartes": {"$elemMatch": {"tags": "energieBatterie", "active": true}}}}, {$match: {"deck.cartes": {"$elemMatch": {"tags": "energieGestion", "active": true}}}}, {$unwind: "$deck.cartes"}, {$unwind: "$deck.cartes.tags"}, {$match: {"deck.cartes.active": true}}, {$group: {"_id":"$_id", "nbr":{$sum: 1}}} ]);
-
-db.parties.aggregate([{$match: {_id: "7b2rw4HTzorMo7cCo"}}, {$match: {"$and":[ {"deck.cartes": {"$elemMatch": {"tags": "energieBatterie", "active": true}}}, {"deck.cartes": {"$elemMatch": {"tags": "energieGestion", "active": true}}}]}}, {$unwind: "$deck.cartes"}, {$unwind: "$deck.cartes.tags"}, {$match: {"deck.cartes.active": true}}, {$group: {"_id":"$_id", "nbr":{$sum: 1}}} ]);
-
-
-db.parties.update({_id: "7b2rw4HTzorMo7cCo"},{$set:{"deck.structures.masses":[0]}});
 
 
 

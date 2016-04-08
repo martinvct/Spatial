@@ -15,7 +15,7 @@
         <div class="illustrationPartie"></div>
         <div class="infosPartie">
             <div class="titrePartie"><button class="lien" data-partieId="{{ _id }}"  data-scenarioId="{{ scenarioId }}">{{nom}}</button></div>
-            <div class="descPartie">{{scenario.intitule}}</div>
+            <div class="descPartie">{{i18nMongo scenario.intitule}}</div>
             <div class="tagsPartie">
                 <span class="tagPartie">{{_ "interface.budget" }}: {{{formatValeurRegle deck.budget "eur" false}}}</span>
                 {{#if cubesat }}
@@ -274,14 +274,16 @@
             <li><button class="icone" id="partieLancementConf"><img src="/icones_S/submitGO.png" />&nbsp;{{_ "interface.bouton.lancement" }}</button></li>
         </ul>
     </div>
-
+    {{#if cartesglobales.cartes}}
     <div class="deckPreview">
-
         {{#each cartesglobales.cartes}} {{> CartePreview carte=this lastCarteId=cartesglobales.last}} {{/each}}
     </div>
+    {{/if}}
+    {{#if hasEvenements}}
     <div class="deckPreview">
         {{#each evenements}} {{> EvenementPreview}} {{/each}}
     </div>
+    {{/if}}
     {{#each structures}}
     <div class="deckPreview">
             {{> StructurePreview this}}

@@ -33,6 +33,15 @@ if (Meteor.isClient) {
 		this.templateDictionary.set('currentCategorie',"");
 		initTimer(this.data.partieId);	
 		Template.instance().templateDictionary.set('currentTemplate', 'ViewScenario');
+		Session.set("toScore", false);
+	});
+	Template.Partie.onRendered(function(){
+		this.autorun(() => {
+			if(Session.get("toScore")){
+				Template.instance().templateDictionary.set('currentTemplate', 'PartieScore');
+				Session.set("toScore", false);
+			}
+		})
 	});
 	Template.Parties.onCreated(function(){
 		saveTimer();
@@ -246,8 +255,10 @@ if (Meteor.isClient) {
 				//console.log(Template.parentData(1));
 			template.data.partieId = Template.instance().templateDictionary.get('currentPartie');
 			template.data.scenario = Template.instance().templateDictionary.get('currentScenarioObj');
+			Session.set('toScore', false);
+
 			//console.log('partieLancementConf');
-			Modal.show("PartieLancementConf", template.data);
+			Modal.show("PartieLancementConf", this);
 		}
 	});
 	Template.PartieHeader.helpers({
@@ -278,7 +289,7 @@ if (Meteor.isClient) {
 			return Cartes.find({tags: "lanceur", cubesat: Template.instance().data.scenario.initialisation.cubesat}, {sort: {ordre: 1}});
 		},
 		hasLanceurLourd: function(){
-			/*
+			
 			var result = interprete('CE2 + CZ1', 0, true);
 			if(result.erreurPos > 0){
 				console.log(result.erreurPos+" : "+result.erreur);
@@ -313,7 +324,7 @@ if (Meteor.isClient) {
 			if(result.erreurPos > 0){
 				console.log(result.erreurPos+" : "+result.erreur);
 			}
-			else console.log(result.mongo);*/
+			else console.log(result.mongo);
 
 			
 			//var result = interprete('(((C5§ / ("communicationsAntenne"§ + "communicationsGestion"§)) + (Z1/Z2/Z3/Z4)) / ("communicationsAntenne"§ + "communicationsGestion"§ + Z4)) + S3 + (J4§ /J5§)', 0, true);
@@ -585,14 +596,28 @@ if (Meteor.isClient) {
 				cartes: Cartes.find({_id: {$in: cIds}}, {sort: {categorie:1, ordre: 1}}).fetch(),
 				last: ""
 			} 
-			if(result.cartes.length > 0) result.last = result.cartes[result.cartes.length -1].carteId;
 			//console.log(result.last);
+			if(Template.instance().data.scenario.initialisation.budgetGestion > 0){
+				result.cartes.unshift({
+					carteId: "G0",
+					categorie: "G",
+					intitule: {"fr": "Coût de projet", "en": "Project cost" },
+					ordre: 0,
+					copyright: "",
+					description: {"fr": "Coût de préparation et gestion de projet, ainsi que l'intégration de toutes les pièces sur la structure et les test de l'ensemble en environnement spatial pour la mission.", "en": ""},
+					valEur: Template.instance().data.scenario.initialisation.budgetGestion
+				});
+			}
+			if(result.cartes.length > 0) result.last = result.cartes[result.cartes.length -1].carteId;
 			return result;
 		},
 		evenements: function(){
 			var eIds = Template.instance().data.partie.eventIds;
 			console.log(eIds);
 			return Evenements.find({_id: {$in: eIds}}, {sort: {categorie:1, ordre: 1}});
+		},
+		hasEvenements: function(){
+			return (Template.instance().data.partie.eventIds.length > 0);
 		},
 		structures: function(){
 			var structures = [];
@@ -626,15 +651,9 @@ if (Meteor.isClient) {
 		}
 	});
 	Template.PartieLancementConf.events({
-		'click #partieLancementConfirmation': function(event){
-			//Session.set('currentStructure', 0);
-			//Meteor.call("lancementProjet", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), Session.get("dateModif"));
-			
-
-			Meteor.call("lancementProjet", Template.instance().data.partieId, Template.instance().data.scenario, Session.get("dateModif"));
-			//Template.instance().templateDictionary.set('currentTemplate', 'PartieScore');
-			//saveTimer(Template.instance().templateDictionary.get('currentPartie'));
-			console.log(Template.instance().data.partieId);
+		'click #partieLancementConfirmation': function(event, template){
+			Meteor.call("lancementProjet", Template.instance().data.partie._id, Template.instance().data.scenario, Session.get("dateModif"));
+			Session.set("toScore", true);
 			Modal.hide("PartieLancementConf");
 		},
 		'click #partieLancementAnnulation': function(event){

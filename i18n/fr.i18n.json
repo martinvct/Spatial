@@ -158,11 +158,13 @@
 			"enEuros": "(en €)",
 			"enGrammes": "(en grammes)",
 			"enMillimetres": "(en millimètres)",
+			"enMinutes" : "(en minutes)",
 			"enSecondes" : "(en secondes)",
 			"enWatts": "(en Watts)",
 			"fiabilite": "(valeur comprise entre 0 et 1; une valeur de 0.6 indique 40% de probabilité d'une panne)",
 			"ordre": "Numéro d'ordre au sein de la catégorie",
-			"ptsParMinute" : "(points par minute)"
+			"ptsParMinute" : "(points par minute)",
+			"scenarioEdition": "(Forcer la modification du scénario même si il est déjà utilisé)"
 		},
 		"login": "Se connecter",
 		"loginWithFaceBook": "Facebook",
@@ -206,6 +208,7 @@
 		"scenario": {
 			"actif": "Activé",
 			"budget": "Budget",
+			"budgetGestion": "Coûts de gestion",
 			"budgetInfo": "en €",
 			"collaboration": "Collaboration",
 			"construction": "Construction",
@@ -253,6 +256,8 @@
 			"ptsParTps": "Points retirés",
 			"ptsParTpsInfo": "pts/min",
 			"score": "Score",
+			"seuilTps": "Temps avant décompte de points",
+			"seuilTpsinfo": "en s",
 			"tpsMax": "Temps Maximum",
 			"tpsMaxInfo": "en s (0 pour illimité)",
 			"tpsMaxParAppel" : "Durée maximum par appel",
@@ -279,7 +284,7 @@
 			"passwordConf": "Confirmation mot de passe",
 			"username": "Nom d'utilisateur"
 		},
-		"viewScenario" : "Scénario: __intitule__",
+		"viewScenario" : "Scénario: ",
 		"volumeMax": "Taille Max"
 	},
 	"error": {
@@ -338,6 +343,8 @@
 		"scenario_enregistre": "Le scénario est enregistré: %s"
 	},
 	"planetes": {
+		"ASTEROIDES": "Astéroïdes",
+		"EUROPE": "Europe",
 		"MERCURE": "Mercure",
 		"VENUS": "Vénus",
 		"TERRE": "Terre",
@@ -345,7 +352,8 @@
 		"JUPITER": "Jupiter",
 		"SATURNE": "Saturne",
 		"URANUS": "Uranus",
-		"NEPTUNE": "Neptune"
+		"NEPTUNE": "Neptune",
+		"TITAN": "Titan"
 	},
 	"categories" : {
 		"A" : "Attitude",

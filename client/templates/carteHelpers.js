@@ -10,7 +10,9 @@ if (Meteor.isClient) {
 					illustration += carte.carteId + ".png";
 				}
 			} else {
-				illustration = "/cfs/files/illustrations/"+carte.illustration;
+				if(carte.illustration[0] == '§'){
+					illustration = "/Cartes/illustrations/" + carte.illustration.substring(1);
+				} else illustration = "/cfs/files/illustrations/"+carte.illustration;
 			}
 		}
 		else illustration = "/Cartes/illustrations/defaut.png";	
@@ -63,6 +65,7 @@ if (Meteor.isClient) {
 
 	Template.Carte.helpers({
 		isDeck: function(){
+			if(this.carteId == "G0") return "isDeck";
 			//console.log(_.findWhere(Template.parentData(1).partie.deck.cartes, {_carteId: this._id, nStructure: Session.get('currentStructure')}));
 			if((Session.get("sPartieId")) && (_.findWhere(Template.parentData(1).partie.deck.cartes, {_carteId: this._id, nStructure: Session.get('currentStructure')}) && (this.categorie != 'Z'))) return "isDeck";
 			return "";  
@@ -102,6 +105,20 @@ if (Meteor.isClient) {
 		isLast: function(carteId, lastCarteId){
 			if(carteId == lastCarteId) return "isLast";
 			return "";
+		},
+		isInactive: function(){
+			//console.log(_.find(Template.parentData(3).partie.deck.cartes, function(carte){ return carte._carteId == this.carte._id; }));
+			if(Template.parentData(3).hasOwnProperty("partie") ){
+				if ((_.findWhere(Template.parentData(3).partie.deck.cartes, {_carteId: this.carte._id})).active == false){
+					return "inactive";
+				}
+				return "";
+			} else {
+				if ((_.findWhere(Template.parentData(2).partie.deck.cartes, {_carteId: this.carte._id})).active == false){
+					return "inactive";
+				}
+				return "";
+			}
 		}
 	});
 	Template.CartePreview.events({
@@ -116,6 +133,10 @@ if (Meteor.isClient) {
 			}
 		}
 	});
+	Template.CarteNom.helpers({
+		carte: function(){ Cartes.findOne({_id: this}); }
+	});
+
 	Template.StructurePreview.events({
 		'click .structurePreview': function(event){
 			if(!$(event.currentTarget).hasClass("isLast")) {
@@ -199,7 +220,7 @@ if (Meteor.isClient) {
 			//var _carteId = Template.instance().data.carte._id;
 			//console.log(Template.instance().data.carte);
 
-			FS.Utility.eachFile(event, function(file){
+			/*FS.Utility.eachFile(event, function(file){
 				var fsFile = new FS.File(file);
 				fsFile.owner = Meteor.userId();
 
@@ -219,7 +240,7 @@ if (Meteor.isClient) {
     					}, 50);
           			}
 				});
-			});
+			});*/
 		},
 		'click #delCarte': function(event, template){
 			template.data.securite = $('#securite').is(':checked');

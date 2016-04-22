@@ -38,7 +38,7 @@ if (Meteor.isClient) {
 	Template.Partie.onRendered(function(){
 		this.autorun(() => {
 			if(Session.get("toScore")){
-				Template.instance().templateDictionary.set('currentTemplate', 'PartieScore');
+				//Template.instance().templateDictionary.set('currentTemplate', 'PartieLancement');
 				Session.set("toScore", false);
 			}
 		})
@@ -65,6 +65,9 @@ if (Meteor.isClient) {
 		},
 		scenario: function(){
 			return Scenarios.findOne({_id: this.scenarioId});
+		},
+		estFinie: function(){
+			return (this.finie ? "finie" : "");
 		}
 	});
 	Template.PartieItem.events({
@@ -156,17 +159,26 @@ if (Meteor.isClient) {
 		},
 		'click div.carte': function(event){
 			var carteId = $(event.currentTarget).attr("data-carteId");
+			if(carteId == "G0") return;
 			if($(event.currentTarget).hasClass("isDeck")){ 
 				Meteor.call('removeCarteFromDeck', Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), this, Session.get('currentStructure'), Session.get("dateModif"));
 				//$(event.currentTarget).removeClass("isDeck");
 			} else {
-				console.log("AJOUT CARTE DANS " + Session.get('currentStructure'));
-				console.log("PartieId "+ Template.instance().data.partieId);
-				console.log("ScenId " + Template.instance().templateDictionary.get('currentScenarioObj'));
-				console.log(this);
+				//console.log("AJOUT CARTE DANS " + Session.get('currentStructure'));
+				//console.log("PartieId "+ Template.instance().data.partieId);
+				//console.log("ScenId " + Template.instance().templateDictionary.get('currentScenarioObj'));
+				//console.log(this);
 				Meteor.call("addCarteToDeck", Template.instance().data.partieId, Template.instance().templateDictionary.get('currentScenarioObj'), this, Session.get('currentStructure'), Session.get("dateModif"));
 				//$(event.currentTarget).addClass("isDeck");
 			}
+			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
+		},
+		'click h2.structure': function(event){
+			/*Session.set('currentStructure', parseInt($(event.currentTarget).attr('data-nStructure')));
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategories');
+			Template.instance().templateDictionary.set('currentLocationHash', '');*/
+			Session.set('currentStructure', 0);
+			Template.instance().templateDictionary.set('currentTemplate', 'PartieStructure');
 			saveTimer(Template.instance().templateDictionary.get('currentPartie'));
 		},
 		'click .partieCategorie': function(event){
@@ -180,13 +192,13 @@ if (Meteor.isClient) {
 			Template.instance().templateDictionary.set('currentTemplate', 'PartieCategorie');
 			Template.instance().templateDictionary.set('currentLocationHash', '');
 		},
-		'click .structureMagasin': function(event){
+		/*'click .structureMagasin': function(event){
 			if($(event.currentTarget).parent().find("button.structureMagasin").length){
 				Session.set('currentStructure', parseInt($(event.currentTarget).attr('data-nStructure')));
 				Template.instance().templateDictionary.set('currentTemplate', 'PartieCategories');
 				Template.instance().templateDictionary.set('currentLocationHash', '');
 			}
-		},
+		},*/
 		'click #percentLanceur': function(event){
 			if($('#percentLanceurModal').css("width") == "100%"){
 				if($('#percentLanceurModal').css("display") == "block"){
@@ -289,7 +301,7 @@ if (Meteor.isClient) {
 			return Cartes.find({tags: "lanceur", cubesat: Template.instance().data.scenario.initialisation.cubesat}, {sort: {ordre: 1}});
 		},
 		hasLanceurLourd: function(){
-			
+			/*
 			var result = interprete('CE2 + CZ1', 0, true);
 			if(result.erreurPos > 0){
 				console.log(result.erreurPos+" : "+result.erreur);
@@ -326,17 +338,17 @@ if (Meteor.isClient) {
 			}
 			else console.log(result.mongo);
 
-			
+			*/
 			//var result = interprete('(((C5§ / ("communicationsAntenne"§ + "communicationsGestion"§)) + (Z1/Z2/Z3/Z4)) / ("communicationsAntenne"§ + "communicationsGestion"§ + Z4)) + S3 + (J4§ /J5§)', 0, true);
 			//var result = interprete('{"objectif": "espace"}/{"planete.distance": 0}/(Z4 + (O1/O2/O3/O4))');
-			var reg = new RegExp(/(§nS)/,"g");
+			/*var reg = new RegExp(/(§nS)/,"g");
 			var result = interprete('Z5§');
 
 			if(result.erreurPos > 0){
 				console.log(result.erreurPos+" : "+result.erreur);
 			}
 			else console.log(result.mongo.replace(reg, "2"));
-
+*/
 			//'{"deck.cartes": {"$elemMatch": {"$and": [{"carteId": "CE2", "active": true}, {"carteId": "CZ1", "active": true}]}}}' CE2 + CZ1
 			//'{"deck.cartes": {"$elemMatch": {"$or": [{"carteId": "O3", "active": true}, {"carteId": "O4", "active": true}, {"carteId": "O5", "active": true}, {"carteId": "O6", "active": true}]}}}' O3/O4/O5/O6
 			//'{"deck.cartes": {"$elemMatch": {"$and": [{"carteId": "S3", "active": true}, {"$or": [{"carteId": "J4", "active": true}, {"carteId": "J5", "active": true}]}]}}}' S3 + (J4/J5)
@@ -373,12 +385,13 @@ if (Meteor.isClient) {
 			var cats = [];
 			if(carteStructure.composants){
 				if(carteStructure.atterrisseur){
-					for(var key in ListCategories){ if((key != "L") && (key != "O") && (key != "Z") && (key != "S") && (key != "A") && (key != "P")) cats.push(key); }
+					for(var key in ListCategories){ if((key != "L") && (key != "Z") && (key != "S") && (key != "A") && (key != "P")) { if((key != "O") || (carteStructure.carteId != "Z5")) cats.push(key); }}
 				} else {
-					for(var key in ListCategories){ if((key != "L") && (key != "O") && (key != "Z") && (key != "S") && (key != "J") && ((!Template.instance().data.partie.cubesat) || ((key != "T") && (key != "P")))) cats.push(key); }
+					for(var key in ListCategories){ if((key != "L") && (key != "Z") && (key != "S") && (key != "J") && ((!Template.instance().data.partie.cubesat) || ((key != "T") && (key != "P")))) cats.push(key); }
 				}
 			} else {
 				cats.push("A");
+				cats.push("O");
 				cats.push("P");
 			}	
 			return cats;
@@ -452,19 +465,21 @@ if (Meteor.isClient) {
 				var structure = {
 					n: deckCarte[0].nStructure,
 					carte: carteStructure,
-					categories: []
+					categories: [],
+					masse: Template.instance().data.partie.deck.structures.masses[i],
+					energie: Template.instance().data.partie.deck.structures.energies[i]
 				};
 				if(carteStructure.composants){
 					if(carteStructure.atterrisseur){
 						for(var key in ListCategories){ 
-							if((key != "L") && (key != "O") && (key != "Z") && (key != "S") && (key != "A") && (key != "P")) {
-								structure.categories.push({categorie: key, nbrSelect: (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == key) && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length)});
-							} 
+							if((key != "L") && (key != "Z") && (key != "S") && (key != "A") && (key != "P")) {
+								if((key != "O") || (carteStructure.carteId != "Z5")) structure.categories.push({categorie: key, nbrSelect: (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == key) && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length)});
+							}
 						}
 					} else {
 						for(var key in ListCategories){ 
 							//console.log(key);
-							if((key != "L") && (key != "O") && (key != "Z") && (key != "S") && (key != "J") && ((!Template.instance().data.partie.cubesat) || ((key != "T") && (key != "P")))) {
+							if((key != "L") && (key != "Z") && (key != "S") && (key != "J") && ((!Template.instance().data.partie.cubesat) || ((key != "T") && (key != "P")))) {
 								//console.log( Template.instance().data.partie.deck.structures.ids[i]);
 								//console.log(Template.instance().data.partie.deck.cartes);
 								//console.log(_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == key) && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length);
@@ -474,6 +489,7 @@ if (Meteor.isClient) {
 					}
 				} else {
 					structure.categories.push({categorie: "A", nbrSelect: (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == "A") && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length)});
+					structure.categories.push({categorie: "O", nbrSelect: (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == "O") && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length)});
 					structure.categories.push({categorie: "P", nbrSelect: (_.filter(Template.instance().data.partie.deck.cartes, function(obj){ return ((obj.categorie == "P") && (obj.nStructure == Template.instance().data.partie.deck.structures.ids[i]) ); }).length)});
 				}
 				structures.push(structure);
@@ -488,6 +504,11 @@ if (Meteor.isClient) {
 			return TAPi18n.__("categories_legendes.Z");
 		}
 
+	});
+	Template.Structure.helpers({
+		isNegatif: function(valeur){
+			return (valeur > -1 ? "" : "R");
+		}
 	});
 	Template.Structure.events({
 		'click .structureSupprimer': function(event, template){
@@ -589,6 +610,9 @@ if (Meteor.isClient) {
 		}
 	});
 	Template.PartieLancement.helpers({
+		finie: function(){
+			return Template.instance().data.partie.finie;
+		},
 		cartesglobales: function(){
 			var cIds = _.pluck(_.filter(Template.instance().data.partie.deck.cartes, function(carte){ return carte.nStructure == 0; }), "_carteId");
 			//console.log(cIds);
@@ -601,11 +625,17 @@ if (Meteor.isClient) {
 				result.cartes.unshift({
 					carteId: "G0",
 					categorie: "G",
-					intitule: {"fr": "Coût de projet", "en": "Project cost" },
-					ordre: 0,
+					intitule: {"fr": TAPi18n.__("interface.scenario.gestionProjet"), "en": TAPi18n.__("interface.scenario.gestionProjet", {}, "en") },
 					copyright: "",
-					description: {"fr": "Coût de préparation et gestion de projet, ainsi que l'intégration de toutes les pièces sur la structure et les test de l'ensemble en environnement spatial pour la mission.", "en": ""},
-					valEur: Template.instance().data.scenario.initialisation.budgetGestion
+					description: {"fr": TAPi18n.__("interface.gestionProjetDescription"), "en": TAPi18n.__("interface.gestionProjetDescription", {}, "en")},
+					valEur: Template.instance().data.scenario.initialisation.budgetGestion,
+					valPds:0,
+					valVol:0,
+					valNrg:0,
+					tip: {"fr":"", "en":""},
+					isDeck: "",
+					stars: {},
+					ordre: 0
 				});
 			}
 			if(result.cartes.length > 0) result.last = result.cartes[result.cartes.length -1].carteId;
@@ -652,9 +682,10 @@ if (Meteor.isClient) {
 	});
 	Template.PartieLancementConf.events({
 		'click #partieLancementConfirmation': function(event, template){
+			Modal.hide("PartieLancementConf");
 			Meteor.call("lancementProjet", Template.instance().data.partie._id, Template.instance().data.scenario, Session.get("dateModif"));
 			Session.set("toScore", true);
-			Modal.hide("PartieLancementConf");
+			
 		},
 		'click #partieLancementAnnulation': function(event){
 			Modal.hide("PartieLancementConf");

@@ -70,9 +70,9 @@
 </template>
 <template name="Evenement">
     <div id="{{eventId}}" class="evenement" data-eventId="{{ eventId }}" ><!--
-        --><div class="evenementIntitule EV {{ isLancementTag }}"><div class="evenementStars">{{#each stars}}<div class="evenementStar">&#9733;</div>{{/each}}{{#each badstars}}<div class="evenementStar">&#9734;</div>{{/each}}</div><div class="intitule"><span>{{i18nMongo intitule }}</span></div><div class="eventId">{{evenementNumero eventId }}</div><div class="evenementCopyright">&copy; {{ copyright }}</div></div><!--
+        --><div class="evenementIntitule EV {{ isLancementTag }}"><div class="evenementStars">{{#each stars}}<div class="evenementStar">&#9734;</div>{{/each}}{{#each badstars}}<div class="evenementBadStar">&#9733;</div>{{/each}}</div><div class="intitule"><span>{{i18nMongo intitule }}</span></div><div class="eventId">{{evenementNumero eventId }}</div><div class="evenementCopyright">&copy; {{ copyright }}</div></div><!--
         --><div class="evenementIllustration"><img src="{{getIllustration this}}" /></div><!--
-        --><div class="evenementDescription">{{i18nMongo description }}</div><!--
+        --><div class="evenementDescription">{{i18nMongo description }}{{#if hasCarteIds}}<br/>{{_ 'interface.evenement.cartesDesactivees'}} {{#each carteIds}} {{>CarteNom}} {{/each}}{{/if}}</div><!--
         --><div class="evenementConstantes EV {{ isLancementTag }}">
           {{#if deltaEur}}<div class="evenementConstante"><!--
             --><div class="evenementConstanteBudget"></div><!--
@@ -97,7 +97,7 @@
 </template>
 <template name="EvenementPreview">
     <div id="{{eventId}}" class="evenementPreview" data-eventId="{{ eventId }}" ><!--
-        --><div class="evenementIntitule EV {{ isLancementTag }}"><div class="evenementStars">{{#each stars}}<div class="evenementStar">&#9733;</div>{{/each}}{{#each badstars}}<div class="evenementStar">&#9734;</div>{{/each}}</div><div class="intitule"><span>{{i18nMongo intitule }}</span></div><div class="eventId">{{evenementNumero eventId }}</div><div class="evenementCopyright">&copy; {{ copyright }}</div></div><!--
+        --><div class="evenementIntitule EV {{ isLancementTag }}"><div class="evenementStars">{{#each stars}}<div class="evenementStar">&#9734;</div>{{/each}}{{#each badstars}}<div class="evenementBadStar">&#9733;</div>{{/each}}</div><div class="intitule"><span>{{i18nMongo intitule }}</span></div><div class="eventId">{{evenementNumero eventId }}</div><div class="evenementCopyright">&copy; {{ copyright }}</div></div><!--
         --><div class="evenementIllustration"><img src="{{getIllustration this}}" /></div><!--
         --><div class="evenementDescription">{{i18nMongo description }}</div><!--
         --><div class="evenementConstantes EV {{ isLancementTag }}">

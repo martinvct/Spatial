@@ -3,6 +3,9 @@
 	<nav class="navMain">
 		<div id="logoApplication"></div>
 		<div id="rightNavButtons">
+			<div id="buttonHome">
+				<button class="buttonHome"><img id="homeMinified" src="/home-75.png"/></button>
+			</div>
 			{{#if currentUser}}
 			<div id="buttonAvatar">
 				<button class="buttonAvatar"><img id="avatarMinified" src="{{#if currentUser.profile.avatar}} {{currentUser.profile.avatar}} {{else}} /avatar-75.png {{/if}}"/></button>

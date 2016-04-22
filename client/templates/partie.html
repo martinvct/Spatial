@@ -11,10 +11,10 @@
     </div>
 </template>
 <template name="PartieItem">
-    <div class="partie">
+    <div class="partie {{ estFinie }}">
         <div class="illustrationPartie"></div>
         <div class="infosPartie">
-            <div class="titrePartie"><button class="lien" data-partieId="{{ _id }}"  data-scenarioId="{{ scenarioId }}">{{nom}}</button></div>
+            <div class="titrePartie"><button class="lien" data-partieId="{{ _id }}"  data-scenarioId="{{ scenarioId }}">{{nom}}</button>{{#if finie}}<span class="finie">{{_ "interface.partie.finie"}}</span>{{/if}}</div>
             <div class="descPartie">{{i18nMongo scenario.intitule}}</div>
             <div class="tagsPartie">
                 <span class="tagPartie">{{_ "interface.budget" }}: {{{formatValeurRegle deck.budget "eur" false}}}</span>
@@ -47,7 +47,7 @@
         <ul>
             <li><button id="partieScenario" class="image" title="{{_ 'interface.bouton.scenario'}}" ></button></li>
             {{#if hasPlanete}}
-            {{#unless partie.cubesat}}<li><button id="partieOrbite" class="image" title="{{_ 'interface.bouton.orbite'}}" ></button></li>{{/unless}}
+            <!--{{#unless partie.cubesat}}<li><button id="partieOrbite" class="image" title="{{_ 'interface.bouton.orbite'}}" ></button></li>{{/unless}}-->
             <li><button id="partieLanceur" class="image" title="{{_ 'interface.bouton.lanceur'}}" ></button></li>
             {{#if hasLanceur }}
             {{#unless partie.cubesat}}<li><button id="partieSegmentSol" class="image" title="{{_ 'interface.bouton.segmentSol'}}" ></button></li>{{/unless}}
@@ -63,10 +63,10 @@
         <ul>
             <li><button id="partieBudget" class="iconeConstante {{getIconeConstante 'euro-rd' partie.deck.budgetMax partie.deck.budget}}" title="{{_ 'interface.bouton.constanteBudget' }}"></button><span id="partieBudgetConstante" class="partieConstante">{{{formatValeurRegle partie.deck.budget 'eur' false}}}</span></li>
             <li><button id="partieEnergie" class="iconeConstante {{getIconeConstante 'nrj-rd' partie.deck.energieMax partie.deck.energie}}" title="{{_ 'interface.bouton.constanteEnergie' }}"></button><span id="partieEnergieConstante" class="partieConstante">{{{formatValeurRegle partie.deck.energie 'nrg' false}}}</span></li>
-            <li><button id="partiePoids" class="iconeConstante {{getIconeConstante 'Kg-rd' partie.deck.poidsMax partie.deck.masse}}" title="{{_ 'interface.bouton.constantePoids' }}"></button><span id="partiePoidsConstante" class="partieConstante">{{{formatValeurRegle partie.deck.masse 'pds' false}}}</span></li>
+            <li><button id="partiePoids" class="iconeConstante {{getIconeConstante 'Kg-rd' partie.deck.masseMax partie.deck.masse}}" title="{{_ 'interface.bouton.constantePoids' }}"></button><span id="partiePoidsConstante" class="partieConstante">{{{formatValeurRegle partie.deck.masse 'pds' false}}}</span></li>
             {{#if partie.cubesat}}<li><button id="partieVolume" class="iconeConstante {{getIconeConstante 'cm-rd' partie.deck.volumeMax partie.deck.volume}}" title="{{_ 'interface.bouton.constanteVolume' }}"></button><span id="partieVolumeConstante" class="partieConstante">{{{formatValeurRegle partie.deck.volume 'vol' false}}}</span></li>{{/if}}
             <li><button id="partieScience" class="iconeConstante {{getIconeConstante 'star-rd' partie.deck.science partie.deck.science}}" title="{{_ 'interface.bouton.constanteScience' }}"></button><span id="partieScienceConstante" class="partieConstante">{{{formatValeurRegle partie.deck.science 'sci' false}}}</span></li>
-            <li><button id="partieBudgetLanceur" class="iconeConstante {{getIconeConstante 'L-rd' 10 partie.budgetLanceur }}" title="{{_ 'interface.bouton.constantePcLanceur' }}"></button><span id="budgetLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span></li>
+            <!--<li><button id="partieBudgetLanceur" class="iconeConstante {{getIconeConstante 'L-rd' 10 partie.budgetLanceur }}" title="{{_ 'interface.bouton.constantePcLanceur' }}"></button><span id="budgetLanceur" class="partieConstante">{{multi100 partie.budgetLanceur }}%</span></li>-->
         </ul>
     </nav>
 
@@ -88,7 +88,7 @@
     {{/each}}
 </template>
 <template name="PartieCategorie">
-    {{#if nStructure}}<h2><div class="logoStructure"></div>{{structure.intitule.fr}}({{nStructure}})</h2>{{/if}}
+    {{#if nStructure}}<h2 class="structure" data-nStructure="{{nStructure}}"><div class="logoStructure"></div>{{structure.intitule.fr}}({{nStructure}})</h2>{{/if}}
     <p class="categorieLegende">{{{ categorieLegende }}}</p>
     {{#each cartes}}{{> Carte }}{{/each}}
 </template>
@@ -111,12 +111,16 @@
             {{/each}} 
            </div><!--
         --><div class="carteConstantes {{ carte.categorie }}">
-               <div class="structureToolbar">
-                 <ul class="structureToolbar">
-                  <li><button class="structureMagasin"  data-nStructure="{{n}}" title="{{_ 'interface.bouton.magasin'}}" ></button></li>
-                  <li><button class="structureSupprimer"  data-nStructure="{{n}}" title="{{_ 'interface.bouton.structureSupprimer'}}" ></button></li>
-                 </ul>  
-               </div>
+                <div class="structureConstante"><!--
+            --><div class="structureConstanteMasse{{isNegatif masse}}"></div><!--
+            --><div class="structureConstanteValeur{{isNegatif masse}}"><span>{{{formatValeurRegle masse 'pds' true}}}</span></div><!--
+            --><div class="structureConstanteFin{{isNegatif masse}}"></div><!--
+          --></div><div class="structureConstante"><!--
+            --><div class="structureConstanteEnergie{{isNegatif energie}}"></div><!--
+            --><div class="structureConstanteValeur{{isNegatif energie}}"><span>{{{formatValeurRegle energie 'nrg' true}}}</span></div><!--
+            --><div class="structureConstanteFin{{isNegatif energie}}"></div><!--
+          --></div>
+               <div class="structureToolbar"><button class="structureSupprimer"  data-nStructure="{{n}}" title="{{_ 'interface.bouton.structureSupprimer'}}" ></button></div>
            </div>
     </div>
 </template>
@@ -148,7 +152,7 @@
     </div>
 </template>
 <template name="PartieCategories">
-    <h2><div class="logoStructure"></div>{{structure.intitule.fr}}({{nStructure}})</h2>
+    <h2 class="structure"  data-nStructure="{{nStructure}}"><div class="logoStructure"></div>{{structure.intitule.fr}}({{nStructure}})</h2>
     {{#each categories}}
         {{#if nbrCartesTotal this}}
         <div class="partieCategorie" data-categorie="{{this}}"><!--
@@ -194,7 +198,7 @@
     {{/unless}}
     {{#if niveauDetailsCategorie }}
         {{#each erreurs.categories }}
-        <li><button class="categorieLien" data-categorieId="{{this}}">{{concat "categories." this }}</button></li>
+        <li>{{concat "categories." this }}</li>
         {{/each}}
     {{/if}}
     {{#if niveauDetailsCartes }}
@@ -269,21 +273,21 @@
 </template>
 <template name="PartieLancement">
    
+    {{#if finie}}
+        {{> PartieScore }}
+    {{else}}
     <div class="toolbarForm">
         <ul>
             <li><button class="icone" id="partieLancementConf"><img src="/icones_S/submitGO.png" />&nbsp;{{_ "interface.bouton.lancement" }}</button></li>
         </ul>
     </div>
-    {{#if cartesglobales.cartes}}
+    {{/if}}
     <div class="deckPreview">
+    {{#if hasEvenements}}
+        {{#each evenements}} {{> EvenementPreview}} {{/each}}
+    {{/if}}
         {{#each cartesglobales.cartes}} {{> CartePreview carte=this lastCarteId=cartesglobales.last}} {{/each}}
     </div>
-    {{/if}}
-    {{#if hasEvenements}}
-    <div class="deckPreview">
-        {{#each evenements}} {{> EvenementPreview}} {{/each}}
-    </div>
-    {{/if}}
     {{#each structures}}
     <div class="deckPreview">
             {{> StructurePreview this}}
@@ -329,7 +333,7 @@
     {{/unless}}
     {{#if niveauDetailsCategorie }}
         {{#each erreurs.categories }}
-        <li><button class="categorieLien" data-categorieId="{{this}}">{{concat "categories." this }}</button></li>
+        <li>{{concat "categories." this }}</li>
         {{/each}}
     {{/if}}
     {{#if niveauDetailsCartes }}

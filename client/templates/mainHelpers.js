@@ -23,21 +23,21 @@ if (Meteor.isClient) {
 		if(valeur > 0) return "+";
 	});
 	Template.registerHelper('formatValeurRegle', function(valeur, unite, isCarte){
-		valeur = Math.round(valeur*100)/100;
+		valeur = Math.floor(valeur*100)/100;
 		if(unite == "pds"){
 			if(Math.abs(valeur) < 1000){
 				return valeur + " <span class='valUnite'>g"+"</span>";
 			} 
 			if(Math.abs(valeur) < 1000000){
-				if(Math.round(valeur / 1000) != (valeur / 1000)) {
+				if(Math.floor(valeur / 1000) != (valeur / 1000)) {
 					if(isCarte) return (valeur / 1000)+ " <span class='valUnite'>kg</span>";
-					return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>kg</span>";
+					return Math.floor(valeur / 1000)+ " <span class='valUnite'>kg</span>";
 				}
 				return (valeur / 1000)+ " <span class='valUnite'>kg</span>";
 			}
-			if(Math.round(valeur / 1000000) != (valeur / 1000000)){
+			if(Math.floor(valeur / 1000000) != (valeur / 1000000)){
 				if(isCarte) return (valeur / 1000000)+ " <span class='valUnite'>T</span>";
-				return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>T</span>";
+				return Math.floor(valeur / 1000000)+ " <span class='valUnite'>T</span>";
 			} 
 			return (valeur / 1000000)+ " <span class='valUnite'>T</span>";
 		}
@@ -46,15 +46,15 @@ if (Meteor.isClient) {
 				return valeur + " <span class='valUnite'>mm</span>";
 			} 
 			if(Math.abs(valeur) < 1000000){
-				if(Math.round(valeur / 1000) != (valeur / 1000)){
+				if(Math.floor(valeur / 1000) != (valeur / 1000)){
 					if(isCarte) return (valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
-					return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
+					return Math.floor(valeur / 1000)+ " <span class='valUnite'>m"+"</span>";
 				} 
 				return (valeur / 1000)+ " <span class='valUnite'>"+"</span>";
 			}
-			if(Math.round(valeur / 1000000) != (valeur / 1000000)){
+			if(Math.floor(valeur / 1000000) != (valeur / 1000000)){
 				if(isCarte) return (valeur / 1000000)+ " <span class='valUnite'>km"+"</span>";
-				return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>km"+"</span>";
+				return Math.floor(valeur / 1000000)+ " <span class='valUnite'>km"+"</span>";
 			} 
 			return (valeur / 1000000)+ " <span class='valUnite'>"+"</span>";
 		}
@@ -67,30 +67,30 @@ if (Meteor.isClient) {
 			return valeur + " <span class='valUnite'>"+unite+"</span>";
 		} 
 		if(Math.abs(valeur) < 1000000){
-			if(Math.round(valeur / 1000) != (valeur / 1000)){
+			if(Math.floor(valeur / 1000) != (valeur / 1000)){
 				if(isCarte) return (valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
-				return "&plusmn; "+Math.round(valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
+				return Math.floor(valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
 			} 
 			return (valeur / 1000)+ " <span class='valUnite'>k"+unite+"</span>";
 		}
-		if(Math.round(valeur / 1000000) != (valeur / 1000000)){
+		if(Math.floor(valeur / 1000000) != (valeur / 1000000)){
 			if(isCarte) return (valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
-			return "&plusmn; "+Math.round(valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
+			return Math.floor(valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
 		} 
 		return (valeur / 1000000)+ " <span class='valUnite'>M"+unite+"</span>";
 	});
 
 	Template.registerHelper('formatValeurTemps', function(valeur, unite, isCarte){
-		valeur = Math.round(valeur*100)/100;
+		valeur = Math.floor(valeur*100)/100;
 		if(unite == "tps"){
 			if(Math.abs(valeur) < 60){
 				return valeur + "<span class='valUnite'>s</span>";
 			} 
 			if(Math.abs(valeur) < 3600){
-				return Math.round(valeur / 60) + "<span class='valUnite'>m</span>" + Math.round(valeur % 60);
+				return Math.floor(valeur / 60) + "<span class='valUnite'>m</span>" + Math.floor(valeur % 60);
 			}
-			var restValeur = Math.round(valeur % 3600);
-			return Math.round(valeur / 3600) + "<span class='valUnite'>h</span>" + Math.round(restValeur / 60) + "<span class='valUnite'>m</span>" + Math.round(restValeur % 60);
+			var restValeur = Math.floor(valeur % 3600);
+			return Math.floor(valeur / 3600) + "<span class='valUnite'>h</span>" + Math.floor(restValeur / 60) + "<span class='valUnite'>m</span>" + Math.floor(restValeur % 60);
 		}
 	});
 
@@ -118,7 +118,7 @@ if (Meteor.isClient) {
 		'click #buttonNotifications': function(event, template){
 			//console.log("ntoification menu");
 			//Blaze.render(Template.NotificationsMenu, document.getElementById('backgroundModal'));
-			Meteor.call('updateNotifications');
+			Meteor.call('updateNNotifications');
 			Modal.show("NotificationsMenu");
 		}
 	});

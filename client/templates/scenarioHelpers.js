@@ -62,6 +62,24 @@ if(Meteor.isClient){
 		},
 		hasPartieId: function(){
 			return (Session.get("sPartieId"));
+		},
+		carteProjet: function(){
+			var carte = {
+				carteId: "G0",
+				categorie: "G",
+				intitule: {"fr": TAPi18n.__("interface.scenario.gestionProjet"), "en": TAPi18n.__("interface.scenario.gestionProjet", {}, "en") },
+				copyright: "",
+				description: {"fr": TAPi18n.__("interface.gestionProjetDescription"), "en": TAPi18n.__("interface.gestionProjetDescription", {}, "en")},
+				valEur: Template.instance().data.scenario.initialisation.budgetGestion,
+				valPds:0,
+				valVol:0,
+				valNrg:0,
+				tip: {"fr":"", "en":""},
+				stars: {},
+				ordre: 0
+			};
+			console.log(carte);
+			return carte;
 		}
 	});
 	Template.ViewScenario.events({

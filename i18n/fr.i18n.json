@@ -34,6 +34,7 @@
 		"peer-stillcall": "Vous attendez déjà une réponse de __firstname__ __lastname__ (__username__) à un appel du __dateAppel__ .",
 		"peer-toolate": "Le temps imparti pour la collaboration est écoulé ou la partie est terminée.",
 		"planete-set": "a changé la destination de la partie <span class='lienPartie' data-partieId='__partieId__' data-scenarioId='__scenarioId__'>__partie__</span> vers __planete__ .",
+		"project-launched": "lancé la mission <span class='lienPartie' data-partieId='__partieId__' data-scenarioId='__scenarioId__'>__partie__</span>",
 		"user-call": " sollicite votre aide pour sa partie <span class='lienPartie' data-partieId='__partieId__' data-scenarioId='__scenarioId__'>__partie__</span>.",
 		"user-del-msg": "a supprimé un message pour la partie <span class='lienPartie' data-partieId='__partieId__' data-scenarioId='__scenarioId__'>__partie__</span>",
 		"user-msg": "vous a envoyé un message pour la partie <span class='lienPartie' data-partieId='__partieId__' data-scenarioId='__scenarioId__'>__partie__</span>",
@@ -136,6 +137,7 @@
 		"editionUtilisateur": "Edition de l'utilisateur __username__",
 		"evenement":{
 			"cartes": "les cartes",
+			"cartesDesactivees": "Cartes désactivées :",
 			"cibles": "Désactive",
 			"isLancement": "Après lancement",
 			"isNotLancement": "Durant la partie",
@@ -149,6 +151,8 @@
 		},
 		"filtre": "Filtre de recherche",
 		"finie": "Score final",
+		"gestionProjet": "Gestion de projet",
+		"gestionProjetDescription": "Coût de préparation et gestion de projet, ainsi que l'intégration de toutes les pièces sur la structure et les test de l'ensemble en environnement spatial pour la mission.",
 		"importUtilisateurs": "Importation d'utilisateurs",
 		"lastLogin": "Dernière connexion",
 		"legende" : {
@@ -189,7 +193,8 @@
 		"oui": "Oui",
 		"pageNonTrouvee": "Désolé, cette page n'existe pas.",
 		"partie": {
-			"nouvelle": "(Nouvelle partie)"
+			"nouvelle": "(Nouvelle partie)",
+			"finie": "(Terminée)"
 		},
 		"planetes": "Planètes",
 		"poidsMax": "Charge Max",
@@ -216,6 +221,7 @@
 			"description": "Description",
 			"expertise": "Expertise",
 			"evenement": "Evènement",
+			"gestionProjet": "Gestion de projet",
 			"infos": "Informations",
 			"initialisation": "Initialisation",
 			"intitule": "Intitulé",

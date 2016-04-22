@@ -249,6 +249,11 @@
 			<span>{{{i18nMongo scenario.description }}}</span>
 		</div>
 		
+		{{#unless partie.cubesat}}
+		<h3>{{_ "interface.scenario.gestionProjet" }}</h3>
+			{{> Carte carteProjet }}
+		{{/unless}}
+
 		<h3>{{_ "interface.scenario.initialisation" }}</h3>
 		{{#if scenario.initialisation.cubesat}}
 		<div class="scenarioParametre">
@@ -262,11 +267,11 @@
 		{{/if}}
 		<div class="scenarioParametre">
 			<label for="budget">{{_ "interface.scenario.budget" }}</label>
-			<span>{{ scenario.initialisation.budget }}</span>
+			<span>{{{formatValeurRegle scenario.initialisation.budget 'eur' true}}}€</span>
 		</div>
 		<div class="scenarioParametre">
 			<label for="budgetGestion">{{_ "interface.scenario.budgetGestion" }}</label>
-			<span>{{ scenario.initialisation.budgetGestion }}</span>
+			<span>{{{formatValeurRegle scenario.initialisation.budgetGestion 'eur' true}}}€</span>
 		</div>
 		<div class="scenarioParametre">
 			<label for="objectif">{{_ "interface.scenario.objectif"}}</label>

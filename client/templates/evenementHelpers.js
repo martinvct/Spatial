@@ -55,6 +55,9 @@ if(Meteor.isClient){
 		},
 		isLancementTag: function(){
 			return (this.isLancement ? "L" : "");
+		},
+		hasCarteIds: function(){
+			return (this.carteIds.length > 0);
 		}
 	});
 	Template.EvenementPreview.helpers({
@@ -74,6 +77,18 @@ if(Meteor.isClient){
 		},
 		isLancementTag: function(){
 			return (this.isLancement ? "L" : "");
+		}
+	});
+	Template.EvenementPreview.events({
+		'click .evenementPreview': function(event){
+			//if(!$(event.currentTarget).hasClass("isLast")) {
+				//console.log($(event.currentTarget).attr("id"));
+
+				$(event.currentTarget).find("div.evenementIllustration").toggle();
+				$(event.currentTarget).find("div.evenementDescription").toggle();
+				$(event.currentTarget).find("div.evenementConstantes").toggle();
+				$(event.currentTarget).find("div.evenementTps").toggle();
+			//}
 		}
 	});
 	Template.EditEvenement.onRendered(function() {
@@ -150,7 +165,7 @@ if(Meteor.isClient){
 			$('#tag').val("");
 		},
 		'change #illustration' : function(event, template){
-			FS.Utility.eachFile(event, function(file){
+			/*FS.Utility.eachFile(event, function(file){
 				//console.log("MERDE" + _carteId);
 				var fsFile = new FS.File(file);
 				fsFile.owner = Meteor.userId();
@@ -172,7 +187,7 @@ if(Meteor.isClient){
     					}, 50);
           			}
 				});
-			});
+			});*/
 		},
 		'click #delEvenement': function(event, template){
 			template.data.securite = $('#securite').is(':checked');

@@ -13,10 +13,13 @@ if (Meteor.isClient) {
 	});
 	Template.NotificationsMenu.events({
 		'click #notificationsToPage':function(){
+			Modal.hide("NotificationsMenu");
 			Router.go('Notifications');
+
 		},
 		'click .lienPartie': function(){
 			//console.log(this);
+			Modal.hide("NotificationsMenu");
 			Router.go('Partie', {_scenarioId: this.data.scenarioId, _id: this.data.partieId});
 		}
 	});

@@ -3,50 +3,47 @@
 [*] affichage des évènements !
 [*] page d'affichage des cartes
 [*] page d'édition de cartes
-[] modifier contrainte scenario : ajouter une checkbox qui autorise la modification d'un scénario malgré les précédentes parties
+[*] modifier contrainte scenario : ajouter une checkbox qui autorise la modification d'un scénario malgré les précédentes parties
 [*] internationaliser l'appli  : voir la page d'édition de cartes pour example... taper : TAPi18n.setLanguage('en'); dans la console du navigateur pour switcher la langue
 [] débug lancement partie : ok côté serveur mais exception côté client
-[] cron pour évènement (meteor.cron : https://atmospherejs.com/mrt/cron ?)
 [] test et debug éventuel sur déclenchement d'évènement lors d'expertise/collaboration
 [] suppression carte : suppression de cartes en cascades dans les anciennes parties
  
 
+
+db.parties.update({_id: "ykatBjAgjZvyTyT9X"},{$set:{finie: false, rapportFinalEvents:[], score: 0, eventIds:  ["4ZvNZ8tAFur38mZfT", "4ZvNZ8tAFur38mZfX"]}});
+db.parties.find({_id: "ykatBjAgjZvyTyT9X"},{eventIds: 1});
 
  -------------> http://blog.modulus.io/demeteorizer
 *** CUP ***
 Pas oublier de créer l'import / mise à jour / désinscription de groupe des fichiers excel google de Bxl et Charleroi
 
 ***  Questions Yael Naze ****
+FGS
 
-cubesat 1U
+carteld A9
 
-Votre défi est d'imaginer un cubesat, un petit satellite étudiant de forme cubique (10cm de côté). Il devra contenir toutes les composantes d'un vrai satellite, sans oublier de lui donner une mission à accomplir (ce qui rapporte des points scientifiques). Attention, vous ne disposez que de 135 000 euros pour ce faire, le satellite ne peut dépasser 1,3kg, et si vous dépassez 45 min de travail, vous perdez des points.
+(c) NASA/ESA
+https://www.spacetelescope.org/images/fgs/
+http://www.nasa.gov/images/content/676107main_fgs_new-lg.jpg
+http://hubblesite.org/the_telescope/nuts_.and._bolts/instruments/fgs/graphics/fgs_target.gif
 
-[chiffres de memoire, a verifier]
+Pour les bons observatoires, ce système de guidage fin complète les senseurs stellaires et roues à réactions. Il permet d'obtenir des données de qualité inégalée grâce à un pointage extrêmement précis contrôlé en continu.
 
-cubesat 3U
+necessite objectif = espace & attitude capteur + attitude roues
 
-Votre mission est d'imaginer un satellite étudiant comprenant 3 unités, soit un volume de 10cm*10cm*30cm. Il devra contenir toutes les composantes d'un vrai satellite, sans oublier de lui donner une mission à accomplir (ce qui rapporte des points scientifiques). Attention, vous ne disposez que de 405 000 euros pour ce faire, le satellite ne peut dépasser 3,9kg, et si vous dépassez 45 min de travail, vous perdez des points.
+incompatible objectif pas espace & A6
 
-petite mission d'observation du ciel
-Désirant étudier le cosmos, vous construisez une petite mission d'observation. Elle comporte un télescope et peut observer dans le visible, l'infrarouge ou l'ultraviolet avec divers instruments. A vous de choisir son objectif (qui rapporte des points scientifiques) : faire des images de l'ensemble de la voûte céleste ou étudier des astres bien déterminés, le tout avec un ou plusieurs instruments. Attention, vous devez éviter les incompatibilités entre composants, vous ne disposez que de 150 millions d'euros, et si vous dépassez 45 min de travail, vous perdez des points - sans oublier que les aléas typiques des missions spatiales peuvent aussi se produire...
+tags = attitude
 
-moyenne mission d'observation du ciel
-idem sauf cout
+val Sci = 1
+val Vol=0
+fiabilite=1
+active=true
+cubesat=false
+order = 4
 
-grande mission d'observation du ciel
-idem sauf cout
-
-petite mission planétaire
-Votre défi est de construire une petite mission d'observation de la Terre. Surveillance des océans, étude de l'atmosphère : à vous de choisir votre objectif et donc de gagner des points ! Attention, vous devez éviter les incompatibilités entre composants, vous ne disposez que de 100 millions d'euros, et si vous dépassez 45 min de travail, vous perdez des points - sans oublier que les aléas typiques des missions spatiales peuvent aussi se produire...
-
-moyenne mission planétaire
-A vous l'étude du Système solaire! Vous construisez une mission moyenne d'observation planétaire ou lunaire, qui peut étudier la Terre en détail ou s'en éloigner pour aller analyser sur place Mercure, Vénus, Mars, un astéroïde, Jupiter, ou Saturne. Satellite d'observation en orbite autour de l'objet choisi, atterrisseur, ou combinaison des deux: à vous de choisir  votre objectif et donc de gagner des points ! Attention, vous devez éviter les incompatibilités entre composants, vous ne disposez que de 400 millions d'euros pour ce faire, et si vous dépassez 1h  de travail, vous perdez des points. Les aléas typiques des missions spatiales peuvent aussi se produire...
-
-[cibles : j'ai rien oublie?]
-
-grande mission planétaire
-idem sauf cou
+masse/prix/conso elec : j'attends un quote d'airbus...
 
 
 

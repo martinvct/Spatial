@@ -21,4 +21,13 @@ if (Meteor.isClient) {
 			Router.go('Home');
 		}
 	});
+	Template.Scores.helpers({
+		scores: function(){
+			var scores = Parties.find({finie: true}, {sort :{score: -1}, limit: 20}).fetch();
+			for(var s=0; s < scores.length; s++){
+				scores[s].user = Meteor.users.findOne({_id: scores[s].userId},{profile: 1});
+			}
+			return scores;
+		}
+	});
 }

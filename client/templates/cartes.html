@@ -94,11 +94,11 @@
             --><div class="carteConstanteFin"></div><!--
           --></div>{{/if}}<!--    
         --></div>
-        {{#if hasTip }}<div class="carteTips">{{i18nMongo tip }}</div>{{/if}}
+        {{#if hasTip }}<div class="carteTips">{{{i18nMongo tip }}} </div>{{/if}}
     </div>
 </template>
 <template name="CartePreview">
-    <div id="{{carte.carteId}}" class="cartePreview {{isLast carte.carteId lastCarteId}}" data-carteId="{{ carte.carteId }}" ><!--
+    <div id="{{carte.carteId}}" class="cartePreview {{isLast carte.carteId lastCarteId}} {{isInactive}}" data-carteId="{{ carte.carteId }}" ><!--
         --><div class="carteIntitule {{ carte.categorie }}"><div class="carteStars">{{#each stars}}<div class="carteStar">&#9733;</div>{{/each}}</div><div class="intitule"><span>{{i18nMongo carte.intitule }}</span></div><div class="carteId">{{ carte.categorie }}{{ carte.ordre }}</div><div class="carteCopyright">&copy; {{ carte.copyright }}</div></div><!--
         --><div class="carteIllustration"><img src="{{getIllustration carte}}" /></div><!--
         --><div class="carteDescription">{{i18nMongo carte.description }}</div><!--
@@ -121,8 +121,11 @@
             --><div class="carteConstanteFin"></div><!--
           --></div>{{/if}}<!--    
         --></div>
-        {{#if hasTip }}<div class="carteTips">{{i18nMongo carte.tip }}</div>{{/if}}
+        {{#if hasTip }}<div class="carteTips">{{{i18nMongo carte.tip }}}</div>{{/if}}
     </div>
+</template>
+<template name="CarteNom">
+  ({{carte.carteId}}) {{i18nMongo carte.intitule }}
 </template>
 
 <template name="EditCarte">

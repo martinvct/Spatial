@@ -23,7 +23,7 @@ Meteor.startup(function () {
     //console.log(TAPi18n.getLanguage());
     sAlert.config({
         effect: '',
-        position: 'top-right',
+        position: 'top-left',
         timeout: 5000,
         html: false,
         onRouteClose: true,

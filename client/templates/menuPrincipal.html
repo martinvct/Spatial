@@ -5,7 +5,7 @@
 			<li><button id="chargerPartie">{{_ "interface.bouton.chargerPartie" }}</button></li>
 			{{#if currentUser.profile.admin }}<li><button id="configuration">{{_ "interface.bouton.configuration" }}</button></li>{{/if}}
 			<li><button id="meilleursScores">{{_ "interface.bouton.meilleursScores" }}</button></li>
-			<li><button id="aide">{{_ "interface.bouton.aide" }}</button></li>
+			<!--<li><button id="aide">{{_ "interface.bouton.aide" }}</button></li>-->
 		</ul>
 	</div>
 
@@ -25,17 +25,16 @@
 <template name="Scores">
 	<button class="lien" id="retour">{{_ "interface.bouton.retour" }}</button>
 	{{#unless scores}}<p>{{_ "interface.scores.aucunScore"}}</p>{{/unless}}
-	<ol>
+	
 		{{#each scores }}
-		<li>
-			<img id="avatarMinified" src="{{#if user.profile.avatar}} {{user.profile.avatar}} {{else}} /avatar-75.png {{/if}}"/>
-			<div class="scoreInfo">{{ user.profile.lastname }}</div>
-			<div class="scoreInfo">{{ user.profile.firstname }}</div>
-			<div class="scoreInfo">{{ partie.score }}</div>
-			<div class="scoreInfo">{{ partie.budget }}</div>
-			<div class="scoreInfo">{{ partie.science }}</div>
-			<div class="scoreInfo">{{ partie.tempsTotal }}</div>
-		</li>
+		<div class="score">
+			<div class="avatar"><img class="scoreInfo" src="{{#if user.profile.avatar}} {{user.profile.avatar}} {{else}} /avatar-75.png {{/if}}"/></div>
+			<div class="details">
+				<div class="scoreInfoUser">{{ user.profile.lastname }} {{ user.profile.firstname }}</div>
+				<div class="scoreInfo">{{ deck.science }} <div class="carteStar">&#9733;</div> - {{{formatValeurRegle (deck.budget) 'eur' true}}} - {{{formatValeurTemps tempsTotal "tps" false}}}</div>
+			</div>
+			<div class="valeur">{{ score }}</div>
+		</div>
 		{{/each}}
-	</ol>
+	
 </template>

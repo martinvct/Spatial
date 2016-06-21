@@ -5,7 +5,7 @@ Meteor.startup(function(){
   });*/
   process.env.MAIL_URL = 'smtp://smtp.ulg.ac.be';
   process.env.MAIL_EXP = 'vincent.martin@ulg.ac.be';
-  process.env.PATH     = '/usr/local/src/GraphicsMagick-1.3.23/';
+  //process.env.PATH     = '/usr/local/src/GraphicsMagick-1.3.23/';
  // process.env.PATH     = 'C:\\Program Files (x86)\\GraphicsMagick-1.3.23-Q16';
  /* var sep = /^win/.test(process.platform) ? ';' : ':';
   console.log(process.env['PATH'].split(/:|;/));

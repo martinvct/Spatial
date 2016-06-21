@@ -2,6 +2,9 @@ if (Meteor.isClient) {
 	Template.registerHelper('convertir', function(valeur, unite){
 		return convertir(valeur, unite);
 	});
+	Template.registerHelper('nonNul', function(valeur){
+		return ((typeof(valeur) != "undefined") && (valeur != 0) && (valeur != "0"));
+	});
 	Template.registerHelper('getIconeConstante', function(nom, valeurMax, valeur){
 		if(nom == "star-rd"){
 			if(valeur == 0) return nom+"0";
@@ -534,7 +537,6 @@ if (Meteor.isClient) {
 				var lastRapport = _.max(Template.instance().data.partie.experts, function(rapport){ return rapport.dateAppel; });
 				if(lastRapport){
 					var e = _.find(Template.instance().data.partie.experts, function(rapport){ return rapport.dateAppel == lastRapport.dateAppel; });
-					//console.log(e.rapport);
 					return e.rapport;
 				}
 			}	

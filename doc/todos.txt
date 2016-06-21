@@ -5,11 +5,12 @@
 [*] page d'édition de cartes
 [*] modifier contrainte scenario : ajouter une checkbox qui autorise la modification d'un scénario malgré les précédentes parties
 [*] internationaliser l'appli  : voir la page d'édition de cartes pour example... taper : TAPi18n.setLanguage('en'); dans la console du navigateur pour switcher la langue
-[] débug lancement partie : ok côté serveur mais exception côté client
+[*] débug lancement partie : ok côté serveur mais exception côté client
 [] test et debug éventuel sur déclenchement d'évènement lors d'expertise/collaboration
 [] suppression carte : suppression de cartes en cascades dans les anciennes parties
  
 
+[] déploy avec mupx !!  https://www.npmjs.com/package/mupx  https://docs.docker.com/engine/installation/linux/centos/ https://github.com/arunoda/meteor-up/issues/522
 
 db.parties.update({_id: "ykatBjAgjZvyTyT9X"},{$set:{finie: false, rapportFinalEvents:[], score: 0, eventIds:  ["4ZvNZ8tAFur38mZfT", "4ZvNZ8tAFur38mZfX"]}});
 db.parties.find({_id: "ykatBjAgjZvyTyT9X"},{eventIds: 1});
@@ -46,7 +47,13 @@ order = 4
 masse/prix/conso elec : j'attends un quote d'airbus...
 
 
-
+/**************************************************************
+[*] logo ULg, FSc, Astro, IFRES, eCampus en page d'accueil
+[*] logo ULg partout
+[] illustrations OLO
+[] modifs évènements
+[] page des logs
+[] textes
 			
 
 

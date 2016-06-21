@@ -33,8 +33,8 @@ button.okBouton { border: 0.1em solid white; width: 50px; margin: 4px; padding: 
 button.petitBouton { border: 0.1em solid white; margin: 0.2em; text-align: center; background: none; color: white; font-size: x-small; width: 105px; }
 nav.navMain { font-family: "nasalization"; vertical-align: top; }
 #navMainHR { width: 100%; height: 7px; background-image: url('ligne.png'); }
-ul.buttonsBar, div.statsScenario ul, div.statsPartie ul { list-style: none;  margin-left: 0; padding-left: 0; }
-ul.buttonsBar li, ul.structureToolbar li { display: inline; list-style-type:none;  }
+ul.buttonsBar, div.statsScenario ul, div.statsPartie ul, ul.logos { list-style: none;  margin-left: 0; padding-left: 0; }
+ul.buttonsBar li, ul.structureToolbar li, ul.logos li { display: inline; list-style-type:none;  }
 ul.buttonsBar button { background: none; margin-top: 10px; }
 span.mandatory { color: red; }
 
@@ -49,18 +49,19 @@ ul.menuMain > li > button { border: 0.2em solid white; border-radius: 5px; width
 
 #rightNavButtons { display: inline-block; float: right; min-width: 110px; }
 
-#buttonHome { display: inline-block; position: relative; left: 80px; top: -15px; }
+
+#buttonHome { display: inline-block; height: 75px; }
 button.buttonHome { padding: 0; margin: 0; background: none; border: none; }
 #homeMinified { display: block; padding: 0; margin: 0; }
 
-#buttonAvatar { display: inline-block; position: relative; left: 80px; top: -15px; }
+#buttonAvatar { display: inline-block; height: 75px; }
 button.buttonAvatar { padding: 0; margin: 0; background: none; border: none; }
 #avatarMinified { display: block; padding: 0; margin: 0; }
 
-#buttonNotifications { display: inline-block; position: relative; left: 80px; margin-left: 6px; }
+#buttonNotifications { display: inline-block; height: 75px; }
 button.buttonNotifications { padding: 0; margin: 0; background: none; border: none; }
 #notificationMinified { display: block; padding: 0; margin: 0; }
-div.nNotifications { display: inline-block; background: red; font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: small; color: white; padding: 2px 4px 0 4px; position: relative; top: -30px; right: -15px; border-radius: 3px; }
+div.nNotifications { display: inline-block; background: red; font-family: "MyriadPro", Helvetica, Arial, sans-serif; font-size: small; color: white; padding: 2px 4px 0 4px; position: absolute; top: 80px; margin-left: 5px; border-radius: 3px; }
 
 /*ul.menuProfile { position: absolute; top: 50px; right: 0; border: 0.5em solid black; list-style: none; margin-left: 0; padding: 0 0.5em; max-width: 20em; z-index: 1000;}*/
 ul.menuProfile { border: 0.5px dashed white; color: #DDD; width: 324px; float: right; margin-top: 75px; list-style: none; }
@@ -367,6 +368,14 @@ div.score div.valeur { display: inline-block;  height: 75px; text-align: right; 
     textarea.newMessage { width:300px; }
     td.notMobile { display: none; }
     div.deckPreview { display: block; }
+    div.logoIfres { display: inline-block; width: 46px; height: 30px; background: url('/icones_S/logoIFRES.png') no-repeat; }
+    div.logoEcampus { display: inline-block; width: 45px; height: 30px; background: url('/icones_S/logoECAMPUS.png') no-repeat; }
+    div.logoFacSciences { display: inline-block; width: 37px; height: 30px; background: url('/icones_S/logoFAC-SC.png') no-repeat; }
+    div.logoAgo { display: inline-block; width: 29px; height: 30px; background: url('/icones_S/logoAGO.png') no-repeat; }
+    div.logoUlg { display: inline-block; width: 38px; height: 30px; background: url('/icones_S/logoULG.png') no-repeat; }
+    ul.logos { margin-top: 50px; }
+    ul.logos li { margin: 0 calc((100% - 230px)/ 12); }
+    div.logoUlgNav { background: url('/icones_S/logoULG2.png') no-repeat; width: 18px; height: 40px; margin-left: 70px; }
 }
 @media only screen and (min-width: 480px){
     .container { min-height: 768px; }
@@ -462,7 +471,14 @@ div.score div.valeur { display: inline-block;  height: 75px; text-align: right; 
     div.partieCategorieLabel span.stat, div.carteCategorieLabel span.stat { font-size: 11px; }
     textarea.newMessage { width:400px; }
     div.deckPreview { display: inline-block; width: 244px; vertical-align: top; margin-top: 20px; margin-right: 5px;}
-
+    div.logoIfres { display: inline-block; width: 119px; height: 80px; background: url('/icones_M/logoIFRES.png') no-repeat; }
+    div.logoEcampus { display: inline-block; width: 113px; height: 80px; background: url('/icones_M/logoECAMPUS.png') no-repeat; }
+    div.logoFacSciences { display: inline-block; width: 94px; height: 80px; background: url('/icones_M/logoFAC-SC.png') no-repeat; }
+    div.logoAgo { display: inline-block; width: 73px; height: 80px; background: url('/icones_M/logoAGO.png') no-repeat; }
+    div.logoUlg { display: inline-block; width: 95px; height: 80px; background: url('/icones_M/logoULG.png') no-repeat; }
+    ul.logos { margin-top: 100px; }
+    ul.logos li { margin: 0 calc((100% - 595px)/ 12); }
+    div.logoUlgNav { background: url('/icones_M/logoULG2.png') no-repeat; width: 96px; height: 45px; margin-left: 70px; }
 }
 @media only screen and (min-width: 480px) and (max-width: 1024px){
 	body { background: #111111 url('/fond1024x1024.jpg') no-repeat fixed center top; }

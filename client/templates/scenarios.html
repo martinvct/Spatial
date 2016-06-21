@@ -296,6 +296,8 @@
 				{{/if}}{{/if}}
 			</ul>
 		</div>
+
+		{{#if user.profile.admin }}
 		<h3>{{_ "interface.scenario.construction" }}</h3>
 		<div class="scenarioParametre">
 			<label for="tpsMax">{{_ "interface.scenario.tpsMax" }}</label>
@@ -383,6 +385,16 @@
 			<label for="ptsParTps">{{_ "interface.scenario.ptsParTps" }}</label>
 			<span>{{ scenario.score.ptsParTps }}</span>
 		</div>
-	
+		{{else}}
+		<h3>{{_ "interface.scenario.score" }}</h3>
+		<div class="scenarioParametre">
+			<span>
+				{{{_ "interface.scenario.ptsParScienceTxt" scenario.score.ptsParScience }}}
+				{{#if nonNul scenario.score.ptsParTps }}
+					{{_ "interface.scenario.ptsParTpsTxt" pts=scenario.score.ptsParTps tps=scenario.score.seuilTps }}
+				{{/if}}
+			</span>
+		</div>	
+		{{/if}}
 	
 </template>

@@ -104,7 +104,7 @@
         --><div class="carteDescription"></div><!--
         --><div class="structureCategories">
            {{#each categories}}<!--
-            --><div class="structureCategorie" data-categorie="{{this.categorie}}" data-nStructure="{{../n}}"><!--
+            --><div class="structureCategorie" data-categorie="{{this.categorie}}" data-nStructure="{{../n}}" title="{{concat 'categories.' this.categorie }}"><!--
                 --><div class="structureCategorieIcone {{this.categorie}}"></div><!--
                 --><div class="structureCategorieLabel"><span class="stat">{{this.nbrSelect}}</span></div><!--
             --></div>
@@ -163,17 +163,17 @@
     {{/each}}
 </template>
 <template name="PartieExpertiseConfirmation">
-    <h2>{{_ "interface.expertise.appelExpert" }}</h2>
+    <h2>{{_ "interface.expertise.appelExpertTitre" }}</h2>
     <p>{{_ "interface.expertise.appelExpertDescription" }}</p>
-    <ul>
-        <li>{{_ "interface.scenario.nbrMaxExperts" }}: {{ scenario.expertise.nbrMaxExperts }}</li>
-        <li>{{_ "interface.scenario.malusTemps" }}: {{ scenario.expertise.malusTemps }}</li>
-        <li>{{_ "interface.scenario.malusBudget" }}: {{ scenario.expertise.malusBudget }}</li>
-        <li>{{_ "interface.scenario.malusNbrEvenements" }}: {{ scenario.expertise.malusNbrEvenements }}</li>
-        <li>{{_ "interface.scenario.nbrExpertsGratuits" }}: {{ scenario.expertise.nbrExpertsGratuits }}</li>
-        <li>{{_ "interface.expertise.nbrExpertsAppeles" }}: {{nbrExpertsAppeles}}</li>
-        <li>{{_ "interface.scenario.niveauDetails"}}: {{concat "interface.scenario.niveauDetails" scenario.expertise.niveauDetails }}</li>
-    </ul>
+    <p>{{#if nonNul scenario.expertise.nbrMaxExperts}} {{_ "interface.expertise.appelExpert" count=scenario.expertise.nbrMaxExperts}} {{else}}  {{_ "interface.expertise.appelExpert_plural_0"}} {{/if}}
+       {{#if nonNul scenario.expertise.nbrMaxExpertsGratuits}} {{_ "interface.expertise.appelExpertGratuit" count=scenario.expertise.nbrMaxExpertsGratuits}} {{else}}  {{_ "interface.expertise.appelExpertGratuit_plural_0"}} {{/if}}
+       {{#if nonNul scenario.expertise.nbrExpertsGratuits}}  (
+        {{#if nonNul scenario.expertise.malusTemps }} {{_ "interface.scenario.malusTemps" }}: {{ scenario.expertise.malusTemps }}  {{/if}}
+        {{#if nonNul scenario.expertise.malusBudget }} {{_ "interface.scenario.malusBudget" }}: {{ scenario.expertise.malusBudget }}  {{/if}}
+        {{#if nonNul scenario.expertise.malusNbrEvenements }} {{_ "interface.scenario.malusNbrEvenements" }}: {{ scenario.expertise.malusNbrEvenements }}  {{/if}}
+        ) {{/if}} <br />
+        {{#if nonNul nbrExpertsAppeles}} {{_ "interface.expertise.nbrExpertsAppeles"  count=nbrExpertsAppeles }} {{/if}}
+    </p>    
     <div class="toolbarForm">
         <ul>
             <li><button class="icone" id="appelExpert"><img src="/icones_S/exprt320b.png" />{{_ "interface.bouton.appelExpert" }}</button></li>
@@ -182,6 +182,7 @@
     </div>
 </template>
 <template name="PartieExpertiseRapport">
+    <h2>{{_ "interface.expertise.rapportTitre" (formatDate dateAppel "DD/MM/YYYY hh:mm:ss") }}</h2>
     <ul class="rapport">
     {{#if erreurs.isOK }}
            <li>{{_ "interface.rapport.isOK"}}</li>
@@ -197,6 +198,7 @@
         {{/unless}}
     {{/unless}}
     {{#if niveauDetailsCategorie }}
+        {{#unless erreurs.isOK}}<p>{{_ "interface.rapport.categories" }}</p>{{/unless}}
         {{#each erreurs.categories }}
         <li>{{concat "categories." this }}</li>
         {{/each}}
@@ -225,6 +227,7 @@
        
     {{/if}}
     </ul>
+    {{#unless erreurs.isOK}} <p>{{_ "interface.rapport.conseils" }}</p> {{/unless}}
     <div class="toolbarForm">
         <ul>
             <li><button id="appelExpertConfirmation" class="icone"><img src="/icones_S/exprt320b.png" />{{_ "interface.bouton.appelExpert" }}</button></li>
@@ -232,17 +235,18 @@
     </div>
 </template>
 <template name="PartieCollaborationConfirmation">
-    <h2>{{_ "interface.collaboration.appelPeer" }}</h2>
+    <h2>{{_ "interface.collaboration.appelPeerTitre" }}</h2>
     <p>{{_ "interface.collaboration.appelPeerDescription" }}</p>
-    <ul>
-        <li>{{_ "interface.scenario.nbrMaxAppels" }}: {{ scenario.collaboration.nbrMaxAppels }}</li>
-        <li>{{_ "interface.scenario.malusTemps" }}: {{ scenario.collaboration.malusTemps }}</li>
-        <li>{{_ "interface.scenario.malusBudget" }}: {{ scenario.collaboration.malusBudget }}</li>
-        <li>{{_ "interface.scenario.malusNbrEvenements" }}: {{ scenario.collaboration.malusNbrEvenements }}</li>
-        <li>{{_ "interface.scenario.nbrAppelsGratuits" }}: {{ scenario.collaboration.nbrAppelsGratuits }}</li>
-        <li>{{_ "interface.scenario.tpsMaxParAppel"}}: {{ scenario.collaboration.tpsMaxParAppel }}</li>
-        <li>{{_ "interface.collaboration.nbrPeersAppeles" }}: {{nbrPeersAppeles}}</li>
-    </ul>
+    <p>{{#if nonNul scenario.collaboration.nbrMaxAppels}} {{_ "interface.collaboration.appelPeer" count=scenario.collaboration.nbrMaxAppels}} {{else}}  {{_ "interface.collaboration.appelPeer_plural_0"}} {{/if}}
+       {{#if nonNul scenario.collaboration.nbrMaxAppelsGratuits}} {{_ "interface.collaboration.appelPeerGratuit" count=scenario.collaboration.nbrMaxAppelsGratuits}} {{else}}  {{_ "interface.collaboration.appelPeerGratuit_plural_0"}} {{/if}}
+       {{#if nonNul scenario.collaboration.nbrAppelsGratuits}}  (
+        {{#if nonNul scenario.collaboration.malusTemps }} {{_ "interface.scenario.malusTemps" }}: {{ scenario.collaboration.malusTemps }}  {{/if}}
+        {{#if nonNul scenario.collaboration.malusBudget }} {{_ "interface.scenario.malusBudget" }}: {{ scenario.collaboration.malusBudget }}  {{/if}}
+        {{#if nonNul scenario.collaboration.malusNbrEvenements }} {{_ "interface.scenario.malusNbrEvenements" }}: {{ scenario.collaboration.malusNbrEvenements }}  {{/if}}
+        ) {{/if}} <br />
+        {{#if nonNul scenario.collaboration.tpsMaxParAppel}} {{_ "interface.collaboration.appelPeerTemps" count=scenario.collaboration.tpsMaxParAppel}} {{else}} {{_ "interface.collaboration.appelPeerTemps_plural_0"}} {{/if}} <br />
+        {{#if nonNul nbrPeersAppeles}} {{_ "interface.collaboration.nbrPeersAppeles"  count=nbrPeersAppeles }} {{/if}}
+    </p>   
     <div class="toolbarForm">
         <ul>
             <li>{{> inputAutocomplete settings=settings id="peer" placeholder="..." }} <button class="icone" id="appelPeer"><img src="/icones_S/collab320b.png"/>{{_ "interface.bouton.appelPeer" }}</button></li>
@@ -332,6 +336,7 @@
         {{/unless}}
     {{/unless}}
     {{#if niveauDetailsCategorie }}
+        {{#unless erreurs.isOK}}<p>{{_ "interface.rapport.categories" }}</p>{{/unless}}
         {{#each erreurs.categories }}
         <li>{{concat "categories." this }}</li>
         {{/each}}
